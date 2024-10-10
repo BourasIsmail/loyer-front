@@ -305,7 +305,7 @@ export default function Home({
                               Contract:
                               {selectedValue?.fileName ? (
                                 <a
-                                  href={`http://localhost:8080/local/download/${selectedValue.id}`}
+                                  href={`http://172.16.20.58:81/local/download/${selectedValue.id}`}
                                   className="text-blue-500"
                                 >
                                   <FaFileDownload />
