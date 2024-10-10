@@ -39,3 +39,17 @@ export async function getLocauxByCoordination(id: number) {
     console.log(error);
   }
 }
+
+export async function dashboard() {
+  try {
+    const token = getCookie("token");
+    const response = await api.get(`/local/dashboard`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}

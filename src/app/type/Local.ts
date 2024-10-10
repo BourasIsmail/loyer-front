@@ -6,6 +6,10 @@ export type Local = {
   proprietaires?: Proprietaire[];
   adresse?: string;
   brutMensuel?: number;
+  rib?: string;
+  etat?: string;
   contrat?: File;
+  fileName?: string;
+  fileType?: string;
   province?: Province;
 };

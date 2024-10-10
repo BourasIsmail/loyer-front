@@ -37,7 +37,7 @@ export const columns: ColumnDef<Local>[] = [
     ),
     cell: ({ row }) => {
       const proprietaires = row.original.proprietaires;
-      return (proprietaires ?? []).map((p: any) => p.nom).join(", ");
+      return (proprietaires ?? []).map((p: any) => p.nomComplet).join(", ");
     },
   },
   {
@@ -67,11 +67,6 @@ export const columns: ColumnDef<Local>[] = [
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <Link href={local.id ? `/locaux/${local.id}` : `#`}>
                 <DropdownMenuItem>Details local</DropdownMenuItem>
-              </Link>
-              <Link
-                href={local.id ? `/locaux/facture/?local=${local.id}` : `#`}
-              >
-                <DropdownMenuItem>facture</DropdownMenuItem>
               </Link>
             </DropdownMenuContent>
           </DropdownMenu>

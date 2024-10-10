@@ -1,12 +1,13 @@
 import { Province } from "./Province";
+import { Rib } from "./Rib";
 
 export type Proprietaire = {
   id?: number;
-  nom?: string;
-  prenom?: string;
+  nomComplet?: string;
   cin?: string;
   telephone?: string;
   adresse?: string;
-  rib?: string;
+  type?: string;
+  rib?: Rib[];
   province?: Province;
 };

@@ -1,4 +1,5 @@
 "use client";
+import { api } from "@/app/api";
 import { getProprietaire } from "@/app/api/proprietaire";
 import { getAllProvinces } from "@/app/api/province";
 import { Proprietaire } from "@/app/type/Proprietaire";
@@ -15,6 +16,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { useQuery } from "react-query";
 
@@ -42,8 +44,26 @@ export default function Home({
     queryFn: () => getAllProvinces(),
   });
 
-  const handleSubmit = () => {
-    console.log(selectedValue);
+  const handleSubmit = async () => {
+    try {
+      const response = await api.put(
+        `/Proprietaire/update/${params.id}`,
+        selectedValue
+      );
+      toast({
+        title: "Succès",
+        description: "Les informations ont été modifiées avec succès",
+        className: "bg-green-500 text-white",
+        duration: 2000,
+      });
+    } catch (err) {
+      toast({
+        title: "Erreur",
+        description: "Erreur lors de la modification des informations",
+        className: "bg-red-500 text-white",
+        duration: 2000,
+      });
+    }
   };
 
   return (
@@ -66,12 +86,12 @@ export default function Home({
                         name="nom"
                         id=""
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        value={selectedValue?.nom || ""}
+                        value={selectedValue?.nomComplet || ""}
                         placeholder="Nom"
                         onChange={(e) =>
                           setselectedValue({
                             ...selectedValue,
-                            nom: e.target.value || "",
+                            nomComplet: e.target.value || "",
                           })
                         }
                         required
@@ -79,25 +99,26 @@ export default function Home({
                     </div>
                     <div className="w-full">
                       <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Prenom
+                        Type de propriétaire
                       </label>
-                      <input
-                        type="text"
-                        name="prenom"
+                      <select
+                        name="type"
                         id=""
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        value={selectedValue?.prenom || ""}
-                        placeholder="Prenom"
+                        value={selectedValue?.type || ""}
                         onChange={(e) =>
                           setselectedValue({
                             ...selectedValue,
-                            prenom: e.target.value || "",
+                            type: e.target.value || "",
                           })
                         }
                         required
-                      />
+                      >
+                        <option value="">Choisissez un type</option>
+                        <option value="personne physique">Physique</option>
+                        <option value="personne morale">Morale</option>
+                      </select>
                     </div>
-
                     <div className="w-full">
                       <div className="relative z-0 w-full mb-5 group">
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -184,26 +205,6 @@ export default function Home({
                           setselectedValue({
                             ...selectedValue,
                             adresse: e.target.value || "",
-                          })
-                        }
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        RIB
-                      </label>
-                      <input
-                        type="text"
-                        name="rib"
-                        id=""
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        value={selectedValue?.rib || ""}
-                        placeholder="rib de 24 caractères"
-                        onChange={(e) =>
-                          setselectedValue({
-                            ...selectedValue,
-                            rib: e.target.value || "",
                           })
                         }
                         required

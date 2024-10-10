@@ -18,21 +18,21 @@ import Link from "next/link";
 
 export const columns: ColumnDef<Proprietaire>[] = [
   {
+    accessorKey: "nomComplet",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Nom" />
+    ),
+  },
+  {
     accessorKey: "cin",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="CIN" />
     ),
   },
   {
-    accessorKey: "nom",
+    accessorKey: "type",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Nom" />
-    ),
-  },
-  {
-    accessorKey: "prenom",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Prenom" />
+      <DataTableColumnHeader column={column} title="Type" />
     ),
   },
   {
