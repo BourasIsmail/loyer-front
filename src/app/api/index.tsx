@@ -4,7 +4,7 @@ import { UserInfo } from "../type/UserInfo";
 
 const client = axios.create({
   //baseURL: "http://localhost:8080",
-  baseURL: "http://172.16.20.58:81/",
+  baseURL: "https://loyer.entraide.ma/api",
   headers: {
     "Content-Type": "application/json",
   },
