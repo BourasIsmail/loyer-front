@@ -38,11 +38,10 @@ export function AddProprietaireFormComponent() {
     setProprietaire((prev) => ({ ...prev, [field]: value }));
   };
 
-  const router = useRouter();
-
   const handleSubmit = (e: any) => {
     try {
       e.preventDefault();
+      const router = useRouter();
       console.log(proprietaire);
       const response = api.post(`/Proprietaire`, proprietaire).then((res) => {
         console.log(response);

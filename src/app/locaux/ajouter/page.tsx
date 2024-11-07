@@ -57,10 +57,10 @@ export default function Home({
     queryFn: () => getAllProvinces(),
   });
 
-  const router = useRouter();
-
   const handleSubmit = (e: any) => {
     try {
+      const router = useRouter();
+
       e.preventDefault();
       console.log(selectedValue);
       const response = api.post(`/auth/addUser`, selectedValue).then((res) => {
