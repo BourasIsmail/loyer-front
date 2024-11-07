@@ -135,7 +135,7 @@ export default function Home({
                   className="grid w-full grid-cols-2"
                 >
                   <TabsTrigger value="info">Informations du local</TabsTrigger>
-                  <TabsTrigger value="contract">Contact</TabsTrigger>
+                  <TabsTrigger value="contract">Contrat</TabsTrigger>
                 </TabsList>
                 <TabsContent value="info">
                   <div className=" px-4 py-2 mx-auto lg:py-2">
@@ -158,7 +158,6 @@ export default function Home({
                                 adresse: e.target.value || "",
                               })
                             }
-                            required
                           />
                         </div>
                         <div className="w-full">
@@ -178,7 +177,6 @@ export default function Home({
                                 brutMensuel: Number(e.target.value) || 0,
                               })
                             }
-                            required
                           />
                         </div>
 
@@ -189,6 +187,7 @@ export default function Home({
                           <input
                             type="text"
                             name="rib"
+                            disabled
                             id=""
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             value={selectedValue?.rib || ""}
@@ -199,7 +198,6 @@ export default function Home({
                                 rib: e.target.value || "",
                               })
                             }
-                            required
                           />
                         </div>
                         <div className="w-full">
@@ -281,6 +279,26 @@ export default function Home({
                             }}
                             placeholder="Proprietaires"
                             isMulti
+                          />
+                        </div>
+                        <div className="w-full">
+                          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            Id de contrat
+                          </label>
+                          <input
+                            type="text"
+                            name="contrat"
+                            disabled
+                            id=""
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            value={selectedValue?.idContrat || ""}
+                            placeholder="rib"
+                            onChange={(e) =>
+                              setselectedValue({
+                                ...selectedValue,
+                                idContrat: e.target.value || "",
+                              })
+                            }
                           />
                         </div>
                       </div>

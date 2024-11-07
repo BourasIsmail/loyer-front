@@ -7,6 +7,7 @@ export type Local = {
   adresse?: string;
   brutMensuel?: number;
   rib?: string;
+  idContrat?: string;
   etat?: string;
   contrat?: File;
   fileName?: string;

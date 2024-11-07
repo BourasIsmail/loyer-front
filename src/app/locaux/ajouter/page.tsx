@@ -20,6 +20,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
 import { useQuery } from "react-query";
+import { api } from "@/app/api";
+import { toast } from "@/hooks/use-toast";
+import { useRouter } from "next/router";
 
 export default function Home({
   params,
@@ -54,10 +57,31 @@ export default function Home({
     queryFn: () => getAllProvinces(),
   });
 
-  const handleSubmit = () => {
-    console.log(selectedValue);
+  const router = useRouter();
+
+  const handleSubmit = (e: any) => {
+    try {
+      e.preventDefault();
+      console.log(selectedValue);
+      const response = api.post(`/auth/addUser`, selectedValue).then((res) => {
+        console.log(response);
+      });
+      toast({
+        description: "تم تحديث البيانات بنجاح",
+        className: "bg-green-500 text-white",
+        duration: 3000,
+        title: "نجاح",
+      });
+      router.push("/comptes");
+    } catch (error) {
+      toast({
+        description: "اسم مستخدم أو كلمة مرور غير صحيحة",
+        variant: "destructive",
+        duration: 3000,
+        title: "خطأ",
+      });
+    }
   };
-  console.log(selectedValue);
 
   return (
     <>

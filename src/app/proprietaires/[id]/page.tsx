@@ -94,7 +94,6 @@ export default function Home({
                             nomComplet: e.target.value || "",
                           })
                         }
-                        required
                       />
                     </div>
                     <div className="w-full">
@@ -112,7 +111,6 @@ export default function Home({
                             type: e.target.value || "",
                           })
                         }
-                        required
                       >
                         <option value="">Choisissez un type</option>
                         <option value="personne physique">Physique</option>
@@ -152,7 +150,7 @@ export default function Home({
 
                     <div className="w-full">
                       <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        CIN
+                        CIN / IEF
                       </label>
                       <input
                         type="text"
@@ -167,7 +165,6 @@ export default function Home({
                             cin: e.target.value || "",
                           })
                         }
-                        required
                       />
                     </div>
                     <div className="w-full">
@@ -187,7 +184,6 @@ export default function Home({
                             telephone: e.target.value || "",
                           })
                         }
-                        required
                       />
                     </div>
                     <div className="w-full">
@@ -207,7 +203,6 @@ export default function Home({
                             adresse: e.target.value || "",
                           })
                         }
-                        required
                       />
                     </div>
                   </div>
