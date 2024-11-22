@@ -49,22 +49,20 @@ export default function Home() {
     }
   }, [selectedRegion]);
 
-  const formatDate = (input: string) => {
-    const value = input.replace(/\D/g, "");
-    if (value.length <= 2) return value;
-    if (value.length <= 4) return `${value.slice(0, 2)}/${value.slice(2)}`;
-    return `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4, 8)}`;
+  const formatDateForAPI = (dateString: string) => {
+    const [day, month, year] = dateString.split("-");
+    return `${year}-${month}-${day}`;
   };
 
-  const parseDate = (input: string) => {
-    const [day, month, year] = input.split("/");
-    return `${year}-${month}-${day}`;
+  const formatDateForDisplay = (dateString: string) => {
+    if (!dateString) return "";
+    const [year, month, day] = dateString.split("-");
+    return `${day}-${month}-${year}`;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation for all fields
     if (
       !selectedRegion ||
       !date ||
@@ -93,18 +91,6 @@ export default function Home() {
       return;
     }
 
-    // Date format validation
-    const dateRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
-    if (!dateRegex.test(date) || !dateRegex.test(dateCreation)) {
-      toast({
-        description: "Please enter valid dates in the format jj/mm/aaaa.",
-        variant: "destructive",
-        duration: 3000,
-        title: "Error",
-      });
-      return;
-    }
-
     const payload = {
       locals: selectedRows.map((local) => ({
         id: local.id,
@@ -114,10 +100,10 @@ export default function Home() {
         contrat: local.contrat,
         province: local.province,
       })),
-      date: `${parseDate(date)}T00:00:00`,
+      date: `${formatDateForAPI(date)}T00:00:00`,
       nOrdre: nOrdre,
       nOP: nOP,
-      dateCreation: `${parseDate(dateCreation)}`,
+      dateCreation: formatDateForAPI(dateCreation),
       comptePaiement: comptePaiement,
       mode: mode,
     };
@@ -126,7 +112,7 @@ export default function Home() {
       const response = await api.post("/Paiement/ov", payload, {
         responseType: "blob",
       });
-      const dateObj = new Date(parseDate(date));
+      const dateObj = new Date(formatDateForAPI(date));
       const mois = (dateObj.getMonth() + 1).toString().padStart(2, "0");
       const year = dateObj.getFullYear();
       const filename =
@@ -194,14 +180,14 @@ export default function Home() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="date">Date (jj/mm/aaaa)</Label>
+              <Label htmlFor="date">Date (DD-MM-YYYY)</Label>
               <Input
                 id="date"
-                type="text"
-                value={date}
-                onChange={(e) => setDate(formatDate(e.target.value))}
-                placeholder="jj/mm/aaaa"
+                type="date"
+                value={formatDateForDisplay(date)}
+                onChange={(e) => setDate(e.target.value)}
                 required
+                max="9999-12-31"
               />
             </div>
             <div className="space-y-2">
@@ -247,15 +233,15 @@ export default function Home() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="dateCreation">
-                Date de création (jj/mm/aaaa)
+                Date de création (DD-MM-YYYY)
               </Label>
               <Input
                 id="dateCreation"
-                type="text"
-                value={dateCreation}
-                onChange={(e) => setDateCreation(formatDate(e.target.value))}
-                placeholder="jj/mm/aaaa"
+                type="date"
+                value={formatDateForDisplay(dateCreation)}
+                onChange={(e) => setDateCreation(e.target.value)}
                 required
+                max="9999-12-31"
               />
             </div>
             <div className="space-y-2">

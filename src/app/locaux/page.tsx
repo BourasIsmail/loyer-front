@@ -6,12 +6,10 @@ import { BreadCrumb } from "@/components/BreadCrumb";
 import SideBar from "@/components/SideBar";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./columns";
-import Link from "next/link";
 import { getLocauxByCoordination } from "@/app/api/local";
 import { getALLRegions } from "@/app/api/region";
 import { Region } from "@/app/type/Region";
 import { Local } from "../type/Local";
-import axios from "axios";
 import { api } from "../api";
 import { toast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
@@ -24,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { format, parse } from "date-fns";
 
 export default function Home() {
   const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
@@ -40,6 +39,16 @@ export default function Home() {
       });
     }
   }, [selectedRegion]);
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputDate = e.target.value;
+    if (inputDate) {
+      const parsedDate = parse(inputDate, "yyyy-MM-dd", new Date());
+      setDate(format(parsedDate, "dd/MM/yyyy"));
+    } else {
+      setDate("");
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -175,19 +184,16 @@ export default function Home() {
               <Label htmlFor="date">Date (jj/mm/aaaa)</Label>
               <Input
                 id="date"
-                type="text"
-                value={date}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  // Allow only numbers and /
-                  const sanitizedValue = value.replace(/[^\d/]/g, "");
-                  // Automatically add / after day and month
-                  const formattedValue = sanitizedValue
-                    .replace(/^(\d{2})/, "$1/")
-                    .replace(/^(\d{2})\/(\d{2})/, "$1/$2/");
-                  setDate(formattedValue);
-                }}
-                placeholder="jj/mm/aaaa"
+                type="date"
+                value={
+                  date
+                    ? format(
+                        parse(date, "dd/MM/yyyy", new Date()),
+                        "yyyy-MM-dd"
+                      )
+                    : ""
+                }
+                onChange={handleDateChange}
                 required
               />
             </div>
