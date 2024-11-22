@@ -6,10 +6,12 @@ import { BreadCrumb } from "@/components/BreadCrumb";
 import SideBar from "@/components/SideBar";
 import { DataTable } from "@/components/ui/data-table";
 import { columns } from "./columns";
+import Link from "next/link";
 import { getLocauxByCoordination } from "@/app/api/local";
 import { getALLRegions } from "@/app/api/region";
 import { Region } from "@/app/type/Region";
 import { Local } from "../type/Local";
+import axios from "axios";
 import { api } from "../api";
 import { toast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
@@ -22,18 +24,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { format, parse } from "date-fns";
-
-const formatDateForDisplay = (dateString: string) => {
-  if (!dateString) return "";
-  const [year, month, day] = dateString.split("-");
-  return `${day}/${month}/${year}`;
-};
-
-const formatDateForAPI = (dateString: string) => {
-  const [day, month, year] = dateString.split("/");
-  return `${year}-${month}-${day}`;
-};
 
 export default function Home() {
   const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
@@ -64,21 +54,6 @@ export default function Home() {
       return;
     }
 
-    // Validate date format
-    const dateRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
-    if (!dateRegex.test(date)) {
-      toast({
-        description: "Please enter a valid date in the format jj/mm/aaaa.",
-        variant: "destructive",
-        duration: 3000,
-        title: "Error",
-      });
-      return;
-    }
-
-    // Parse the date
-    const formattedDate = formatDateForDisplay(date);
-
     if (selectedRows.length === 0) {
       toast({
         description: "Please select at least one local.",
@@ -98,7 +73,7 @@ export default function Home() {
         contrat: local.contrat,
         province: local.province,
       })),
-      date: `${formattedDate}T00:00:00`, // Use the parsed and formatted date
+      date: `${date}T00:00:00`, // Formatting the date if needed
     };
 
     try {
@@ -181,21 +156,13 @@ export default function Home() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="date">Date (jj/mm/aaaa)</Label>
+              <Label htmlFor="date">Date</Label>
               <Input
                 id="date"
                 type="date"
-                value={date ? formatDateForDisplay(date) : ""}
-                onChange={(e) => {
-                  const inputDate = e.target.value;
-                  if (inputDate) {
-                    setDate(formatDateForDisplay(inputDate));
-                  } else {
-                    setDate("");
-                  }
-                }}
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
                 required
-                max="9999-12-31"
               />
             </div>
           </div>

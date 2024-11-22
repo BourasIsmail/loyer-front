@@ -50,30 +50,77 @@ export default function Home() {
   }, [selectedRegion]);
 
   const formatDateForAPI = (dateString: string) => {
-    const [day, month, year] = dateString.split("-");
-    return `${year}-${month}-${day}`;
-  };
-
-  const formatDateForDisplay = (dateString: string) => {
     if (!dateString) return "";
     const [year, month, day] = dateString.split("-");
-    return `${day}-${month}-${year}`;
+    return `${day}/${month}/${year}`;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (
-      !selectedRegion ||
-      !date ||
-      !nOrdre ||
-      !comptePaiement ||
-      !nOP ||
-      !mode ||
-      !dateCreation
-    ) {
+    if (!selectedRegion) {
       toast({
-        description: "Please fill in all fields.",
+        description: "Please select a region.",
+        variant: "destructive",
+        duration: 3000,
+        title: "Error",
+      });
+      return;
+    }
+
+    if (!date) {
+      toast({
+        description: "Please enter a date.",
+        variant: "destructive",
+        duration: 3000,
+        title: "Error",
+      });
+      return;
+    }
+
+    if (!nOrdre) {
+      toast({
+        description: "Please enter an order number.",
+        variant: "destructive",
+        duration: 3000,
+        title: "Error",
+      });
+      return;
+    }
+
+    if (!comptePaiement) {
+      toast({
+        description: "Please select a payment account.",
+        variant: "destructive",
+        duration: 3000,
+        title: "Error",
+      });
+      return;
+    }
+
+    if (!nOP) {
+      toast({
+        description: "Please enter an OP number.",
+        variant: "destructive",
+        duration: 3000,
+        title: "Error",
+      });
+      return;
+    }
+
+    if (!mode) {
+      toast({
+        description: "Please enter the mode of payement.",
+        variant: "destructive",
+        duration: 3000,
+        title: "Error",
+      });
+      return;
+    }
+
+    if (!dateCreation) {
+      toast({
+        description: "Please enter a creation date.",
         variant: "destructive",
         duration: 3000,
         title: "Error",
@@ -100,10 +147,10 @@ export default function Home() {
         contrat: local.contrat,
         province: local.province,
       })),
-      date: `${formatDateForDisplay(date)}T00:00:00`,
+      date: `${date}T00:00:00`,
       nOrdre: nOrdre,
       nOP: nOP,
-      dateCreation: formatDateForDisplay(dateCreation),
+      dateCreation: `${formatDateForAPI(dateCreation)}`,
       comptePaiement: comptePaiement,
       mode: mode,
     };
@@ -112,7 +159,8 @@ export default function Home() {
       const response = await api.post("/Paiement/ov", payload, {
         responseType: "blob",
       });
-      const dateObj = new Date(date);
+      console.log(payload);
+      const dateObj = new Date(payload.date);
       const mois = (dateObj.getMonth() + 1).toString().padStart(2, "0");
       const year = dateObj.getFullYear();
       const filename =
@@ -180,14 +228,13 @@ export default function Home() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="date">Date (DD-MM-YYYY)</Label>
+              <Label htmlFor="date">Date</Label>
               <Input
                 id="date"
                 type="date"
-                value={formatDateForDisplay(date)}
+                value={date}
                 onChange={(e) => setDate(e.target.value)}
                 required
-                max="9999-12-31"
               />
             </div>
             <div className="space-y-2">
@@ -232,23 +279,20 @@ export default function Home() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="dateCreation">
-                Date de création (DD-MM-YYYY)
-              </Label>
+              <Label htmlFor="dateCreation">Date de création</Label>
               <Input
                 id="dateCreation"
                 type="date"
-                value={formatDateForDisplay(dateCreation)}
+                value={dateCreation}
                 onChange={(e) => setDateCreation(e.target.value)}
                 required
-                max="9999-12-31"
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="mode">Choisissez un mode de paiement</Label>
               <Select onValueChange={(value) => setMode(value)} required>
-                <SelectTrigger id="mode">
-                  <SelectValue placeholder="Choisissez un mode" />
+                <SelectTrigger id="comptePaiement">
+                  <SelectValue placeholder="Choisissez un compte" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="mois">Mois</SelectItem>
