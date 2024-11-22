@@ -54,6 +54,22 @@ export default function Home() {
       return;
     }
 
+    // Validate date format
+    const dateRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+    if (!dateRegex.test(date)) {
+      toast({
+        description: "Please enter a valid date in the format jj/mm/aaaa.",
+        variant: "destructive",
+        duration: 3000,
+        title: "Error",
+      });
+      return;
+    }
+
+    // Parse the date
+    const [day, month, year] = date.split("/");
+    const formattedDate = `${year}-${month}-${day}`;
+
     if (selectedRows.length === 0) {
       toast({
         description: "Please select at least one local.",
@@ -73,7 +89,7 @@ export default function Home() {
         contrat: local.contrat,
         province: local.province,
       })),
-      date: `${date}T00:00:00`, // Formatting the date if needed
+      date: `${formattedDate}T00:00:00`, // Use the parsed and formatted date
     };
 
     try {
@@ -156,12 +172,22 @@ export default function Home() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="date">Date</Label>
+              <Label htmlFor="date">Date (jj/mm/aaaa)</Label>
               <Input
                 id="date"
-                type="date"
+                type="text"
                 value={date}
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Allow only numbers and /
+                  const sanitizedValue = value.replace(/[^\d/]/g, "");
+                  // Automatically add / after day and month
+                  const formattedValue = sanitizedValue
+                    .replace(/^(\d{2})/, "$1/")
+                    .replace(/^(\d{2})\/(\d{2})/, "$1/$2/");
+                  setDate(formattedValue);
+                }}
+                placeholder="jj/mm/aaaa"
                 required
               />
             </div>

@@ -49,72 +49,33 @@ export default function Home() {
     }
   }, [selectedRegion]);
 
+  const formatDate = (input: string) => {
+    const value = input.replace(/\D/g, "");
+    if (value.length <= 2) return value;
+    if (value.length <= 4) return `${value.slice(0, 2)}/${value.slice(2)}`;
+    return `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4, 8)}`;
+  };
+
+  const parseDate = (input: string) => {
+    const [day, month, year] = input.split("/");
+    return `${year}-${month}-${day}`;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!selectedRegion) {
+    // Validation for all fields
+    if (
+      !selectedRegion ||
+      !date ||
+      !nOrdre ||
+      !comptePaiement ||
+      !nOP ||
+      !mode ||
+      !dateCreation
+    ) {
       toast({
-        description: "Please select a region.",
-        variant: "destructive",
-        duration: 3000,
-        title: "Error",
-      });
-      return;
-    }
-
-    if (!date) {
-      toast({
-        description: "Please enter a date.",
-        variant: "destructive",
-        duration: 3000,
-        title: "Error",
-      });
-      return;
-    }
-
-    if (!nOrdre) {
-      toast({
-        description: "Please enter an order number.",
-        variant: "destructive",
-        duration: 3000,
-        title: "Error",
-      });
-      return;
-    }
-
-    if (!comptePaiement) {
-      toast({
-        description: "Please select a payment account.",
-        variant: "destructive",
-        duration: 3000,
-        title: "Error",
-      });
-      return;
-    }
-
-    if (!nOP) {
-      toast({
-        description: "Please enter an OP number.",
-        variant: "destructive",
-        duration: 3000,
-        title: "Error",
-      });
-      return;
-    }
-
-    if (!mode) {
-      toast({
-        description: "Please enter the mode of payement.",
-        variant: "destructive",
-        duration: 3000,
-        title: "Error",
-      });
-      return;
-    }
-
-    if (!dateCreation) {
-      toast({
-        description: "Please enter a creation date.",
+        description: "Please fill in all fields.",
         variant: "destructive",
         duration: 3000,
         title: "Error",
@@ -132,6 +93,18 @@ export default function Home() {
       return;
     }
 
+    // Date format validation
+    const dateRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+    if (!dateRegex.test(date) || !dateRegex.test(dateCreation)) {
+      toast({
+        description: "Please enter valid dates in the format jj/mm/aaaa.",
+        variant: "destructive",
+        duration: 3000,
+        title: "Error",
+      });
+      return;
+    }
+
     const payload = {
       locals: selectedRows.map((local) => ({
         id: local.id,
@@ -141,10 +114,10 @@ export default function Home() {
         contrat: local.contrat,
         province: local.province,
       })),
-      date: `${date}T00:00:00`,
+      date: `${parseDate(date)}T00:00:00`,
       nOrdre: nOrdre,
       nOP: nOP,
-      dateCreation: `${dateCreation}`,
+      dateCreation: `${parseDate(dateCreation)}`,
       comptePaiement: comptePaiement,
       mode: mode,
     };
@@ -153,8 +126,7 @@ export default function Home() {
       const response = await api.post("/Paiement/ov", payload, {
         responseType: "blob",
       });
-      console.log(payload);
-      const dateObj = new Date(payload.date);
+      const dateObj = new Date(parseDate(date));
       const mois = (dateObj.getMonth() + 1).toString().padStart(2, "0");
       const year = dateObj.getFullYear();
       const filename =
@@ -222,12 +194,13 @@ export default function Home() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="date">Date</Label>
+              <Label htmlFor="date">Date (jj/mm/aaaa)</Label>
               <Input
                 id="date"
-                type="date"
+                type="text"
                 value={date}
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(e) => setDate(formatDate(e.target.value))}
+                placeholder="jj/mm/aaaa"
                 required
               />
             </div>
@@ -273,20 +246,23 @@ export default function Home() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="dateCreation">Date de création</Label>
+              <Label htmlFor="dateCreation">
+                Date de création (jj/mm/aaaa)
+              </Label>
               <Input
                 id="dateCreation"
-                type="date"
+                type="text"
                 value={dateCreation}
-                onChange={(e) => setDateCreation(e.target.value)}
+                onChange={(e) => setDateCreation(formatDate(e.target.value))}
+                placeholder="jj/mm/aaaa"
                 required
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="mode">Choisissez un mode de paiement</Label>
               <Select onValueChange={(value) => setMode(value)} required>
-                <SelectTrigger id="comptePaiement">
-                  <SelectValue placeholder="Choisissez un compte" />
+                <SelectTrigger id="mode">
+                  <SelectValue placeholder="Choisissez un mode" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="mois">Mois</SelectItem>
