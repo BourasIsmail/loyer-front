@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { BreadCrumb } from "@/components/BreadCrumb";
@@ -13,10 +14,21 @@ import { Local } from "../type/Local";
 import axios from "axios";
 import { api } from "../api";
 import { toast } from "@/hooks/use-toast";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function Home() {
-  const [selectedRegion, setselectedRegion] = useState<Region | null>(null);
+  const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
   const [tableData, setTableData] = useState<Local[]>([]);
+  const [selectedRows, setSelectedRows] = useState<Local[]>([]);
   const [date, setDate] = useState<string>("");
 
   const { data: regions } = useQuery("regions", getALLRegions);
@@ -42,9 +54,9 @@ export default function Home() {
       return;
     }
 
-    if (tableData.length === 0) {
+    if (selectedRows.length === 0) {
       toast({
-        description: "No locals to process.",
+        description: "Please select at least one local.",
         variant: "destructive",
         duration: 3000,
         title: "Error",
@@ -53,7 +65,7 @@ export default function Home() {
     }
 
     const payload = {
-      locals: tableData.map((local) => ({
+      locals: selectedRows.map((local) => ({
         id: local.id,
         proprietaires: local.proprietaires,
         adresse: local.adresse,
@@ -68,9 +80,9 @@ export default function Home() {
       const response = await api.post("/Paiement/paiements", payload, {
         responseType: "blob", // Important for handling file downloads
       });
-      const date = payload.date.split("T")[0];
-      const mois = date.split("-")[1];
-      const year = date.split("-")[0];
+      const dateObj = new Date(payload.date);
+      const mois = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+      const year = dateObj.getFullYear();
       const filename =
         payload.locals[0].province?.region.name +
         "_" +
@@ -83,7 +95,7 @@ export default function Home() {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", filename); // or the appropriate file name
+      link.setAttribute("download", filename);
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -96,7 +108,7 @@ export default function Home() {
         title: "Succès",
       });
     } catch (error) {
-      console.log(payload);
+      console.error(error);
       // Toast error message
       toast({
         description: "Erreur lors du téléchargement",
@@ -112,69 +124,63 @@ export default function Home() {
       <SideBar />
       <div className="p-4 ml-64">
         <BreadCrumb />
-        <form onSubmit={handleSubmit} className="mt-4">
-          <div className="flex flex-wrap gap-4 items-end">
-            <div className="flex-1 min-w-[200px]">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Choisissez une Coordination
-              </label>
-              <select
-                name="region1"
-                onChange={(e) => {
-                  const selectedId = Number(e.target.value);
-                  const selectedName =
-                    e.target.options[e.target.selectedIndex].text;
-                  setselectedRegion({ id: selectedId, name: selectedName });
+        <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="region">Choisissez une Coordination</Label>
+              <Select
+                onValueChange={(value) => {
+                  const selectedId = Number(value);
+                  const selectedRegionData = regions?.find(
+                    (r) => r.id === selectedId
+                  );
+                  if (selectedRegionData) {
+                    setSelectedRegion(selectedRegionData);
+                  }
                 }}
-                className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               >
-                <option value="" selected disabled>
-                  {selectedRegion ? selectedRegion.name : "Select a region"}
-                </option>
-                {regions?.map((region) => (
-                  <option key={region.id} value={region.id}>
-                    {region.name}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger id="region">
+                  <SelectValue
+                    placeholder={
+                      selectedRegion ? selectedRegion.name : "Select a region"
+                    }
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  {regions?.map((region) => (
+                    <SelectItem key={region.id} value={region.id.toString()}>
+                      {region.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-            <div className="flex-1 min-w-[200px]">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Date
-              </label>
-              <input
+            <div className="space-y-2">
+              <Label htmlFor="date">Date</Label>
+              <Input
+                id="date"
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required
               />
             </div>
-            <div>
-              <button
-                type="submit"
-                className="focus:outline-none text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900"
-              >
-                Submit
-              </button>
-            </div>
           </div>
+          <Button type="submit" className="w-full md:w-auto">
+            Submit
+          </Button>
         </form>
 
         <hr className="my-4" />
         {tableData.length > 0 ? (
           <>
-            {/* <Link href={"/locaux/ajouter"}>
-              <button
-                type="button"
-                className="focus:outline-none text-white float-end bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900"
-              >
-                Ajouter Local
-              </button>
-            </Link>*/}
             <h1 className="text-2xl font-bold mb-4 py-2">Listes des Locaux</h1>
             <div className="p-2 bg-white border-2 border-gray-200 rounded-lg dark:border-gray-700">
-              <DataTable columns={columns} data={tableData} />
+              <DataTable
+                columns={columns}
+                data={tableData}
+                onRowsSelected={setSelectedRows}
+              />
             </div>
           </>
         ) : (

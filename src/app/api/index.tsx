@@ -3,8 +3,8 @@ import { setCookie, getCookie, deleteCookie } from "cookies-next";
 import { UserInfo } from "../type/UserInfo";
 
 const client = axios.create({
-  //baseURL: "http://localhost:8080",
-  baseURL: "https://loyer.entraide.ma/api",
+  baseURL: "http://localhost:8080",
+  //baseURL: "https://loyer.entraide.ma/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -72,6 +72,7 @@ const tokenPayload = async () => {
   const tokenPay = JSON.parse(decodedPayload);
   return tokenPay?.sub;
 };
+
 export function getCurrentUser() {
   return async () => {
     const email = await tokenPayload();
@@ -84,6 +85,17 @@ export function getCurrentUser() {
     });
     return data;
   };
+}
+
+export async function getCurrentUsers(): Promise<UserInfo> {
+  const token = getCookie("token");
+  if (!token) throw new Error("No token found");
+
+  const payload = JSON.parse(atob(token.split(".")[1]));
+  const email = payload.sub;
+
+  const { data } = await api.get("/auth/email/" + email);
+  return data;
 }
 
 export const logout = async () => {

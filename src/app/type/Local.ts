@@ -13,4 +13,9 @@ export type Local = {
   fileName?: string;
   fileType?: string;
   province?: Province;
+  modeDePaiement?: string;
+  dateResiliation?: string;
+  dateEffetContrat?: string;
+  longitude?: number;
+  latitude?: number;
 };
