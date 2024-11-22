@@ -24,6 +24,17 @@ import {
 } from "@/components/ui/select";
 import { format, parse } from "date-fns";
 
+const formatDateForDisplay = (dateString: string) => {
+  if (!dateString) return "";
+  const [year, month, day] = dateString.split("-");
+  return `${day}/${month}/${year}`;
+};
+
+const formatDateForAPI = (dateString: string) => {
+  const [day, month, year] = dateString.split("/");
+  return `${year}-${month}-${day}`;
+};
+
 export default function Home() {
   const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
   const [tableData, setTableData] = useState<Local[]>([]);
@@ -39,16 +50,6 @@ export default function Home() {
       });
     }
   }, [selectedRegion]);
-
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputDate = e.target.value;
-    if (inputDate) {
-      const parsedDate = parse(inputDate, "yyyy-MM-dd", new Date());
-      setDate(format(parsedDate, "dd/MM/yyyy"));
-    } else {
-      setDate("");
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,8 +77,7 @@ export default function Home() {
     }
 
     // Parse the date
-    const [day, month, year] = date.split("/");
-    const formattedDate = `${year}-${month}-${day}`;
+    const formattedDate = formatDateForDisplay(date);
 
     if (selectedRows.length === 0) {
       toast({
@@ -185,16 +185,17 @@ export default function Home() {
               <Input
                 id="date"
                 type="date"
-                value={
-                  date
-                    ? format(
-                        parse(date, "dd/MM/yyyy", new Date()),
-                        "yyyy-MM-dd"
-                      )
-                    : ""
-                }
-                onChange={handleDateChange}
+                value={date ? formatDateForDisplay(date) : ""}
+                onChange={(e) => {
+                  const inputDate = e.target.value;
+                  if (inputDate) {
+                    setDate(formatDateForDisplay(inputDate));
+                  } else {
+                    setDate("");
+                  }
+                }}
                 required
+                max="9999-12-31"
               />
             </div>
           </div>

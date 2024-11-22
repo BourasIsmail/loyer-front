@@ -100,10 +100,10 @@ export default function Home() {
         contrat: local.contrat,
         province: local.province,
       })),
-      date: `${formatDateForAPI(date)}T00:00:00`,
+      date: `${formatDateForDisplay(date)}T00:00:00`,
       nOrdre: nOrdre,
       nOP: nOP,
-      dateCreation: formatDateForAPI(dateCreation),
+      dateCreation: formatDateForDisplay(dateCreation),
       comptePaiement: comptePaiement,
       mode: mode,
     };
@@ -112,7 +112,7 @@ export default function Home() {
       const response = await api.post("/Paiement/ov", payload, {
         responseType: "blob",
       });
-      const dateObj = new Date(formatDateForAPI(date));
+      const dateObj = new Date(date);
       const mois = (dateObj.getMonth() + 1).toString().padStart(2, "0");
       const year = dateObj.getFullYear();
       const filename =
