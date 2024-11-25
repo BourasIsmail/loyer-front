@@ -263,7 +263,7 @@ export default function AccountsManagement() {
               Suivant
             </Button>
             <Button variant="outline" size="sm">
-              Nomber de page({table.getPageCount()})
+              Nombre de pages({table.getPageCount()})
             </Button>
           </div>
         </div>
