@@ -175,11 +175,11 @@ export default function AccountsManagement() {
       <div className="p-4 ml-64">
         <BreadCrumb />
         <div className="container mx-auto p-4">
-          <h1 className="text-2xl font-bold mb-4">Gestion des comptes</h1>
+          <h1 className="text-2xl font-bold mb-4">Accounts Management</h1>
 
           <div className="flex justify-between items-center py-4">
             <Link href="/addComptes">
-              <Button variant="outline">Ajouter Un Compte</Button>
+              <Button variant="outline">Add Account</Button>
             </Link>
             <Input
               placeholder="Filter emails..."
@@ -253,10 +253,7 @@ export default function AccountsManagement() {
             >
               Precedent
             </Button>
-            <span>
-              Page {table.getState().pagination.pageIndex + 1} of{" "}
-              {table.getPageCount()}
-            </span>
+            <span> {table.getState().pagination.pageIndex + 1}</span>
             <Button
               variant="outline"
               size="sm"
@@ -264,6 +261,9 @@ export default function AccountsManagement() {
               disabled={!table.getCanNextPage()}
             >
               Suivant
+            </Button>
+            <Button variant="outline" size="sm">
+              Nomber de page({table.getPageCount()})
             </Button>
           </div>
         </div>
