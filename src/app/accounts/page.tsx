@@ -3,29 +3,12 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getUsers, api } from "@/app/api";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { UserInfo } from "../type/UserInfo";
 import SideBar from "@/components/SideBar";
 import { BreadCrumb } from "@/components/BreadCrumb";
 import { toast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -37,12 +20,31 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+  getPaginationRowModel,
+  SortingState,
+  getSortedRowModel,
+  ColumnFiltersState,
+  getFilteredRowModel,
+} from "@tanstack/react-table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import Link from "next/link";
 
 export default function AccountsManagement() {
-  const [page, setPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [userToDelete, setUserToDelete] = useState<UserInfo | null>(null);
-  const pageSize = 10;
 
   const queryClient = useQueryClient();
 
@@ -83,6 +85,77 @@ export default function AccountsManagement() {
     setUserToDelete(null);
   };
 
+  const columns: ColumnDef<UserInfo>[] = [
+    {
+      accessorKey: "name",
+      header: "Name",
+    },
+    {
+      accessorKey: "email",
+      header: "Email",
+    },
+    {
+      accessorKey: "province.name",
+      header: "Province",
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => {
+        const user = row.original;
+        return (
+          <div className="flex gap-2">
+            <a href={`/accounts/${user.id}`}>
+              <Button variant="outline" size="sm">
+                Edit
+              </Button>
+            </a>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => handleDelete(user)}
+                >
+                  Delete
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    the user account and remove their data from our servers.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={confirmDelete}>
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+        );
+      },
+    },
+  ];
+
+  const table = useReactTable({
+    data: users || [],
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      sorting,
+      columnFilters,
+    },
+  });
+
   if (isLoading)
     return (
       <div className="flex justify-center items-center h-screen">
@@ -96,123 +169,103 @@ export default function AccountsManagement() {
       </div>
     );
 
-  const filteredUsers =
-    users?.filter(
-      (user) =>
-        user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.province?.name.toLowerCase().includes(searchTerm.toLowerCase())
-    ) || [];
-
-  const paginatedUsers = filteredUsers.slice(
-    (page - 1) * pageSize,
-    page * pageSize
-  );
-  const totalPages = Math.ceil(filteredUsers.length / pageSize);
-
   return (
     <>
       <SideBar />
       <div className="p-4 ml-64">
         <BreadCrumb />
         <div className="container mx-auto p-4">
-          <h1 className="text-2xl font-bold mb-4">Accounts Management</h1>
+          <h1 className="text-2xl font-bold mb-4">Gestion des comptes</h1>
 
-          <div className="mb-4">
-            <Label htmlFor="search">Search</Label>
+          <div className="flex justify-between items-center py-4">
+            <Link href="/addComptes">
+              <Button variant="outline">Ajouter Un Compte</Button>
+            </Link>
             <Input
-              id="search"
-              type="text"
-              placeholder="Search by name, email, or province"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Filter emails..."
+              value={
+                (table.getColumn("email")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table.getColumn("email")?.setFilterValue(event.target.value)
+              }
               className="max-w-sm"
             />
           </div>
 
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Province</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {paginatedUsers.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell>{user.name || "N/A"}</TableCell>
-                  <TableCell>{user.email || "N/A"}</TableCell>
-                  <TableCell>{user.province?.name || "N/A"}</TableCell>
-                  <TableCell>
-                    <a href={`/accounts/${user.id}`}>
-                      <Button variant="outline" className="mr-2">
-                        Edit
-                      </Button>
-                    </a>
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button
-                          variant="destructive"
-                          onClick={() => handleDelete(user)}
-                        >
-                          Delete
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>
-                            Are you absolutely sure?
-                          </AlertDialogTitle>
-                          <AlertDialogDescription>
-                            This action cannot be undone. This will permanently
-                            delete the user account and remove their data from
-                            our servers.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction onClick={confirmDelete}>
-                            Continue
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      );
+                    })}
+                  </TableRow>
+                ))}
+              </TableHeader>
+              <TableBody>
+                {table.getRowModel().rows?.length ? (
+                  table.getRowModel().rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-24 text-center"
+                    >
+                      No results.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
 
-          <Pagination className="mt-4">
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  className={page === 1 ? "pointer-events-none opacity-50" : ""}
-                />
-              </PaginationItem>
-              {[...Array(totalPages)].map((_, i) => (
-                <PaginationItem key={i}>
-                  <PaginationLink
-                    onClick={() => setPage(i + 1)}
-                    isActive={page === i + 1}
-                  >
-                    {i + 1}
-                  </PaginationLink>
-                </PaginationItem>
-              ))}
-              <PaginationItem>
-                <PaginationNext
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  className={
-                    page === totalPages ? "pointer-events-none opacity-50" : ""
-                  }
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+          <div className="flex items-center justify-end space-x-2 py-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Precedent
+            </Button>
+            <span>
+              Page {table.getState().pagination.pageIndex + 1} of{" "}
+              {table.getPageCount()}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Suivant
+            </Button>
+          </div>
         </div>
       </div>
     </>
