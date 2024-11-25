@@ -187,7 +187,7 @@ export default function Home({
                 <TabsList className="grid w-full grid-cols-3">
                   <TabsTrigger value="info">Informations du local</TabsTrigger>
                   <TabsTrigger value="contract">Contrat</TabsTrigger>
-                  <TabsTrigger value="map">Localisation</TabsTrigger>
+                  {/*<TabsTrigger value="map">Localisation</TabsTrigger>*/}
                 </TabsList>
                 <TabsContent value="info">
                   <div className="px-4 py-2 mx-auto lg:py-2">
@@ -493,6 +493,7 @@ export default function Home({
                     </form>
                   </div>
                 </TabsContent>
+                {/*
                 <TabsContent value="map">
                   <div className="container mx-auto p-4 space-y-4">
                     <h2 className="text-2xl font-bold">Localisation</h2>
@@ -607,6 +608,7 @@ export default function Home({
                     </p>
                   </div>
                 </TabsContent>
+                */}
               </Tabs>
             </section>
           </div>
