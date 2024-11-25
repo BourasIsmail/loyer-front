@@ -175,11 +175,11 @@ export default function AccountsManagement() {
       <div className="p-4 ml-64">
         <BreadCrumb />
         <div className="container mx-auto p-4">
-          <h1 className="text-2xl font-bold mb-4">Accounts Management</h1>
+          <h1 className="text-2xl font-bold mb-4">Gestion des Comptes</h1>
 
           <div className="flex justify-between items-center py-4">
             <Link href="/addComptes">
-              <Button variant="outline">Add Account</Button>
+              <Button variant="outline">Ajouter Un Comptes</Button>
             </Link>
             <Input
               placeholder="Filter emails..."
