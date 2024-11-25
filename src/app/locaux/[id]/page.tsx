@@ -184,7 +184,7 @@ export default function Home({
           <div className="p-2 mt-5 border-2 bg-white border-gray-200 rounded-lg dark:border-gray-700">
             <section className="bg-white dark:bg-gray-900">
               <Tabs defaultValue="info" className="px-2">
-                <TabsList className="grid w-full grid-cols-3">
+                <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="info">Informations du local</TabsTrigger>
                   <TabsTrigger value="contract">Contrat</TabsTrigger>
                   {/*<TabsTrigger value="map">Localisation</TabsTrigger>*/}
