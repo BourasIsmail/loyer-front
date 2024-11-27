@@ -11,6 +11,7 @@ import { UserInfo } from "@/app/type/UserInfo";
 import { getCookie } from "cookies-next";
 import { useQuery } from "react-query";
 import { toast } from "@/hooks/use-toast";
+import { MdOutlineNotificationAdd } from "react-icons/md";
 
 const SideBar = () => {
   const [utilisateurSelectionne, setUtilisateurSelectionne] =
@@ -161,6 +162,21 @@ const SideBar = () => {
                   </span>
                   <span className="ml-2 text-sm tracking-wide truncate">
                     Gestions des Comptes
+                  </span>
+                </a>
+              </li>
+            )}
+            {utilisateur?.roles === "SUPER_ADMIN_ROLES" && (
+              <li>
+                <a
+                  href="/avenant"
+                  className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+                >
+                  <span className="inline-flex justify-center items-center ml-4">
+                    <MdOutlineNotificationAdd />
+                  </span>
+                  <span className="ml-2 text-sm tracking-wide truncate">
+                    Avenants
                   </span>
                 </a>
               </li>
