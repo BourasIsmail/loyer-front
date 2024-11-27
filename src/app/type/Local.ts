@@ -18,4 +18,6 @@ export type Local = {
   dateEffetContrat?: string;
   longitude?: number;
   latitude?: number;
+  ancientBrute?: number;
+  dateChangementBrute?: Date;
 };

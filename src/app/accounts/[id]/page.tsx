@@ -64,7 +64,7 @@ export default function Home({
           description: "Mis à jour des données a réussi",
           className: "bg-green-500 text-white",
           duration: 3000,
-          title: "نجاح",
+          title: "Success",
         });
         router.push("/comptes");
       },
@@ -73,7 +73,7 @@ export default function Home({
           description: "Mis à jour des données a échoué",
           variant: "destructive",
           duration: 3000,
-          title: "خطأ",
+          title: "Erreur",
         });
       },
     }

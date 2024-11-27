@@ -413,6 +413,44 @@ export default function Home({
                             placeholder="ID de contrat"
                           />
                         </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="ancientBrute">Ancien Brut</Label>
+                          <Input
+                            id="ancientBrute"
+                            type="number"
+                            value={selectedValue?.ancientBrute || ""}
+                            onChange={(e) =>
+                              setSelectedValue({
+                                ...selectedValue,
+                                ancientBrute: Number(e.target.value),
+                              } as Local)
+                            }
+                            placeholder="Ancien montant brut"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="dateChangementBrute">
+                            Date de changement du brut
+                          </Label>
+                          <Input
+                            id="dateChangementBrute"
+                            type="date"
+                            value={
+                              selectedValue?.dateChangementBrute
+                                ? new Date(selectedValue.dateChangementBrute)
+                                    .toISOString()
+                                    .split("T")[0]
+                                : ""
+                            }
+                            onChange={(e) =>
+                              setSelectedValue({
+                                ...selectedValue,
+                                dateChangementBrute: new Date(e.target.value),
+                              } as Local)
+                            }
+                            placeholder="Date de changement du brut"
+                          />
+                        </div>
                       </div>
                       <div className="flex justify-start items-end gap-3">
                         <Button type="submit">Modifier les informations</Button>

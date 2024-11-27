@@ -24,22 +24,47 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { FaCheck, FaTrash } from "react-icons/fa";
 
 export default function Home() {
   const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
   const [tableData, setTableData] = useState<Local[]>([]);
   const [selectedRows, setSelectedRows] = useState<Local[]>([]);
   const [date, setDate] = useState<string>("");
+  const [confirmedLocals, setConfirmedLocals] = useState<number[]>([]);
 
   const { data: regions } = useQuery("regions", getALLRegions);
 
   useEffect(() => {
-    if (selectedRegion) {
+    if (selectedRegion && date) {
       getLocauxByCoordination(selectedRegion.id).then((data) => {
         setTableData(Array.isArray(data) ? data : []);
+        fetchConfirmedLocals();
       });
     }
-  }, [selectedRegion]);
+  }, [selectedRegion, date]);
+
+  const fetchConfirmedLocals = async () => {
+    if (selectedRegion && date) {
+      try {
+        const response = await api.get("/local/confirmed", {
+          params: {
+            date: date,
+            regionName: selectedRegion.name,
+          },
+        });
+        setConfirmedLocals(response.data.map((local: Local) => local.id));
+      } catch (error) {
+        console.error("Error fetching confirmed locals:", error);
+        toast({
+          description: "Error fetching confirmed locals",
+          variant: "destructive",
+          duration: 3000,
+          title: "Error",
+        });
+      }
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,6 +144,121 @@ export default function Home() {
     }
   };
 
+  const handleConfirmedPayment = async () => {
+    if (!selectedRegion || !date) {
+      toast({
+        description: "Please select a region and a date.",
+        variant: "destructive",
+        duration: 3000,
+        title: "Error",
+      });
+      return;
+    }
+
+    if (selectedRows.length === 0) {
+      toast({
+        description: "Please select at least one local.",
+        variant: "destructive",
+        duration: 3000,
+        title: "Error",
+      });
+      return;
+    }
+
+    const dateObj = new Date(date);
+    const mois = dateObj.getMonth() + 1;
+    const year = dateObj.getFullYear();
+
+    const confirmedPayments = selectedRows.map((local) => ({
+      local: {
+        id: local.id,
+      },
+      date: date,
+    }));
+
+    try {
+      const response = await api.post("/Confirme", confirmedPayments);
+      toast({
+        description: "Paiements confirmés avec succès",
+        className: "bg-green-500 text-white",
+        duration: 2000,
+        title: "Succès",
+      });
+      fetchConfirmedLocals(); // Refresh the confirmed locals after confirmation
+    } catch (error) {
+      console.error(error);
+      toast({
+        description: "Erreur lors de la confirmation des paiements",
+        variant: "destructive",
+        duration: 3000,
+        title: "Erreur",
+      });
+    }
+  };
+
+  const handleDeleteConfirmedPayment = async (
+    localId: number,
+    month: number,
+    year: number
+  ) => {
+    try {
+      await api.delete(
+        `/Confirme/local/${localId}/month/${month}/year/${year}`
+      );
+      toast({
+        description: "Paiement confirmé supprimé avec succès",
+        className: "bg-green-500 text-white",
+        duration: 2000,
+        title: "Succès",
+      });
+      fetchConfirmedLocals(); // Refresh the confirmed locals after deletion
+    } catch (error) {
+      console.error(error);
+      toast({
+        description: "Erreur lors de la suppression du paiement confirmé",
+        variant: "destructive",
+        duration: 3000,
+        title: "Erreur",
+      });
+    }
+  };
+  const dateObj = new Date(date);
+  const mois = dateObj.getMonth() + 1;
+  const year = dateObj.getFullYear();
+  const updatedColumns = [
+    ...columns,
+    {
+      id: "confirmed",
+      header: () => <div className="text-center">Confirmé</div>,
+      cell: ({ row }: { row: { original: Local } }) =>
+        row.original.id !== undefined &&
+        confirmedLocals.includes(row.original.id) ? (
+          <div className="text-center">
+            <FaCheck className="inline-block text-green-500" />
+          </div>
+        ) : null,
+    },
+    {
+      id: "actions",
+      header: () => <div className="text-center">Annuler Confirmation</div>,
+      cell: ({ row }: { row: { original: Local } }) =>
+        row.original.id !== undefined &&
+        confirmedLocals.includes(row.original.id) ? (
+          <div className="text-center">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() =>
+                handleDeleteConfirmedPayment(row.original.id!, mois, year)
+              }
+            >
+              <FaTrash className="text-red-500" />
+            </Button>
+          </div>
+        ) : null,
+    },
+  ];
+
   return (
     <>
       <SideBar />
@@ -166,9 +306,18 @@ export default function Home() {
               />
             </div>
           </div>
-          <Button type="submit" className="w-full md:w-auto">
-            Submit
-          </Button>
+          <div className="flex space-x-4">
+            <Button type="submit" className="w-full md:w-auto">
+              Générer PDF
+            </Button>
+            <Button
+              type="button"
+              onClick={handleConfirmedPayment}
+              className="w-full md:w-auto"
+            >
+              Confirmer les paiements
+            </Button>
+          </div>
         </form>
 
         <hr className="my-4" />
@@ -177,7 +326,7 @@ export default function Home() {
             <h1 className="text-2xl font-bold mb-4 py-2">Listes des Locaux</h1>
             <div className="p-2 bg-white border-2 border-gray-200 rounded-lg dark:border-gray-700">
               <DataTable
-                columns={columns}
+                columns={updatedColumns}
                 data={tableData}
                 onRowsSelected={setSelectedRows}
               />

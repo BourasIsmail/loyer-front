@@ -179,7 +179,7 @@ export default function AccountsManagement() {
 
           <div className="flex justify-between items-center py-4">
             <Link href="/addComptes">
-              <Button variant="outline">Ajouter Un Comptes</Button>
+              <Button variant="outline">Ajouter Un Compte</Button>
             </Link>
             <Input
               placeholder="Filter emails..."
