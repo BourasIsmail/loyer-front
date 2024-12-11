@@ -234,7 +234,6 @@ export default function Home({
                               } as Local)
                             }
                             placeholder="RIB"
-                            disabled={!is_User}
                           />
                         </div>
                         <div className="space-y-2">
