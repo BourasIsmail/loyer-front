@@ -66,7 +66,7 @@ export default function Home({
           duration: 3000,
           title: "Success",
         });
-        router.push("/comptes");
+        router.push("/accounts");
       },
       onError: () => {
         toast({
@@ -189,7 +189,6 @@ export default function Home({
                           roles: value,
                         }))
                       }
-                      disabled={!isSuperAdmin}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Sélectionnez un type de compte" />
@@ -203,6 +202,10 @@ export default function Home({
                         </SelectItem>
                         <SelectItem value="SUPER_ADMIN_ROLES">
                           Compte administrateur
+                        </SelectItem>
+                        <SelectItem value="OBSERVATEUR_ROLES">
+                          Compte utilisateur Division de la Gestion des
+                          Ressources Financières
                         </SelectItem>
                       </SelectContent>
                     </Select>
