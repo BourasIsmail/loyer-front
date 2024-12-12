@@ -183,6 +183,13 @@ export default function AjouterCompte() {
                         <SelectItem value="ADMIN_ROLES">
                           Compte utilisateur service budget
                         </SelectItem>
+                        <SelectItem value="SUPER_ADMIN_ROLES">
+                          Compte administrateur
+                        </SelectItem>
+                        <SelectItem value="OBSERVATEUR_ROLES">
+                          Compte utilisateur Division de la Gestion des
+                          Ressources Financières
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

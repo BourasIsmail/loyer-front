@@ -225,6 +225,10 @@ export default function GestionCompte() {
                         <SelectItem value="SUPER_ADMIN_ROLES">
                           Compte administrateur
                         </SelectItem>
+                        <SelectItem value="OBSERVATEUR_ROLES">
+                          Compte utilisateur Division de la Gestion des
+                          Ressources Financières
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

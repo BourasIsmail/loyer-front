@@ -1,8 +1,9 @@
 "use client";
-import { api } from "@/app/api";
+import { api, getCurrentUsers } from "@/app/api";
 import { getProprietaire } from "@/app/api/proprietaire";
 import { getAllProvinces } from "@/app/api/province";
 import { Proprietaire } from "@/app/type/Proprietaire";
+import { UserInfo } from "@/app/type/UserInfo";
 import { BreadCrumb } from "@/components/BreadCrumb";
 import SideBar from "@/components/SideBar";
 import {
@@ -65,7 +66,26 @@ export default function Home({
       });
     }
   };
-
+  const [utilisateurSelectionne, setUtilisateurSelectionne] =
+    useState<UserInfo | null>(null);
+  const { data: utilisateur, isLoading: isLoadingUser } = useQuery<UserInfo>(
+    "utilisateur",
+    getCurrentUsers,
+    {
+      onSuccess: (data) => {
+        setUtilisateurSelectionne(data);
+      },
+      onError: (error) => {
+        toast({
+          description: "Erreur lors de la récupération des données utilisateur",
+          variant: "destructive",
+          duration: 3000,
+          title: "Erreur",
+        });
+      },
+    }
+  );
+  const is_Observateur = utilisateur?.roles === "OBSERVATEUR_ROLES";
   return (
     <>
       <section>
@@ -94,6 +114,7 @@ export default function Home({
                             nomComplet: e.target.value || "",
                           })
                         }
+                        disabled={is_Observateur}
                       />
                     </div>
                     <div className="w-full">
@@ -111,6 +132,7 @@ export default function Home({
                             type: e.target.value || "",
                           })
                         }
+                        disabled={is_Observateur}
                       >
                         <option value="">Choisissez un type</option>
                         <option value="personne physique">Physique</option>
@@ -133,6 +155,7 @@ export default function Home({
                                 ) || undefined,
                             })
                           }
+                          disabled={is_Observateur}
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
                           <option
@@ -165,6 +188,7 @@ export default function Home({
                             cin: e.target.value || "",
                           })
                         }
+                        disabled={is_Observateur}
                       />
                     </div>
                     <div className="w-full">
@@ -184,6 +208,7 @@ export default function Home({
                             telephone: e.target.value || "",
                           })
                         }
+                        disabled={is_Observateur}
                       />
                     </div>
                     <div className="w-full">
@@ -203,12 +228,14 @@ export default function Home({
                             adresse: e.target.value || "",
                           })
                         }
+                        disabled={is_Observateur}
                       />
                     </div>
                   </div>
                   <div className="flex justify-start items-end gap-3">
                     <button
                       type="submit"
+                      disabled={is_Observateur}
                       className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                       Modifier les informations

@@ -63,22 +63,22 @@ export default function Home({
 
       e.preventDefault();
       console.log(selectedValue);
-      const response = api.post(`/auth/addUser`, selectedValue).then((res) => {
+      const response = api.post(`/local/add`, selectedValue).then((res) => {
         console.log(response);
       });
       toast({
-        description: "تم تحديث البيانات بنجاح",
+        description: "Local ajouté avec succès",
         className: "bg-green-500 text-white",
         duration: 3000,
-        title: "نجاح",
+        title: "Succès",
       });
-      router.push("/comptes");
+      router.push("/locaux");
     } catch (error) {
       toast({
-        description: "اسم مستخدم أو كلمة مرور غير صحيحة",
+        description: "Erreur lors de l'ajout du local",
         variant: "destructive",
         duration: 3000,
-        title: "خطأ",
+        title: "Erreur",
       });
     }
   };

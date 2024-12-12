@@ -170,6 +170,7 @@ export default function Home({
   };
 
   const is_User = utilisateur?.roles === "USER_ROLES";
+  const is_Observateur = utilisateur?.roles === "OBSERVATEUR_ROLES";
 
   if (isLoading || isLoadingUser) {
     return <div>Chargement...</div>;
@@ -205,6 +206,7 @@ export default function Home({
                               } as Local)
                             }
                             placeholder="Adresse"
+                            disabled={is_Observateur}
                           />
                         </div>
                         <div className="space-y-2">
@@ -220,6 +222,7 @@ export default function Home({
                               } as Local)
                             }
                             placeholder="Montant brut mensuel"
+                            disabled={is_Observateur}
                           />
                         </div>
                         <div className="space-y-2">
@@ -234,12 +237,14 @@ export default function Home({
                               } as Local)
                             }
                             placeholder="RIB"
+                            disabled={is_Observateur}
                           />
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="etat">État du local</Label>
                           <Select
                             value={selectedValue?.etat}
+                            disabled={is_Observateur}
                             onValueChange={(value) =>
                               setSelectedValue({
                                 ...selectedValue,
@@ -264,6 +269,7 @@ export default function Home({
                           <Input
                             id="dateResiliation"
                             type="date"
+                            disabled={is_Observateur}
                             value={selectedValue?.dateResiliation || ""}
                             onChange={(e) =>
                               setSelectedValue({
@@ -281,6 +287,7 @@ export default function Home({
                           <Input
                             id="dateEffetContrat"
                             type="date"
+                            disabled={is_Observateur}
                             value={selectedValue?.dateEffetContrat || ""}
                             onChange={(e) =>
                               setSelectedValue({
@@ -295,6 +302,7 @@ export default function Home({
                           <Label htmlFor="province">Province</Label>
                           <Select
                             value={selectedValue?.province?.id.toString()}
+                            disabled={is_Observateur}
                             onValueChange={(value) =>
                               setSelectedValue({
                                 ...selectedValue,
@@ -374,6 +382,7 @@ export default function Home({
                                 },
                               }),
                             }}
+                            isDisabled={is_Observateur}
                           />
                         </div>
                         <div className="space-y-2">
@@ -382,6 +391,7 @@ export default function Home({
                           </Label>
                           <Select
                             value={selectedValue?.modeDePaiement}
+                            disabled={is_Observateur}
                             onValueChange={(value) =>
                               setSelectedValue({
                                 ...selectedValue,
@@ -403,6 +413,7 @@ export default function Home({
                           <Input
                             id="idContrat"
                             value={selectedValue?.idContrat || ""}
+                            disabled={is_Observateur}
                             onChange={(e) =>
                               setSelectedValue({
                                 ...selectedValue,
@@ -417,6 +428,7 @@ export default function Home({
                           <Input
                             id="ancientBrute"
                             type="number"
+                            disabled={is_Observateur}
                             value={selectedValue?.ancientBrute || ""}
                             onChange={(e) =>
                               setSelectedValue({
@@ -434,6 +446,7 @@ export default function Home({
                           <Input
                             id="dateChangementBrute"
                             type="date"
+                            disabled={is_Observateur}
                             value={
                               selectedValue?.dateChangementBrute
                                 ? new Date(selectedValue.dateChangementBrute)
@@ -452,7 +465,9 @@ export default function Home({
                         </div>
                       </div>
                       <div className="flex justify-start items-end gap-3">
-                        <Button type="submit">Modifier les informations</Button>
+                        <Button disabled={is_Observateur} type="submit">
+                          Modifier les informations
+                        </Button>
                       </div>
                     </form>
                   </div>
