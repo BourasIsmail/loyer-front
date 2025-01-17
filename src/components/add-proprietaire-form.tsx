@@ -37,28 +37,37 @@ export function AddProprietaireFormComponent() {
   const handleChange = (field: keyof Proprietaire, value: any) => {
     setProprietaire((prev) => ({ ...prev, [field]: value }));
   };
+  const router = useRouter();
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
-      const router = useRouter();
       console.log(proprietaire);
-      const response = api.post(`/Proprietaire`, proprietaire).then((res) => {
-        console.log(response);
-      });
+      const response = await api.post(`/Proprietaire/add`, proprietaire);
+      console.log(response);
       toast({
-        description: "تم تحديث البيانات بنجاح",
+        description: "Ajouté avec succès",
         className: "bg-green-500 text-white",
         duration: 3000,
-        title: "نجاح",
+        title: "Succès",
       });
       router.push("/proprietaires");
     } catch (error) {
+      let errorMessage = "Une erreur est survenue lors de l'ajout";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      } else if (
+        typeof error === "object" &&
+        error !== null &&
+        "toString" in error
+      ) {
+        errorMessage = error.toString();
+      }
       toast({
-        description: "اسم مستخدم أو كلمة مرور غير صحيحة",
+        description: "erreur lors de l'ajouts",
         variant: "destructive",
-        duration: 3000,
-        title: "خطأ",
+        duration: 5000,
+        title: "Erreur",
       });
     }
   };
