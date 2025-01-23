@@ -12,6 +12,7 @@ import { getCookie } from "cookies-next";
 import { useQuery } from "react-query";
 import { toast } from "@/hooks/use-toast";
 import { MdOutlineNotificationAdd } from "react-icons/md";
+import { FaPercentage } from "react-icons/fa";
 
 const SideBar = () => {
   const [utilisateurSelectionne, setUtilisateurSelectionne] =
@@ -179,6 +180,21 @@ const SideBar = () => {
                 </span>
               </a>
             </li>
+            {utilisateur?.roles === "SUPER_ADMIN_ROLES" && (
+              <li>
+                <a
+                  href="/paramTaux"
+                  className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+                >
+                  <span className="inline-flex justify-center items-center ml-4">
+                    <FaPercentage />
+                  </span>
+                  <span className="ml-2 text-sm tracking-wide truncate">
+                    Parametrage du taux
+                  </span>
+                </a>
+              </li>
+            )}
             <li>
               <a
                 onClick={logout}

@@ -1,7 +1,7 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
-import { Proprietaire } from "../type/Proprietaire";
+import type { ColumnDef } from "@tanstack/react-table";
+import type { Proprietaire } from "../type/Proprietaire";
 import { DataTableColumnHeader } from "@/components/ui/DataTableColumnHeader";
 import { useQueryClient } from "react-query";
 import { useState } from "react";
@@ -46,7 +46,6 @@ export const columns: ColumnDef<Proprietaire>[] = [
     cell: ({ row }) => {
       const proprietaire = row.original;
       const queryClient = useQueryClient();
-
       const [open, setopen] = useState(false);
 
       return (

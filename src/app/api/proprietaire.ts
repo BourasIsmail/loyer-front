@@ -25,3 +25,16 @@ export async function getProprietaire(id: number) {
     console.log(error);
   }
 }
+
+export const generateConfirmedPaymentsReport = async (
+  proprietaireId: number,
+  year: number
+): Promise<Blob> => {
+  const response = await api.get(
+    `/Proprietaire/confirmedPaymentsReport/${proprietaireId}/${year}`,
+    {
+      responseType: "blob",
+    }
+  );
+  return response.data;
+};
