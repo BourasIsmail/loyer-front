@@ -319,8 +319,14 @@ export default function Home() {
             </Button>
           </div>
         </form>
-
         <hr className="my-4" />
+        <div className="float-end">
+          <a href="/locaux/ajouter">
+          <Button className="w-full md:w-auto">
+            Ajouter un local
+          </Button>
+          </a>
+        </div>
         {tableData.length > 0 ? (
           <>
             <h1 className="text-2xl font-bold mb-4 py-2">Listes des Locaux</h1>
