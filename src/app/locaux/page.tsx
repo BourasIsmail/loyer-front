@@ -12,7 +12,7 @@ import { getALLRegions } from "@/app/api/region";
 import { Region } from "@/app/type/Region";
 import { Local } from "../type/Local";
 import axios from "axios";
-import { api } from "../api";
+import {api, getCurrentUsers} from "../api";
 import { toast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -25,6 +25,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { FaCheck, FaTrash } from "react-icons/fa";
+import {UserInfo} from "@/app/type/UserInfo";
 
 export default function Home() {
   const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
@@ -32,6 +33,27 @@ export default function Home() {
   const [selectedRows, setSelectedRows] = useState<Local[]>([]);
   const [date, setDate] = useState<string>("");
   const [confirmedLocals, setConfirmedLocals] = useState<number[]>([]);
+  const [utilisateurSelectionne, setUtilisateurSelectionne] =
+      useState<UserInfo | null>(null);
+  // Fetch current user
+  const { data: utilisateur, isLoading: isLoadingUser } = useQuery<UserInfo>(
+      "utilisateur",
+      getCurrentUsers,
+      {
+        onSuccess: (data) => {
+          // Initialize form with user data when loaded
+          setUtilisateurSelectionne(data);
+        },
+        onError: (error) => {
+          toast({
+            description: "Erreur lors de la récupération des données utilisateur",
+            variant: "destructive",
+            duration: 3000,
+            title: "Erreur",
+          });
+        },
+      }
+  );
 
   const { data: regions } = useQuery("regions", getALLRegions);
 
@@ -320,6 +342,7 @@ export default function Home() {
           </div>
         </form>
         <hr className="my-4" />
+        {utilisateur?.roles === "SUPER_ADMIN_ROLES" && (
         <div className="float-end">
           <a href="/locaux/ajouter">
           <Button className="w-full md:w-auto">
@@ -327,6 +350,7 @@ export default function Home() {
           </Button>
           </a>
         </div>
+        )}
         {tableData.length > 0 ? (
           <>
             <h1 className="text-2xl font-bold mb-4 py-2">Listes des Locaux</h1>
