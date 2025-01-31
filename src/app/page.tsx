@@ -27,29 +27,36 @@ export default function Home() {
           <SideBar />
           <div className="p-4 ml-64">
             <BreadCrumb />
-            {
-              /*
+
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 mt-4">
               <CardDashboard icon={<FaWarehouse />} title="Locaux" value={data?.totalLocaux} />
-              <CardDashboard
-                  icon={<FaWarehouse />}
-                  title="Locaux avec données incomplètes"
-                  value={data?.locauxIncomplet}
-              />
-              <CardDashboard icon={<FaWarehouse />} title="Locaux avec données complètes" value={data?.localComplet} />
-              <CardDashboard icon={<BsFillPeopleFill />} title="Propriétaires" value={data?.totalProprietaire} />
-              <CardDashboard
-                  icon={<BsFillPeopleFill />}
-                  title="Propriétaires avec données incomplètes"
-                  value={data?.proprietaireIncomplet}
-              />
-              <CardDashboard
-                  icon={<BsFillPeopleFill />}
-                  title="Propriétaires avec données complètes"
-                  value={data?.proprietaireComplet}
-              />
-            </div>
-               */}
+              {
+                /*
+                <CardDashboard
+                    icon={<FaWarehouse />}
+                    title="Locaux avec données incomplètes"
+                    value={data?.locauxIncomplet}
+                />
+                <CardDashboard icon={<FaWarehouse />} title="Locaux avec données complètes" value={data?.localComplet} />
+                */}
+
+                <CardDashboard icon={<BsFillPeopleFill />} title="Propriétaires" value={data?.totalProprietaire} />
+              {
+                /*
+                <CardDashboard
+                    icon={<BsFillPeopleFill />}
+                    title="Propriétaires avec données incomplètes"
+                    value={data?.proprietaireIncomplet}
+                />
+                <CardDashboard
+                    icon={<BsFillPeopleFill />}
+                    title="Propriétaires avec données complètes"
+                    value={data?.proprietaireComplet}
+                />
+                 */
+              }
+              </div>
+
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 mt-4">
               <div className="bg-white overflow-hidden shadow sm:rounded-lg dark:bg-gray-900">
                 <h1 className="text-center text-2xl font-bold text-gray-800 dark:text-gray-100">Locaux par etat</h1>
