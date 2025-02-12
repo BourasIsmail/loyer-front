@@ -171,6 +171,7 @@ export default function Home({
 
   const is_User = utilisateur?.roles === "USER_ROLES";
   const is_Observateur = utilisateur?.roles === "OBSERVATEUR_ROLES";
+  const is_Super_Admin = utilisateur?.roles === "SUPER_ADMIN_ROLES";
 
   if (isLoading || isLoadingUser) {
     return <div>Chargement...</div>;
@@ -206,7 +207,7 @@ export default function Home({
                               } as Local)
                             }
                             placeholder="Adresse"
-                            disabled={is_Observateur}
+                            disabled={!is_Super_Admin}
                           />
                         </div>
                         <div className="space-y-2">
@@ -222,7 +223,7 @@ export default function Home({
                               } as Local)
                             }
                             placeholder="Montant brut mensuel"
-                            disabled={is_Observateur}
+                            disabled={!is_Super_Admin}
                           />
                         </div>
                         <div className="space-y-2">
@@ -244,7 +245,7 @@ export default function Home({
                           <Label htmlFor="etat">État du local</Label>
                           <Select
                             value={selectedValue?.etat}
-                            disabled={is_Observateur}
+                            disabled={!is_Super_Admin}
                             onValueChange={(value) =>
                               setSelectedValue({
                                 ...selectedValue,
@@ -302,7 +303,7 @@ export default function Home({
                           <Label htmlFor="province">Province</Label>
                           <Select
                             value={selectedValue?.province?.id.toString()}
-                            disabled={is_Observateur}
+                            disabled={!is_Super_Admin}
                             onValueChange={(value) =>
                               setSelectedValue({
                                 ...selectedValue,
@@ -382,7 +383,7 @@ export default function Home({
                                 },
                               }),
                             }}
-                            isDisabled={is_Observateur}
+                            isDisabled={!is_Super_Admin}
                           />
                         </div>
                         <div className="space-y-2">
@@ -391,7 +392,7 @@ export default function Home({
                           </Label>
                           <Select
                             value={selectedValue?.modeDePaiement}
-                            disabled={is_Observateur}
+                            disabled={!is_Super_Admin}
                             onValueChange={(value) =>
                               setSelectedValue({
                                 ...selectedValue,
@@ -413,7 +414,7 @@ export default function Home({
                           <Input
                             id="idContrat"
                             value={selectedValue?.idContrat || ""}
-                            disabled={is_Observateur}
+                            disabled={!is_Super_Admin}
                             onChange={(e) =>
                               setSelectedValue({
                                 ...selectedValue,
@@ -428,7 +429,7 @@ export default function Home({
                           <Input
                             id="ancientBrute"
                             type="number"
-                            disabled={is_Observateur}
+                            disabled={!is_Super_Admin}
                             value={selectedValue?.ancientBrute || ""}
                             onChange={(e) =>
                               setSelectedValue({
@@ -446,7 +447,7 @@ export default function Home({
                           <Input
                             id="dateChangementBrute"
                             type="date"
-                            disabled={is_Observateur}
+                            disabled={!is_Super_Admin}
                             value={
                               selectedValue?.dateChangementBrute
                                 ? new Date(selectedValue.dateChangementBrute)
@@ -465,7 +466,7 @@ export default function Home({
                         </div>
                       </div>
                       <div className="flex justify-start items-end gap-3">
-                        <Button disabled={is_Observateur} type="submit">
+                        <Button disabled={!is_Super_Admin} type="submit">
                           Modifier les informations
                         </Button>
                       </div>
@@ -534,13 +535,14 @@ export default function Home({
                                 }
                                 className="hidden"
                                 name="demande"
+                                disabled={!is_Super_Admin}
                               />
                             </label>
                           </div>
                         </div>
                       </div>
                       <div className="flex justify-start items-end gap-3">
-                        <Button type="submit">Télécharger le contrat</Button>
+                        <Button disabled={!is_Super_Admin} type="submit">Télécharger le contrat</Button>
                       </div>
                     </form>
                   </div>

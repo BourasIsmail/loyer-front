@@ -98,6 +98,8 @@ export default function Home() {
   )
 
   const is_Observateur = utilisateur?.roles === "OBSERVATEUR_ROLES"
+  const is_Super_Admin = utilisateur?.roles === "SUPER_ADMIN_ROLES";
+
 
   const handleGeneratePdf = useCallback(() => {
     if (selectedProprietaires.length > 0 && selectedYear) {
@@ -139,7 +141,7 @@ export default function Home() {
                 </SelectContent>
               </Select>
               <Link href={"proprietaires/ajouter"}>
-                <Button disabled={is_Observateur} className="mr-2">
+                <Button disabled={!is_Super_Admin} className="mr-2">
                   Ajouter Propriétaires
                 </Button>
               </Link>
