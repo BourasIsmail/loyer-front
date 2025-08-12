@@ -1,110 +1,120 @@
-"use client";
-import { setCookie } from "cookies-next";
-import { useState } from "react";
-import { api } from "../api";
-import { useToast } from "@/hooks/use-toast";
+"use client"
+import { setCookie } from "cookies-next"
+import { useState } from "react"
+import { api } from "../api"
+import { useToast } from "@/hooks/use-toast"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
-export default function Home() {
-  const [email, setemail] = useState(""); // Provide initial value for email
-  const [password, setpassword] = useState(""); // Provide initial value for password
-  const { toast } = useToast();
+export default function LoginPage() {
+  const [email, setemail] = useState("")
+  const [password, setpassword] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const { toast } = useToast()
 
   const login = async () => {
+    setIsLoading(true)
     try {
-      const response = await api.post("/auth/login", { email, password });
-      console.log(response.data);
+      const response = await api.post("/auth/login", { email, password })
+      console.log(response.data)
       setCookie("token", response.data, {
         maxAge: 30 * 24 * 60 * 60,
         path: "/",
-      });
+      })
       toast({
         description: "Connexion réussie",
         className: "bg-green-500 text-white",
         duration: 2000,
         title: "Succès",
-      });
-      window.location.href = "";
+      })
+      window.location.href = ""
     } catch (error) {
       toast({
         description: "Email ou mot de passe incorrect",
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      });
+      })
+    } finally {
+      setIsLoading(false)
     }
-  };
+  }
 
   function handleSubmit(event: any) {
-    event.preventDefault();
-    login();
+    event.preventDefault()
+    login()
   }
+
   return (
-    <>
-      <div className="bg-white dark:bg-gray-900">
-        <div className="flex justify-center h-screen">
-          <div className="hidden bg-cover lg:block lg:w-2/3 bg-[url('/img1.png')] "></div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+      <div className="flex min-h-screen">
+        <div className="hidden lg:flex lg:w-1/2 xl:w-2/3 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('/img1.png')] bg-cover bg-center opacity-35"></div>
+          <div className="relative z-10 flex flex-col justify-center px-12 text-white">
+            <h1 className="text-4xl xl:text-5xl text-black font-bold mb-6">Gestion des Loyers</h1>
+            <p className="text-xl xl:text-2xl text-black opacity-90 leading-relaxed">
+              Simplifiez la gestion de vos propriétés locatives avec notre solution complète et intuitive.
+            </p>
+          </div>
+        </div>
 
-          <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
-            <div className="flex-1">
-              <div className="text-center">
-                <h2 className="text-4xl font-bold text-center text-gray-700 dark:text-white">
-                  Application Web de gestion des loyers
-                </h2>
+        <div className="flex w-full lg:w-1/2 xl:w-1/3 items-center justify-center p-8">
+          <div className="w-full max-w-md">
+            <Card className="shadow-2xl border-0">
+              <CardHeader className="space-y-4 pb-8">
+                <div className="text-center">
+                  <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">Connexion</CardTitle>
+                  <CardDescription className="text-base mt-2">Accédez à votre espace de gestion</CardDescription>
+                </div>
+              </CardHeader>
 
-                <p className="mt-3 text-gray-500 dark:text-gray-300">
-                  Veuillez s'identifier
-                </p>
-              </div>
-
-              <div className="mt-8">
-                <form onSubmit={handleSubmit}>
-                  <div>
-                    <label className="block mb-2 text-sm text-gray-600 dark:text-gray-200">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-sm font-medium">
+                      Adresse email
+                    </Label>
+                    <Input
                       id="email"
-                      placeholder="example@example.com"
+                      type="email"
+                      placeholder="exemple@domaine.com"
                       value={email}
                       onChange={(e) => setemail(e.target.value)}
-                      className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      required
+                      className="h-11"
                     />
                   </div>
 
-                  <div className="mt-6">
-                    <div className="flex justify-between mb-2">
-                      <label className="text-sm text-gray-600 dark:text-gray-200">
-                        Mot de passe
-                      </label>
-                    </div>
-
-                    <input
-                      type="password"
-                      name="password"
+                  <div className="space-y-2">
+                    <Label htmlFor="password" className="text-sm font-medium">
+                      Mot de passe
+                    </Label>
+                    <Input
                       id="password"
+                      type="password"
                       placeholder="••••••••"
                       value={password}
                       onChange={(e) => setpassword(e.target.value)}
-                      className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      required
+                      className="h-11"
                     />
                   </div>
 
-                  <div className="mt-6">
-                    <button
-                      className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-pink-600 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
-                      type="submit"
-                    >
-                      Se connecter
-                    </button>
-                  </div>
+                  <Button
+                    type="submit"
+                    className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-medium"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Connexion..." : "Se connecter"}
+                  </Button>
                 </form>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
-    </>
-  );
+    </div>
+  )
 }

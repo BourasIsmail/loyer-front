@@ -1,231 +1,124 @@
-"use client";
+"use client"
 
-import { api, getCurrentUsers, logout } from "@/app/api";
-import { AiOutlineDashboard } from "react-icons/ai";
-import { FaPeopleRoof } from "react-icons/fa6";
-import { IoReceiptSharp } from "react-icons/io5";
-import { FaUserAlt } from "react-icons/fa";
-import { useState } from "react";
-import Image from "next/image";
-import { UserInfo } from "@/app/type/UserInfo";
-import { getCookie } from "cookies-next";
-import { useQuery } from "react-query";
-import { toast } from "@/hooks/use-toast";
-import { MdOutlineNotificationAdd } from "react-icons/md";
-import { FaPercentage } from "react-icons/fa";
+import { getCurrentUsers, logout } from "@/app/api"
+import { AiOutlineDashboard } from "react-icons/ai"
+import { FaPeopleRoof } from "react-icons/fa6"
+import { IoReceiptSharp } from "react-icons/io5"
+import { FaUserAlt } from "react-icons/fa"
+import { useState } from "react"
+import Image from "next/image"
+import type { UserInfo } from "@/app/type/UserInfo"
+import { useQuery } from "react-query"
+import { toast } from "@/hooks/use-toast"
+import { MdOutlineNotificationAdd } from "react-icons/md"
+import { FaPercentage } from "react-icons/fa"
+import { usePathname } from "next/navigation"
+import { cn } from "@/lib/utils"
+import { Building2, Settings, LogOut } from "lucide-react"
 
 const SideBar = () => {
-  const [utilisateurSelectionne, setUtilisateurSelectionne] =
-    useState<UserInfo | null>(null);
-  // Fetch current user
-  const { data: utilisateur, isLoading: isLoadingUser } = useQuery<UserInfo>(
-    "utilisateur",
-    getCurrentUsers,
-    {
-      onSuccess: (data) => {
-        // Initialize form with user data when loaded
-        setUtilisateurSelectionne(data);
-      },
-      onError: (error) => {
-        toast({
-          description: "Erreur lors de la récupération des données utilisateur",
-          variant: "destructive",
-          duration: 3000,
-          title: "Erreur",
-        });
-      },
-    }
-  );
-  return (
-    <>
-      <div className="fixed flex flex-col top-0 left-0 w-64 bg-white h-full border-r bg-cover  lg:block  bg-[url('/side.png')]">
-        <div className="flex items-center justify-center h-14 border-b">
-          <div>
-            <p className="text-xl">
-              <Image src={"/logo.png"} alt={""} width={150} height={100} />
-            </p>
-          </div>
-        </div>
-        <div className="overflow-y-auto overflow-x-hidden flex-grow">
-          <ul className="flex flex-col py-4 space-y-1">
-            <li className="px-5">
-              <div className="flex flex-row items-center h-8">
-                <div className="text-sm font-light tracking-wide text-gray-500">
-                  Menu
-                </div>
-              </div>
-            </li>
-            <li>
-              <a
-                href="/"
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-              >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <AiOutlineDashboard />
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Dashboard
-                </span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="/locaux"
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-              >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                    ></path>
-                  </svg>
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Locaux
-                </span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="/locaux/ov"
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-              >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <IoReceiptSharp />
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Ordre de virement
-                </span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="/proprietaires"
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-              >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <FaPeopleRoof />
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Proprietaires
-                </span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="/settings"
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-              >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                    ></path>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    ></path>
-                  </svg>
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Settings
-                </span>
-              </a>
-            </li>
-            {utilisateur?.roles === "SUPER_ADMIN_ROLES" && (
-              <li>
-                <a
-                  href="/accounts"
-                  className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-                >
-                  <span className="inline-flex justify-center items-center ml-4">
-                    <FaUserAlt />
-                  </span>
-                  <span className="ml-2 text-sm tracking-wide truncate">
-                    Gestions des Comptes
-                  </span>
-                </a>
-              </li>
-            )}
-            <li>
-              <a
-                href="/avenant"
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-              >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <MdOutlineNotificationAdd />
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Avenants
-                </span>
-              </a>
-            </li>
-            {utilisateur?.roles === "SUPER_ADMIN_ROLES" && (
-              <li>
-                <a
-                  href="/paramTaux"
-                  className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-                >
-                  <span className="inline-flex justify-center items-center ml-4">
-                    <FaPercentage />
-                  </span>
-                  <span className="ml-2 text-sm tracking-wide truncate">
-                    Parametrage du taux
-                  </span>
-                </a>
-              </li>
-            )}
-            <li>
-              <a
-                onClick={logout}
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6 hover:cursor-pointer"
-              >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                    ></path>
-                  </svg>
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Logout
-                </span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </>
-  );
-};
+  const pathname = usePathname()
+  const [utilisateurSelectionne, setUtilisateurSelectionne] = useState<UserInfo | null>(null)
 
-export default SideBar;
+  const { data: utilisateur, isLoading: isLoadingUser } = useQuery<UserInfo>("utilisateur", getCurrentUsers, {
+    onSuccess: (data) => {
+      setUtilisateurSelectionne(data)
+    },
+    onError: (error) => {
+      toast({
+        description: "Erreur lors de la récupération des données utilisateur",
+        variant: "destructive",
+        duration: 3000,
+        title: "Erreur",
+      })
+    },
+  })
+
+  const menuItems = [
+    { href: "/", icon: AiOutlineDashboard, label: "Dashboard" },
+    { href: "/locaux", icon: Building2, label: "Locaux" },
+    { href: "/locaux/ov", icon: IoReceiptSharp, label: "Ordre de virement" },
+    { href: "/proprietaires", icon: FaPeopleRoof, label: "Proprietaires" },
+    { href: "/settings", icon: Settings, label: "Settings" },
+    ...(utilisateur?.roles === "SUPER_ADMIN_ROLES"
+      ? [{ href: "/accounts", icon: FaUserAlt, label: "Gestions des Comptes" }]
+      : []),
+    { href: "/avenant", icon: MdOutlineNotificationAdd, label: "Avenants" },
+    ...(utilisateur?.roles === "SUPER_ADMIN_ROLES"
+      ? [{ href: "/paramTaux", icon: FaPercentage, label: "Parametrage du taux" }]
+      : []),
+  ]
+
+  return (
+    <div className="fixed flex flex-col top-0 left-0 w-64 bg-white dark:bg-gray-900 h-full border-r border-gray-200 dark:border-gray-700 shadow-lg z-50">
+      {/* Logo Section */}
+      <div className="flex items-center justify-center h-16 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-grey-600 to-blue-700">
+        <Image src="/logo.png" alt="Logo" width={120} height={80} className="object-contain" />
+      </div>
+
+      {/* Navigation */}
+      <div className="flex-1 overflow-y-auto py-4">
+        <div className="px-3 mb-4">
+          <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Navigation</p>
+        </div>
+
+        <nav className="space-y-1 px-2">
+          {menuItems.map((item) => {
+            const Icon = item.icon
+            const isActive = pathname === item.href
+
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 group",
+                  isActive
+                    ? "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 shadow-sm"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100",
+                )}
+              >
+                <div
+                  className={cn(
+                    "p-1.5 rounded-md transition-colors",
+                    isActive
+                      ? "bg-blue-200 dark:bg-blue-800/50"
+                      : "group-hover:bg-gray-200 dark:group-hover:bg-gray-700",
+                  )}
+                >
+                  <Icon className="h-4 w-4" />
+                </div>
+                <span className="truncate">{item.label}</span>
+                {isActive && <div className="ml-auto w-1.5 h-1.5 bg-blue-600 dark:bg-blue-400 rounded-full" />}
+              </a>
+            )
+          })}
+        </nav>
+      </div>
+
+      {/* User Section & Logout */}
+      <div className="border-t border-gray-200 dark:border-gray-700 p-4">
+        {utilisateur && (
+          <div className="mb-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+            <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+              {utilisateur.name || "Utilisateur"}
+            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{utilisateur.roles}</p>
+          </div>
+        )}
+
+        <button
+          onClick={logout}
+          className="flex items-center gap-3 w-full px-3 py-2.5 text-sm font-medium text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all duration-200 group"
+        >
+          <div className="p-1.5 rounded-md group-hover:bg-red-100 dark:group-hover:bg-red-900/30 transition-colors">
+            <LogOut className="h-4 w-4" />
+          </div>
+          <span>Déconnexion</span>
+        </button>
+      </div>
+    </div>
+  )
+}
+
+export default SideBar

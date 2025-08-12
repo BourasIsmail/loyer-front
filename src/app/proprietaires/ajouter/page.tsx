@@ -1,43 +1,52 @@
-"use client";
-import { getLocal } from "@/app/api/local";
-import { getProprietaire, getProprietaires } from "@/app/api/proprietaire";
-import { getAllProvinces } from "@/app/api/province";
-import { Local } from "@/app/type/Local";
-import { Proprietaire } from "@/app/type/Proprietaire";
-import { BreadCrumb } from "@/components/BreadCrumb";
-import SideBar from "@/components/SideBar";
-import Select from "react-select";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { useState } from "react";
-import { useQuery } from "react-query";
-import { AddProprietaireFormComponent } from "@/components/add-proprietaire-form";
+"use client"
 
-export default function Home() {
+import { BreadCrumb } from "@/components/BreadCrumb"
+import SideBar from "@/components/SideBar"
+import { ArrowLeft, UserPlus } from "lucide-react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { AddProprietaireFormComponent } from "@/components/add-proprietaire-form"
+
+export default function AjouterProprietairePage() {
   return (
-    <>
-      <section>
-        <SideBar />
-        <div className="p-4 ml-64 ">
-          <BreadCrumb />
-          <div className="p-2 mt-5 border-2 bg-white border-gray-200 rounded-lg dark:border-gray-700">
-            <section className="bg-white dark:bg-gray-900">
-              <div className=" px-4 py-2 mx-auto lg:py-2">
-                <AddProprietaireFormComponent />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+      <SideBar />
+      <div className="p-4 sm:p-6 lg:p-8 sm:ml-64">
+        <BreadCrumb />
+
+        {/* Header Section */}
+        <div className="bg-white rounded-xl shadow-lg border border-blue-100 mb-6 overflow-hidden">
+          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-white/20 rounded-lg">
+                  <UserPlus className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold text-white">Ajouter un Propriétaire</h1>
+                  <p className="text-blue-100 text-sm">Créer un nouveau profil de propriétaire</p>
+                </div>
               </div>
-            </section>
+              <Link href="/proprietaires">
+                <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Retour
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
-      </section>
-    </>
-  );
+
+        {/* Form Section */}
+        <div className="bg-white rounded-xl shadow-lg border border-blue-100 overflow-hidden">
+          <div className="bg-gradient-to-r from-gray-50 to-white px-6 py-4 border-b border-gray-100">
+            <h2 className="text-lg font-semibold text-gray-800">Informations du Propriétaire</h2>
+            <p className="text-sm text-gray-600">Veuillez remplir tous les champs obligatoires</p>
+          </div>
+
+          <AddProprietaireFormComponent />
+        </div>
+      </div>
+    </div>
+  )
 }
