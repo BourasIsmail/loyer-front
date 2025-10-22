@@ -1,61 +1,83 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { useQuery } from "react-query"
-import { BreadCrumb } from "@/components/BreadCrumb"
-import SideBar from "@/components/SideBar"
-import { columns } from "./columns"
-import Link from "next/link"
-import { getLocauxByCoordination } from "@/app/api/local"
-import { getALLRegions } from "@/app/api/region"
-import type { Region } from "@/app/type/Region"
-import type { Local } from "../type/Local"
-import { api, getCurrentUsers } from "../api"
-import { toast } from "@/hooks/use-toast"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { FaCheck, FaTrash, FaMapMarkerAlt, FaCalendarAlt, FaFileDownload, FaCheckCircle, FaPlus } from "react-icons/fa"
-import type { UserInfo } from "@/app/type/UserInfo"
-import { Skeleton } from "@/components/ui/skeleton"
-import { DataTable } from "@/components/ui/data-table"
+import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
+import { BreadCrumb } from "@/components/BreadCrumb";
+import SideBar from "@/components/SideBar";
+import { columns } from "./columns";
+import Link from "next/link";
+import { getLocauxByCoordination } from "@/app/api/local";
+import { getALLRegions } from "@/app/api/region";
+import type { Region } from "@/app/type/Region";
+import type { Local } from "../type/Local";
+import { api, getCurrentUsers } from "../api";
+import { toast } from "@/hooks/use-toast";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  FaCheck,
+  FaTrash,
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaFileDownload,
+  FaCheckCircle,
+  FaPlus,
+} from "react-icons/fa";
+import type { UserInfo } from "@/app/type/UserInfo";
+import { Skeleton } from "@/components/ui/skeleton";
+import { DataTable } from "@/components/ui/data-table";
 
 export default function Home() {
-  const [selectedRegion, setSelectedRegion] = useState<Region | null>(null)
-  const [tableData, setTableData] = useState<Local[]>([])
-  const [selectedRows, setSelectedRows] = useState<Local[]>([])
-  const [date, setDate] = useState<string>("")
-  const [confirmedLocals, setConfirmedLocals] = useState<number[]>([])
-  const [utilisateurSelectionne, setUtilisateurSelectionne] = useState<UserInfo | null>(null)
+  const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
+  const [tableData, setTableData] = useState<Local[]>([]);
+  const [selectedRows, setSelectedRows] = useState<Local[]>([]);
+  const [date, setDate] = useState<string>("");
+  const [confirmedLocals, setConfirmedLocals] = useState<number[]>([]);
+  const [utilisateurSelectionne, setUtilisateurSelectionne] =
+    useState<UserInfo | null>(null);
 
   // Fetch current user
-  const { data: utilisateur, isLoading: isLoadingUser } = useQuery<UserInfo>("utilisateur", getCurrentUsers, {
-    onSuccess: (data) => {
-      setUtilisateurSelectionne(data)
-    },
-    onError: (error) => {
-      toast({
-        description: "Erreur lors de la récupération des données utilisateur",
-        variant: "destructive",
-        duration: 3000,
-        title: "Erreur",
-      })
-    },
-  })
+  const { data: utilisateur, isLoading: isLoadingUser } = useQuery<UserInfo>(
+    "utilisateur",
+    getCurrentUsers,
+    {
+      onSuccess: (data) => {
+        setUtilisateurSelectionne(data);
+      },
+      onError: (error) => {
+        toast({
+          description: "Erreur lors de la récupération des données utilisateur",
+          variant: "destructive",
+          duration: 3000,
+          title: "Erreur",
+        });
+      },
+    }
+  );
 
-  const { data: regions, isLoading: isLoadingRegions } = useQuery("regions", getALLRegions)
+  const { data: regions, isLoading: isLoadingRegions } = useQuery(
+    "regions",
+    getALLRegions
+  );
 
   useEffect(() => {
     if (selectedRegion && date) {
       getLocauxByCoordination(selectedRegion.id).then((data) => {
-        setTableData(Array.isArray(data) ? data : [])
-        fetchConfirmedLocals()
-      })
+        setTableData(Array.isArray(data) ? data : []);
+        fetchConfirmedLocals();
+      });
     }
-  }, [selectedRegion, date])
+  }, [selectedRegion, date]);
 
   const fetchConfirmedLocals = async () => {
     if (selectedRegion && date) {
@@ -65,22 +87,22 @@ export default function Home() {
             date: date,
             regionName: selectedRegion.name,
           },
-        })
-        setConfirmedLocals(response.data.map((local: Local) => local.id))
+        });
+        setConfirmedLocals(response.data.map((local: Local) => local.id));
       } catch (error) {
-        console.error("Error fetching confirmed locals:", error)
+        console.error("Error fetching confirmed locals:", error);
         toast({
           description: "Erreur lors de la récupération des locaux confirmés",
           variant: "destructive",
           duration: 3000,
           title: "Erreur",
-        })
+        });
       }
     }
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!selectedRegion || !date) {
       toast({
@@ -88,8 +110,8 @@ export default function Home() {
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
-      return
+      });
+      return;
     }
 
     if (selectedRows.length === 0) {
@@ -98,8 +120,8 @@ export default function Home() {
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
-      return
+      });
+      return;
     }
 
     const payload = {
@@ -112,41 +134,47 @@ export default function Home() {
         province: local.province,
       })),
       date: `${date}T00:00:00`,
-    }
+    };
 
     try {
       const response = await api.post("/Paiement/paiements", payload, {
         responseType: "blob",
-      })
-      const dateObj = new Date(payload.date)
-      const mois = (dateObj.getMonth() + 1).toString().padStart(2, "0")
-      const year = dateObj.getFullYear()
-      const filename = payload.locals[0].province?.region.name + "_" + mois + "_" + year + ".pdf"
+      });
+      const dateObj = new Date(payload.date);
+      const mois = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+      const year = dateObj.getFullYear();
+      const filename =
+        payload.locals[0].province?.region.name +
+        "_" +
+        mois +
+        "_" +
+        year +
+        ".pdf";
 
-      const url = window.URL.createObjectURL(new Blob([response.data]))
-      const link = document.createElement("a")
-      link.href = url
-      link.setAttribute("download", filename)
-      document.body.appendChild(link)
-      link.click()
-      link.remove()
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
 
       toast({
         description: "Téléchargement réussi",
         className: "bg-green-500 text-white",
         duration: 2000,
         title: "Succès",
-      })
+      });
     } catch (error) {
-      console.error(error)
+      console.error(error);
       toast({
         description: "Erreur lors du téléchargement",
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
+      });
     }
-  }
+  };
 
   const handleConfirmedPayment = async () => {
     if (!selectedRegion || !date) {
@@ -155,8 +183,8 @@ export default function Home() {
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
-      return
+      });
+      return;
     }
 
     if (selectedRows.length === 0) {
@@ -165,8 +193,8 @@ export default function Home() {
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
-      return
+      });
+      return;
     }
 
     const confirmedPayments = selectedRows.map((local) => ({
@@ -174,52 +202,58 @@ export default function Home() {
         id: local.id,
       },
       date: date,
-    }))
+    }));
 
     try {
-      const response = await api.post("/Confirme", confirmedPayments)
+      const response = await api.post("/Confirme", confirmedPayments);
       toast({
         description: "Paiements confirmés avec succès",
         className: "bg-green-500 text-white",
         duration: 2000,
         title: "Succès",
-      })
-      fetchConfirmedLocals()
+      });
+      fetchConfirmedLocals();
     } catch (error) {
-      console.error(error)
+      console.error(error);
       toast({
         description: "Erreur lors de la confirmation des paiements",
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
+      });
     }
-  }
+  };
 
-  const handleDeleteConfirmedPayment = async (localId: number, month: number, year: number) => {
+  const handleDeleteConfirmedPayment = async (
+    localId: number,
+    month: number,
+    year: number
+  ) => {
     try {
-      await api.delete(`/Confirme/local/${localId}/month/${month}/year/${year}`)
+      await api.delete(
+        `/Confirme/local/${localId}/month/${month}/year/${year}`
+      );
       toast({
         description: "Paiement confirmé supprimé avec succès",
         className: "bg-green-500 text-white",
         duration: 2000,
         title: "Succès",
-      })
-      fetchConfirmedLocals()
+      });
+      fetchConfirmedLocals();
     } catch (error) {
-      console.error(error)
+      console.error(error);
       toast({
         description: "Erreur lors de la suppression du paiement confirmé",
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
+      });
     }
-  }
+  };
 
-  const dateObj = new Date(date)
-  const mois = dateObj.getMonth() + 1
-  const year = dateObj.getFullYear()
+  const dateObj = new Date(date);
+  const mois = dateObj.getMonth() + 1;
+  const year = dateObj.getFullYear();
 
   const updatedColumns = [
     ...columns,
@@ -227,7 +261,8 @@ export default function Home() {
       id: "confirmed",
       header: () => <div className="text-center font-medium">Confirmé</div>,
       cell: ({ row }: { row: { original: Local } }) =>
-        row.original.id !== undefined && confirmedLocals.includes(row.original.id) ? (
+        row.original.id !== undefined &&
+        confirmedLocals.includes(row.original.id) ? (
           <div className="text-center">
             <FaCheck className="inline-block text-green-500 h-4 w-4" />
           </div>
@@ -235,14 +270,19 @@ export default function Home() {
     },
     {
       id: "actions",
-      header: () => <div className="text-center font-medium">Annuler Confirmation</div>,
+      header: () => (
+        <div className="text-center font-medium">Annuler Confirmation</div>
+      ),
       cell: ({ row }: { row: { original: Local } }) =>
-        row.original.id !== undefined && confirmedLocals.includes(row.original.id) ? (
+        row.original.id !== undefined &&
+        confirmedLocals.includes(row.original.id) ? (
           <div className="text-center">
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => handleDeleteConfirmedPayment(row.original.id!, mois, year)}
+              onClick={() =>
+                handleDeleteConfirmedPayment(row.original.id!, mois, year)
+              }
               className="hover:bg-red-50 hover:text-red-600"
             >
               <FaTrash className="text-red-500 h-4 w-4" />
@@ -250,7 +290,7 @@ export default function Home() {
           </div>
         ) : null,
     },
-  ]
+  ];
 
   if (isLoadingUser || isLoadingRegions) {
     return (
@@ -277,7 +317,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -289,8 +329,12 @@ export default function Home() {
 
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Gestion des Locaux</h1>
-            <p className="text-gray-600">Gérez vos propriétés et générez les documents de paiement</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              Gestion des Locaux
+            </h1>
+            <p className="text-gray-600">
+              Gérez vos propriétés et générez les documents de paiement
+            </p>
           </div>
 
           {/* Filter Form */}
@@ -304,25 +348,39 @@ export default function Home() {
             <form onSubmit={handleSubmit} className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div className="space-y-2">
-                  <Label htmlFor="region" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <Label
+                    htmlFor="region"
+                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  >
                     <FaMapMarkerAlt className="h-4 w-4 text-blue-600" />
-                    Choisissez une Coordination
+                    Choisissez une Direction Régionale
                   </Label>
                   <Select
                     onValueChange={(value) => {
-                      const selectedId = Number(value)
-                      const selectedRegionData = regions?.find((r) => r.id === selectedId)
+                      const selectedId = Number(value);
+                      const selectedRegionData = regions?.find(
+                        (r) => r.id === selectedId
+                      );
                       if (selectedRegionData) {
-                        setSelectedRegion(selectedRegionData)
+                        setSelectedRegion(selectedRegionData);
                       }
                     }}
                   >
                     <SelectTrigger id="region" className="h-11">
-                      <SelectValue placeholder={selectedRegion ? selectedRegion.name : "Sélectionner une région"} />
+                      <SelectValue
+                        placeholder={
+                          selectedRegion
+                            ? selectedRegion.name
+                            : "Sélectionner une région"
+                        }
+                      />
                     </SelectTrigger>
                     <SelectContent>
                       {regions?.map((region) => (
-                        <SelectItem key={region.id} value={region.id.toString()}>
+                        <SelectItem
+                          key={region.id}
+                          value={region.id.toString()}
+                        >
                           {region.name}
                         </SelectItem>
                       ))}
@@ -330,7 +388,10 @@ export default function Home() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="date" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <Label
+                    htmlFor="date"
+                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  >
                     <FaCalendarAlt className="h-4 w-4 text-blue-600" />
                     Date
                   </Label>
@@ -380,13 +441,20 @@ export default function Home() {
           {tableData.length > 0 ? (
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
               <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
-                <h2 className="text-xl font-semibold text-white">Liste des Locaux</h2>
+                <h2 className="text-xl font-semibold text-white">
+                  Liste des Locaux
+                </h2>
                 <p className="text-blue-100 text-sm mt-1">
-                  {tableData.length} local{tableData.length > 1 ? "aux" : ""} trouvé{tableData.length > 1 ? "s" : ""}
+                  {tableData.length} local{tableData.length > 1 ? "aux" : ""}{" "}
+                  trouvé{tableData.length > 1 ? "s" : ""}
                 </p>
               </div>
               <div className="p-6">
-                <DataTable columns={updatedColumns} data={tableData} onRowsSelected={setSelectedRows} />
+                <DataTable
+                  columns={updatedColumns}
+                  data={tableData}
+                  onRowsSelected={setSelectedRows}
+                />
               </div>
             </div>
           ) : selectedRegion && date ? (
@@ -394,20 +462,28 @@ export default function Home() {
               <div className="text-gray-400 mb-4">
                 <FaMapMarkerAlt className="h-16 w-16 mx-auto" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Aucun local trouvé</h3>
-              <p className="text-gray-600">Aucun local ne correspond aux critères sélectionnés.</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                Aucun local trouvé
+              </h3>
+              <p className="text-gray-600">
+                Aucun local ne correspond aux critères sélectionnés.
+              </p>
             </div>
           ) : (
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
               <div className="text-gray-400 mb-4">
                 <FaMapMarkerAlt className="h-16 w-16 mx-auto" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Sélectionnez vos critères</h3>
-              <p className="text-gray-600">Choisissez une région et une date pour afficher les locaux.</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                Sélectionnez vos critères
+              </h3>
+              <p className="text-gray-600">
+                Choisissez une région et une date pour afficher les locaux.
+              </p>
             </div>
           )}
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,58 +1,78 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { useQuery } from "react-query"
-import { BreadCrumb } from "@/components/BreadCrumb"
-import SideBar from "@/components/SideBar"
-import { getLocauxByCoordination } from "@/app/api/local"
-import { getALLRegions } from "@/app/api/region"
-import type { Region } from "@/app/type/Region"
-import { toast } from "@/hooks/use-toast"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import type { Local } from "@/app/type/Local"
-import { api } from "@/app/api"
-import { columns } from "../columns"
-import type { ComptePayement } from "@/app/type/ComptePayement"
-import { getComptes } from "@/app/api/comptePayement"
-import { Skeleton } from "@/components/ui/skeleton"
-import { FaMapMarkerAlt, FaCalendarAlt, FaFileDownload, FaCreditCard, FaHashtag } from "react-icons/fa"
-import { DataTable } from "@/components/ui/data-table"
+import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
+import { BreadCrumb } from "@/components/BreadCrumb";
+import SideBar from "@/components/SideBar";
+import { getLocauxByCoordination } from "@/app/api/local";
+import { getALLRegions } from "@/app/api/region";
+import type { Region } from "@/app/type/Region";
+import { toast } from "@/hooks/use-toast";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import type { Local } from "@/app/type/Local";
+import { api } from "@/app/api";
+import { columns } from "../columns";
+import type { ComptePayement } from "@/app/type/ComptePayement";
+import { getComptes } from "@/app/api/comptePayement";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaFileDownload,
+  FaCreditCard,
+  FaHashtag,
+} from "react-icons/fa";
+import { DataTable } from "@/components/ui/data-table";
 
 export default function Home() {
-  const [selectedRegion, setSelectedRegion] = useState<Region | null>(null)
-  const [tableData, setTableData] = useState<Local[]>([])
-  const [selectedRows, setSelectedRows] = useState<Local[]>([])
-  const [date, setDate] = useState<string>("")
-  const [nOrdre, setNOrdre] = useState<string>("")
-  const [nOP, setNOP] = useState<string>("")
-  const [mode, setMode] = useState<string>("")
-  const [dateCreation, setDateCreation] = useState<string>("")
-  const [comptePaiement, setComptePaiement] = useState<ComptePayement | null>(null)
+  const [selectedRegion, setSelectedRegion] = useState<Region | null>(null);
+  const [tableData, setTableData] = useState<Local[]>([]);
+  const [selectedRows, setSelectedRows] = useState<Local[]>([]);
+  const [date, setDate] = useState<string>("");
+  const [nOrdre, setNOrdre] = useState<string>("");
+  const [nOP, setNOP] = useState<string>("");
+  const [mode, setMode] = useState<string>("");
+  const [dateCreation, setDateCreation] = useState<string>("");
+  const [comptePaiement, setComptePaiement] = useState<ComptePayement | null>(
+    null
+  );
 
-  const { data: regions, isLoading: isLoadingRegions } = useQuery("regions", getALLRegions)
-  const { data: comptes, isLoading: isLoadingComptes } = useQuery("comptePaiement", getComptes)
+  const { data: regions, isLoading: isLoadingRegions } = useQuery(
+    "regions",
+    getALLRegions
+  );
+  const { data: comptes, isLoading: isLoadingComptes } = useQuery(
+    "comptePaiement",
+    getComptes
+  );
 
   useEffect(() => {
     if (selectedRegion) {
       getLocauxByCoordination(selectedRegion.id).then((data) => {
-        setTableData(Array.isArray(data) ? data : [])
-      })
+        setTableData(Array.isArray(data) ? data : []);
+      });
     }
-  }, [selectedRegion])
+  }, [selectedRegion]);
 
   const formatDateForAPI = (dateString: string) => {
-    if (!dateString) return ""
-    const [year, month, day] = dateString.split("-")
-    return `${day}/${month}/${year}`
-  }
+    if (!dateString) return "";
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!selectedRegion) {
       toast({
@@ -60,8 +80,8 @@ export default function Home() {
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
-      return
+      });
+      return;
     }
 
     if (!date) {
@@ -70,8 +90,8 @@ export default function Home() {
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
-      return
+      });
+      return;
     }
 
     if (!nOrdre) {
@@ -80,8 +100,8 @@ export default function Home() {
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
-      return
+      });
+      return;
     }
 
     if (!comptePaiement) {
@@ -90,8 +110,8 @@ export default function Home() {
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
-      return
+      });
+      return;
     }
 
     if (!nOP) {
@@ -100,8 +120,8 @@ export default function Home() {
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
-      return
+      });
+      return;
     }
 
     if (!mode) {
@@ -110,8 +130,8 @@ export default function Home() {
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
-      return
+      });
+      return;
     }
 
     if (!dateCreation) {
@@ -120,8 +140,8 @@ export default function Home() {
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
-      return
+      });
+      return;
     }
 
     if (selectedRows.length === 0) {
@@ -130,8 +150,8 @@ export default function Home() {
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
-      return
+      });
+      return;
     }
 
     const payload = {
@@ -149,42 +169,48 @@ export default function Home() {
       dateCreation: `${formatDateForAPI(dateCreation)}`,
       comptePaiement: comptePaiement,
       mode: mode,
-    }
+    };
 
     try {
       const response = await api.post("/Paiement/ov", payload, {
         responseType: "blob",
-      })
-      console.log(payload)
-      const dateObj = new Date(payload.date)
-      const mois = (dateObj.getMonth() + 1).toString().padStart(2, "0")
-      const year = dateObj.getFullYear()
-      const filename = payload.locals[0].province?.region.name + "_" + mois + "_" + year + ".pdf"
+      });
+      console.log(payload);
+      const dateObj = new Date(payload.date);
+      const mois = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+      const year = dateObj.getFullYear();
+      const filename =
+        payload.locals[0].province?.region.name +
+        "_" +
+        mois +
+        "_" +
+        year +
+        ".pdf";
 
-      const url = window.URL.createObjectURL(new Blob([response.data]))
-      const link = document.createElement("a")
-      link.href = url
-      link.setAttribute("download", filename)
-      document.body.appendChild(link)
-      link.click()
-      link.remove()
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
 
       toast({
         description: "Téléchargement réussi",
         className: "bg-green-500 text-white",
         duration: 2000,
         title: "Succès",
-      })
+      });
     } catch (error) {
-      console.error(error)
+      console.error(error);
       toast({
         description: "Erreur lors du téléchargement",
         variant: "destructive",
         duration: 3000,
         title: "Erreur",
-      })
+      });
     }
-  }
+  };
 
   if (isLoadingRegions || isLoadingComptes) {
     return (
@@ -208,7 +234,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -220,8 +246,12 @@ export default function Home() {
 
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Ordre de Virement</h1>
-            <p className="text-gray-600">Générez les ordres de virement pour les paiements des locaux</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              Ordre de Virement
+            </h1>
+            <p className="text-gray-600">
+              Générez les ordres de virement pour les paiements des locaux
+            </p>
           </div>
 
           {/* Form */}
@@ -235,15 +265,20 @@ export default function Home() {
             <form onSubmit={handleSubmit} className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
                 <div className="space-y-2">
-                  <Label htmlFor="region" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <Label
+                    htmlFor="region"
+                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  >
                     <FaMapMarkerAlt className="h-4 w-4 text-blue-600" />
-                    Choisissez une Coordination
+                    Choisissez une Direction Régionale
                   </Label>
                   <Select
                     onValueChange={(value) => {
-                      const selectedRegion = regions?.find((r) => r.id.toString() === value)
+                      const selectedRegion = regions?.find(
+                        (r) => r.id.toString() === value
+                      );
                       if (selectedRegion) {
-                        setSelectedRegion(selectedRegion)
+                        setSelectedRegion(selectedRegion);
                       }
                     }}
                   >
@@ -252,7 +287,10 @@ export default function Home() {
                     </SelectTrigger>
                     <SelectContent>
                       {regions?.map((region) => (
-                        <SelectItem key={region.id} value={region.id.toString()}>
+                        <SelectItem
+                          key={region.id}
+                          value={region.id.toString()}
+                        >
                           {region.name}
                         </SelectItem>
                       ))}
@@ -260,7 +298,10 @@ export default function Home() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="date" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <Label
+                    htmlFor="date"
+                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  >
                     <FaCalendarAlt className="h-4 w-4 text-blue-600" />
                     Date
                   </Label>
@@ -274,7 +315,10 @@ export default function Home() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="nOrdre" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <Label
+                    htmlFor="nOrdre"
+                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  >
                     <FaHashtag className="h-4 w-4 text-blue-600" />
                     N° Ordre de virement
                   </Label>
@@ -288,14 +332,19 @@ export default function Home() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="comptePaiement" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <Label
+                    htmlFor="comptePaiement"
+                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  >
                     <FaCreditCard className="h-4 w-4 text-blue-600" />
                     Choisissez un compte
                   </Label>
                   <Select
                     onValueChange={(value) => {
-                      const compte = comptes?.find((r) => r?.id?.toString() === value) || null
-                      setComptePaiement(compte)
+                      const compte =
+                        comptes?.find((r) => r?.id?.toString() === value) ||
+                        null;
+                      setComptePaiement(compte);
                     }}
                   >
                     <SelectTrigger id="comptePaiement" className="h-11">
@@ -311,7 +360,10 @@ export default function Home() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="nOP" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <Label
+                    htmlFor="nOP"
+                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  >
                     <FaHashtag className="h-4 w-4 text-blue-600" />
                     N° OP
                   </Label>
@@ -325,7 +377,10 @@ export default function Home() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="dateCreation" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <Label
+                    htmlFor="dateCreation"
+                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  >
                     <FaCalendarAlt className="h-4 w-4 text-blue-600" />
                     Date de création
                   </Label>
@@ -339,7 +394,10 @@ export default function Home() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="mode" className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <Label
+                    htmlFor="mode"
+                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                  >
                     <FaCreditCard className="h-4 w-4 text-blue-600" />
                     Mode de paiement
                   </Label>
@@ -368,13 +426,20 @@ export default function Home() {
           {tableData.length > 0 ? (
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
               <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
-                <h2 className="text-xl font-semibold text-white">Liste des Locaux</h2>
+                <h2 className="text-xl font-semibold text-white">
+                  Liste des Locaux
+                </h2>
                 <p className="text-blue-100 text-sm mt-1">
-                  {tableData.length} local{tableData.length > 1 ? "aux" : ""} trouvé{tableData.length > 1 ? "s" : ""}
+                  {tableData.length} local{tableData.length > 1 ? "aux" : ""}{" "}
+                  trouvé{tableData.length > 1 ? "s" : ""}
                 </p>
               </div>
               <div className="p-6">
-                <DataTable columns={columns} data={tableData} onRowsSelected={setSelectedRows} />
+                <DataTable
+                  columns={columns}
+                  data={tableData}
+                  onRowsSelected={setSelectedRows}
+                />
               </div>
             </div>
           ) : selectedRegion ? (
@@ -382,20 +447,28 @@ export default function Home() {
               <div className="text-gray-400 mb-4">
                 <FaMapMarkerAlt className="h-16 w-16 mx-auto" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Aucun local trouvé</h3>
-              <p className="text-gray-600">Aucun local ne correspond à la région sélectionnée.</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                Aucun local trouvé
+              </h3>
+              <p className="text-gray-600">
+                Aucun local ne correspond à la région sélectionnée.
+              </p>
             </div>
           ) : (
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
               <div className="text-gray-400 mb-4">
                 <FaMapMarkerAlt className="h-16 w-16 mx-auto" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Sélectionnez une coordination</h3>
-              <p className="text-gray-600">Choisissez une région pour afficher les locaux disponibles.</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                Sélectionnez une coordination
+              </h3>
+              <p className="text-gray-600">
+                Choisissez une région pour afficher les locaux disponibles.
+              </p>
             </div>
           )}
         </div>
       </div>
     </div>
-  )
+  );
 }
