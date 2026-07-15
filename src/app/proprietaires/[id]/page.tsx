@@ -182,6 +182,7 @@ export default function ProprietaireDetails({
                       <SelectContent>
                         <SelectItem value="personne physique">Personne Physique</SelectItem>
                         <SelectItem value="personne morale">Personne Morale</SelectItem>
+                        <SelectItem value="entreprise">Entreprise</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
