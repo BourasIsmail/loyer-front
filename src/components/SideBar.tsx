@@ -50,19 +50,16 @@ const SideBar = () => {
   ]
 
   return (
-    <div className="fixed flex flex-col top-0 left-0 w-64 bg-white dark:bg-gray-900 h-full border-r border-gray-200 dark:border-gray-700 shadow-lg z-50">
-      {/* Logo Section */}
-      <div className="flex items-center justify-center h-16 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-grey-600 to-blue-700">
+    <aside className="fixed top-0 left-0 z-50 flex h-full w-64 flex-col border-r border-border bg-card">
+      {/* Logo */}
+      <div className="flex h-16 items-center px-6 border-b border-border">
         <Image src="/logo.png" alt="Logo" width={120} height={80} className="object-contain" />
       </div>
 
       {/* Navigation */}
-      <div className="flex-1 overflow-y-auto py-4">
-        <div className="px-3 mb-4">
-          <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Navigation</p>
-        </div>
-
-        <nav className="space-y-1 px-2">
+      <div className="flex-1 overflow-y-auto px-3 py-5">
+        <p className="px-3 mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Menu</p>
+        <nav className="space-y-0.5">
           {menuItems.map((item) => {
             const Icon = item.icon
             const isActive = pathname === item.href
@@ -72,52 +69,44 @@ const SideBar = () => {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 group",
+                  "relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                   isActive
-                    ? "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 shadow-sm"
-                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100",
+                    ? "bg-accent text-accent-foreground"
+                    : "text-muted-foreground hover:bg-secondary hover:text-foreground",
                 )}
               >
-                <div
-                  className={cn(
-                    "p-1.5 rounded-md transition-colors",
-                    isActive
-                      ? "bg-blue-200 dark:bg-blue-800/50"
-                      : "group-hover:bg-gray-200 dark:group-hover:bg-gray-700",
-                  )}
-                >
-                  <Icon className="h-4 w-4" />
-                </div>
+                {isActive && <span className="absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full bg-primary" />}
+                <Icon className={cn("h-4 w-4 shrink-0", isActive && "text-primary")} />
                 <span className="truncate">{item.label}</span>
-                {isActive && <div className="ml-auto w-1.5 h-1.5 bg-blue-600 dark:bg-blue-400 rounded-full" />}
               </a>
             )
           })}
         </nav>
       </div>
 
-      {/* User Section & Logout */}
-      <div className="border-t border-gray-200 dark:border-gray-700 p-4">
+      {/* User & logout */}
+      <div className="border-t border-border p-3">
         {utilisateur && (
-          <div className="mb-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-            <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
-              {utilisateur.name || "Utilisateur"}
-            </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">{utilisateur.roles}</p>
+          <div className="mb-2 flex items-center gap-3 rounded-lg px-3 py-2">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+              {(utilisateur.name || "U").charAt(0).toUpperCase()}
+            </div>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-medium text-foreground">{utilisateur.name || "Utilisateur"}</p>
+              <p className="truncate text-xs text-muted-foreground">{utilisateur.roles}</p>
+            </div>
           </div>
         )}
 
         <button
           onClick={logout}
-          className="flex items-center gap-3 w-full px-3 py-2.5 text-sm font-medium text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all duration-200 group"
+          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
         >
-          <div className="p-1.5 rounded-md group-hover:bg-red-100 dark:group-hover:bg-red-900/30 transition-colors">
-            <LogOut className="h-4 w-4" />
-          </div>
+          <LogOut className="h-4 w-4" />
           <span>Déconnexion</span>
         </button>
       </div>
-    </div>
+    </aside>
   )
 }
 

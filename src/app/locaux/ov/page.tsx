@@ -214,7 +214,7 @@ export default function Home() {
 
   if (isLoadingRegions || isLoadingComptes) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <div className="min-h-screen bg-background">
         <SideBar />
         <div className="p-4 sm:p-6 lg:p-8 ml-0 lg:ml-64 transition-all duration-300">
           <div className="max-w-7xl mx-auto">
@@ -238,7 +238,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-background">
       <SideBar />
       <div className="p-4 sm:p-6 lg:p-8 ml-0 lg:ml-64 transition-all duration-300">
         <div className="max-w-7xl mx-auto">

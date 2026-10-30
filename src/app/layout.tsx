@@ -1,7 +1,10 @@
 import ReactQueryProvider from "@/components/ReactQueryProvider";
 import type { Metadata } from "next";
 import "./globals.css";
+import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "Loyer EN",
@@ -16,7 +19,7 @@ export default function RootLayout({
   return (
     <ReactQueryProvider>
       <html lang="en">
-        <body className={` bg-cover lg:block  bg-[url('/backgr.jpg')] `}>
+        <body className={`${inter.variable} font-sans min-h-screen`}>
           {children}
           <Toaster />
         </body>

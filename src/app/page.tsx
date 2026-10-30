@@ -18,7 +18,7 @@ export default function Home() {
 
   if (isError) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <div className="min-h-screen bg-background">
         <SideBar />
         <div className="p-4 sm:p-6 lg:p-8 ml-0 lg:ml-64 transition-all duration-300">
           <Alert className="max-w-2xl mx-auto mt-20">
@@ -33,7 +33,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-background">
       <SideBar />
       <div className="p-4 sm:p-6 lg:p-8 ml-0 lg:ml-64 transition-all duration-300">
         <div className="max-w-7xl mx-auto">
@@ -43,12 +43,12 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-8">
             {isLoading ? (
               <>
-                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                <div className="bg-card rounded-xl p-6 shadow-sm border">
                   <Skeleton className="h-12 w-12 rounded-lg mb-4" />
                   <Skeleton className="h-4 w-20 mb-2" />
                   <Skeleton className="h-8 w-16" />
                 </div>
-                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                <div className="bg-card rounded-xl p-6 shadow-sm border">
                   <Skeleton className="h-12 w-12 rounded-lg mb-4" />
                   <Skeleton className="h-4 w-24 mb-2" />
                   <Skeleton className="h-8 w-16" />
@@ -68,10 +68,10 @@ export default function Home() {
 
           {/* Charts Section */}
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 mt-8">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <div className="p-6 border-b border-gray-100">
-                <h2 className="text-xl font-semibold text-gray-900">Locaux par état</h2>
-                <p className="text-sm text-gray-600 mt-1">Répartition de vos biens locatifs</p>
+            <div className="bg-card rounded-xl shadow-sm border overflow-hidden">
+              <div className="p-6 border-b">
+                <h2 className="text-lg font-semibold text-foreground">Locaux par état</h2>
+                <p className="text-sm text-muted-foreground mt-1">Répartition de vos biens locatifs</p>
               </div>
               <div className="p-6">
                 {isLoading ? (
@@ -88,10 +88,10 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <div className="p-6 border-b border-gray-100">
-                <h2 className="text-xl font-semibold text-gray-900">Propriétaires par type</h2>
-                <p className="text-sm text-gray-600 mt-1">Classification de vos propriétaires</p>
+            <div className="bg-card rounded-xl shadow-sm border overflow-hidden">
+              <div className="p-6 border-b">
+                <h2 className="text-lg font-semibold text-foreground">Propriétaires par type</h2>
+                <p className="text-sm text-muted-foreground mt-1">Classification de vos propriétaires</p>
               </div>
               <div className="p-6">
                 {isLoading ? (
@@ -100,7 +100,7 @@ export default function Home() {
                   </div>
                 ) : (
                   <PieChart
-                    colors={["#3B82F6", "#8B5CF6"]}
+                    colors={["#4F46E5", "#A78BFA"]}
                     labels={["Personne Physique", "Personne Morale"]}
                     dataSet={[data?.personnesPhysique, data?.personnesMorale]}
                   />
