@@ -105,14 +105,14 @@ export function DataTable<TData, TValue>({ columns, data, onRowsSelected }: Data
       </div>
 
       {/* Table */}
-      <div className="rounded-md border bg-white">
+      <div className="rounded-md border bg-card">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="bg-gray-50">
+              <TableRow key={headerGroup.id} className="bg-muted/50">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="text-left font-semibold text-gray-900">
+                    <TableHead key={header.id} className="text-left font-semibold text-foreground">
                       {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                     </TableHead>
                   )
@@ -126,7 +126,7 @@ export function DataTable<TData, TValue>({ columns, data, onRowsSelected }: Data
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="hover:bg-gray-50 transition-colors"
+                  className="hover:bg-accent transition-colors"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="text-left">
@@ -137,7 +137,7 @@ export function DataTable<TData, TValue>({ columns, data, onRowsSelected }: Data
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center text-gray-500">
+                <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
                   Aucun résultat trouvé.
                 </TableCell>
               </TableRow>

@@ -93,8 +93,8 @@ export function AddProprietaireFormComponent() {
     <form onSubmit={handleSubmit} className="w-full space-y-6 p-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <Label htmlFor="nomComplet" className="flex items-center space-x-2 text-sm font-medium text-gray-700">
-            <User className="h-4 w-4 text-blue-600" />
+          <Label htmlFor="nomComplet" className="flex items-center space-x-2 text-sm font-medium text-foreground">
+            <User className="h-4 w-4 text-primary" />
             <span>Nom Complet</span>
           </Label>
           <Input
@@ -102,14 +102,14 @@ export function AddProprietaireFormComponent() {
             placeholder="Entrez le nom complet"
             value={proprietaire.nomComplet || ""}
             onChange={(e) => handleChange("nomComplet", e.target.value)}
-            className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+            className="border-border focus:border-ring focus:ring-ring"
             required
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="cin" className="flex items-center space-x-2 text-sm font-medium text-gray-700">
-            <CreditCard className="h-4 w-4 text-blue-600" />
+          <Label htmlFor="cin" className="flex items-center space-x-2 text-sm font-medium text-foreground">
+            <CreditCard className="h-4 w-4 text-primary" />
             <span>CIN / IEF</span>
           </Label>
           <Input
@@ -117,14 +117,14 @@ export function AddProprietaireFormComponent() {
             placeholder="Entrez le CIN ou IEF"
             value={proprietaire.cin || ""}
             onChange={(e) => handleChange("cin", e.target.value)}
-            className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+            className="border-border focus:border-ring focus:ring-ring"
             required
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="telephone" className="flex items-center space-x-2 text-sm font-medium text-gray-700">
-            <Phone className="h-4 w-4 text-blue-600" />
+          <Label htmlFor="telephone" className="flex items-center space-x-2 text-sm font-medium text-foreground">
+            <Phone className="h-4 w-4 text-primary" />
             <span>Téléphone</span>
           </Label>
           <Input
@@ -132,14 +132,14 @@ export function AddProprietaireFormComponent() {
             placeholder="Entrez le numéro de téléphone"
             value={proprietaire.telephone || ""}
             onChange={(e) => handleChange("telephone", e.target.value)}
-            className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+            className="border-border focus:border-ring focus:ring-ring"
             required
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="adresse" className="flex items-center space-x-2 text-sm font-medium text-gray-700">
-            <MapPin className="h-4 w-4 text-blue-600" />
+          <Label htmlFor="adresse" className="flex items-center space-x-2 text-sm font-medium text-foreground">
+            <MapPin className="h-4 w-4 text-primary" />
             <span>Adresse</span>
           </Label>
           <Input
@@ -147,18 +147,18 @@ export function AddProprietaireFormComponent() {
             placeholder="Entrez l'adresse"
             value={proprietaire.adresse || ""}
             onChange={(e) => handleChange("adresse", e.target.value)}
-            className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+            className="border-border focus:border-ring focus:ring-ring"
             required
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="type" className="flex items-center space-x-2 text-sm font-medium text-gray-700">
-            <Building className="h-4 w-4 text-blue-600" />
+          <Label htmlFor="type" className="flex items-center space-x-2 text-sm font-medium text-foreground">
+            <Building className="h-4 w-4 text-primary" />
             <span>Type</span>
           </Label>
           <Select value={proprietaire.type} onValueChange={(value) => handleChange("type", value)} required>
-            <SelectTrigger className="border-gray-200 focus:border-blue-500 focus:ring-blue-500">
+            <SelectTrigger className="border-border focus:border-ring focus:ring-ring">
               <SelectValue placeholder="Sélectionnez un type" />
             </SelectTrigger>
             <SelectContent>
@@ -169,8 +169,8 @@ export function AddProprietaireFormComponent() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="province" className="flex items-center space-x-2 text-sm font-medium text-gray-700">
-            <MapPin className="h-4 w-4 text-blue-600" />
+          <Label htmlFor="province" className="flex items-center space-x-2 text-sm font-medium text-foreground">
+            <MapPin className="h-4 w-4 text-primary" />
             <span>Province</span>
           </Label>
           <Select
@@ -181,7 +181,7 @@ export function AddProprietaireFormComponent() {
             }}
             required
           >
-            <SelectTrigger className="border-gray-200 focus:border-blue-500 focus:ring-blue-500">
+            <SelectTrigger className="border-border focus:border-ring focus:ring-ring">
               <SelectValue placeholder="Sélectionnez une province" />
             </SelectTrigger>
             <SelectContent>
@@ -199,7 +199,7 @@ export function AddProprietaireFormComponent() {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-200 px-6"
+          className="bg-primary hover:bg-primary/90 text-white shadow-md hover:shadow-sm transition-all duration-200 px-6"
         >
           {isSubmitting ? (
             <>
@@ -218,7 +218,7 @@ export function AddProprietaireFormComponent() {
           type="button"
           variant="outline"
           onClick={() => router.push("/proprietaire")}
-          className="border-gray-200 text-gray-700 hover:bg-gray-50"
+          className="border-border text-foreground hover:bg-accent"
         >
           Annuler
         </Button>

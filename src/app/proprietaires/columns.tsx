@@ -19,18 +19,18 @@ export const columns: ColumnDef<Proprietaire>[] = [
   {
     accessorKey: "nomComplet",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Nom Complet" />,
-    cell: ({ row }) => <div className="font-medium text-gray-900">{row.getValue("nomComplet")}</div>,
+    cell: ({ row }) => <div className="font-medium text-foreground">{row.getValue("nomComplet")}</div>,
   },
   {
     accessorKey: "cin",
     header: ({ column }) => <DataTableColumnHeader column={column} title="CIN" />,
-    cell: ({ row }) => <div className="text-gray-600 font-mono">{row.getValue("cin")}</div>,
+    cell: ({ row }) => <div className="text-muted-foreground font-mono">{row.getValue("cin")}</div>,
   },
   {
     accessorKey: "type",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Type" />,
     cell: ({ row }) => (
-      <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+      <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent text-accent-foreground">
         {row.getValue("type")}
       </div>
     ),
@@ -38,7 +38,7 @@ export const columns: ColumnDef<Proprietaire>[] = [
   {
     accessorKey: "province.name",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Province" />,
-    cell: ({ row }) => <div className="text-gray-600">{row.original.province?.name || "N/A"}</div>,
+    cell: ({ row }) => <div className="text-muted-foreground">{row.original.province?.name || "N/A"}</div>,
   },
   {
     id: "actions",
@@ -50,16 +50,16 @@ export const columns: ColumnDef<Proprietaire>[] = [
       return (
         <DropdownMenu open={open} onOpenChange={setOpen}>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-100">
+            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-accent">
               <span className="sr-only">Ouvrir le menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuLabel className="text-gray-700">Actions</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-foreground">Actions</DropdownMenuLabel>
             <Link href={proprietaire.id ? `/proprietaires/${proprietaire.id}` : `#`}>
-              <DropdownMenuItem className="cursor-pointer hover:bg-blue-50">
-                <Eye className="mr-2 h-4 w-4 text-blue-600" />
+              <DropdownMenuItem className="cursor-pointer hover:bg-accent">
+                <Eye className="mr-2 h-4 w-4 text-primary" />
                 Détails Propriétaire
               </DropdownMenuItem>
             </Link>

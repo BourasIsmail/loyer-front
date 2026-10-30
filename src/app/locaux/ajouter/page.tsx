@@ -96,16 +96,16 @@ export default function AjouterLocal() {
 
   if (isLoadingUser) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+      <div className="min-h-screen bg-background">
         <SideBar />
         <div className="p-4 sm:ml-64">
           <BreadCrumb />
           <div className="mt-6">
-            <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
+            <Card className="border-0 shadow-xl bg-card/80 backdrop-blur-sm">
+              <CardHeader className="bg-primary text-white rounded-t-lg">
                 <div className="flex items-center gap-3">
-                  <Skeleton className="h-6 w-6 bg-white/20" />
-                  <Skeleton className="h-8 w-48 bg-white/20" />
+                  <Skeleton className="h-6 w-6 bg-card/20" />
+                  <Skeleton className="h-8 w-48 bg-card/20" />
                 </div>
               </CardHeader>
               <CardContent className="p-8">
@@ -126,21 +126,21 @@ export default function AjouterLocal() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+    <div className="min-h-screen bg-background">
       <SideBar />
       <div className="p-4 sm:ml-64">
         <BreadCrumb />
 
         <div className="mt-6">
-          <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-            <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
+          <Card className="border-0 shadow-xl bg-card/80 backdrop-blur-sm">
+            <CardHeader className="bg-primary text-white rounded-t-lg">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Building2 className="h-6 w-6" />
                   <CardTitle className="text-xl font-semibold">Ajouter un nouveau local</CardTitle>
                 </div>
                 <Link href="/locaux">
-                  <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
+                  <Button variant="ghost" size="sm" className="text-white hover:bg-card/20">
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     Retour
                   </Button>
@@ -153,8 +153,8 @@ export default function AjouterLocal() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Adresse */}
                   <div className="space-y-2">
-                    <Label htmlFor="adresse" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <MapPin className="h-4 w-4 text-blue-600" />
+                    <Label htmlFor="adresse" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <MapPin className="h-4 w-4 text-primary" />
                       Adresse
                     </Label>
                     {isLoadingUser ? (
@@ -171,14 +171,14 @@ export default function AjouterLocal() {
                         }
                         placeholder="Entrez l'adresse du local"
                         disabled={is_Observateur}
-                        className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-input focus:border-ring focus:ring-ring"
                       />
                     )}
                   </div>
 
                   {/* Montant brut */}
                   <div className="space-y-2">
-                    <Label htmlFor="brutMensuel" className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                    <Label htmlFor="brutMensuel" className="flex items-center gap-2 text-sm font-medium text-foreground">
                       <Banknote className="h-4 w-4 text-green-600" />
                       Montant brut mensuel (DH)
                     </Label>
@@ -197,14 +197,14 @@ export default function AjouterLocal() {
                         }
                         placeholder="0.00"
                         disabled={is_Observateur}
-                        className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-input focus:border-ring focus:ring-ring"
                       />
                     )}
                   </div>
 
                   {/* RIB */}
                   <div className="space-y-2">
-                    <Label htmlFor="rib" className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                    <Label htmlFor="rib" className="flex items-center gap-2 text-sm font-medium text-foreground">
                       <CreditCard className="h-4 w-4 text-purple-600" />
                       RIB (24 caractères)
                     </Label>
@@ -222,7 +222,7 @@ export default function AjouterLocal() {
                         }
                         placeholder="XXXX XXXX XXXX XXXX XXXX XX"
                         disabled={is_Observateur}
-                        className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-input focus:border-ring focus:ring-ring"
                         maxLength={24}
                       />
                     )}
@@ -230,7 +230,7 @@ export default function AjouterLocal() {
 
                   {/* État du local */}
                   <div className="space-y-2">
-                    <Label htmlFor="etat" className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                    <Label htmlFor="etat" className="flex items-center gap-2 text-sm font-medium text-foreground">
                       <Home className="h-4 w-4 text-orange-600" />
                       État du local
                     </Label>
@@ -247,7 +247,7 @@ export default function AjouterLocal() {
                           } as Local)
                         }
                       >
-                        <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                        <SelectTrigger className="border-input focus:border-ring focus:ring-ring">
                           <SelectValue placeholder="Sélectionnez l'état du local" />
                         </SelectTrigger>
                         <SelectContent>
@@ -263,7 +263,7 @@ export default function AjouterLocal() {
                   <div className="space-y-2">
                     <Label
                       htmlFor="dateEffetContrat"
-                      className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                      className="flex items-center gap-2 text-sm font-medium text-foreground"
                     >
                       <Calendar className="h-4 w-4 text-red-600" />
                       Date d'effet de contrat
@@ -282,15 +282,15 @@ export default function AjouterLocal() {
                             dateEffetContrat: e.target.value,
                           } as Local)
                         }
-                        className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-input focus:border-ring focus:ring-ring"
                       />
                     )}
                   </div>
 
                   {/* Province */}
                   <div className="space-y-2">
-                    <Label htmlFor="province" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <MapPin className="h-4 w-4 text-indigo-600" />
+                    <Label htmlFor="province" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <MapPin className="h-4 w-4 text-primary" />
                       Province
                     </Label>
                     {isLoadingProvinces ? (
@@ -306,7 +306,7 @@ export default function AjouterLocal() {
                           } as Local)
                         }
                       >
-                        <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                        <SelectTrigger className="border-input focus:border-ring focus:ring-ring">
                           <SelectValue placeholder="Sélectionnez une province" />
                         </SelectTrigger>
                         <SelectContent>
@@ -324,7 +324,7 @@ export default function AjouterLocal() {
                   <div className="space-y-2">
                     <Label
                       htmlFor="modeDePaiement"
-                      className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                      className="flex items-center gap-2 text-sm font-medium text-foreground"
                     >
                       <FileText className="h-4 w-4 text-teal-600" />
                       Mode de paiement
@@ -342,7 +342,7 @@ export default function AjouterLocal() {
                           } as Local)
                         }
                       >
-                        <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                        <SelectTrigger className="border-input focus:border-ring focus:ring-ring">
                           <SelectValue placeholder="Sélectionnez le mode de paiement" />
                         </SelectTrigger>
                         <SelectContent>
@@ -356,8 +356,8 @@ export default function AjouterLocal() {
 
                 {/* Propriétaires - Full width */}
                 <div className="space-y-2">
-                  <Label htmlFor="proprietaires" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                    <Users className="h-4 w-4 text-blue-600" />
+                  <Label htmlFor="proprietaires" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                    <Users className="h-4 w-4 text-primary" />
                     Propriétaires
                   </Label>
                   {isLoadingProprietaires ? (
@@ -427,11 +427,11 @@ export default function AjouterLocal() {
                 </div>
 
                 {/* Submit Button */}
-                <div className="flex justify-end pt-6 border-t border-gray-200">
+                <div className="flex justify-end pt-6 border-t border-border">
                   <Button
                     disabled={is_Observateur || isLoadingUser}
                     type="submit"
-                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-2 rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
+                    className="bg-primary hover:bg-primary/90 text-white px-8 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md"
                   >
                     <Building2 className="h-4 w-4 mr-2" />
                     Ajouter le local

@@ -86,7 +86,7 @@ export default function AccountDetailsPage({
 
   if (isLoadingUser || isLoadingProvinces) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      <div className="min-h-screen bg-background">
         <SideBar />
         <div className="p-4 sm:p-6 lg:p-8 sm:ml-64">
           <div className="max-w-4xl mx-auto">
@@ -95,8 +95,8 @@ export default function AccountDetailsPage({
               <Skeleton className="h-8 w-64" />
             </div>
             <Card className="shadow-xl border-0">
-              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
-                <Skeleton className="h-6 w-48 bg-blue-500" />
+              <CardHeader className="bg-primary text-white rounded-t-lg">
+                <Skeleton className="h-6 w-48 bg-primary" />
               </CardHeader>
               <CardContent className="p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -119,7 +119,7 @@ export default function AccountDetailsPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-background">
       <SideBar />
       <div className="p-4 sm:p-6 lg:p-8 sm:ml-64">
         <div className="max-w-4xl mx-auto">
@@ -131,24 +131,24 @@ export default function AccountDetailsPage({
               Retour
             </Button>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Gestion des Comptes</h1>
-              <p className="text-gray-600 mt-1">Modifier les informations du compte utilisateur</p>
+              <h1 className="text-2xl font-bold text-foreground">Gestion des Comptes</h1>
+              <p className="text-muted-foreground mt-1">Modifier les informations du compte utilisateur</p>
             </div>
           </div>
 
           <Card className="shadow-xl border-0 overflow-hidden">
-            <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+            <CardHeader className="bg-primary text-white">
               <CardTitle className="flex items-center gap-2 text-xl">
                 <User className="h-5 w-5" />
                 Informations du Compte
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-6 bg-white">
+            <CardContent className="p-6 bg-card">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <Mail className="h-4 w-4 text-blue-600" />
+                    <Label htmlFor="email" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <Mail className="h-4 w-4 text-primary" />
                       Adresse e-mail
                     </Label>
                     <Input
@@ -163,13 +163,13 @@ export default function AccountDetailsPage({
                       }
                       placeholder="Adresse e-mail"
                       required
-                      className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      className="border-input focus:border-ring focus:ring-ring"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="name" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <User className="h-4 w-4 text-blue-600" />
+                    <Label htmlFor="name" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <User className="h-4 w-4 text-primary" />
                       Nom
                     </Label>
                     <Input
@@ -184,13 +184,13 @@ export default function AccountDetailsPage({
                       }
                       placeholder="Nom"
                       required
-                      className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      className="border-input focus:border-ring focus:ring-ring"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="password" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <Lock className="h-4 w-4 text-blue-600" />
+                    <Label htmlFor="password" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <Lock className="h-4 w-4 text-primary" />
                       Mot de passe
                     </Label>
                     <Input
@@ -203,13 +203,13 @@ export default function AccountDetailsPage({
                         }))
                       }
                       placeholder="Nouveau mot de passe (optionnel)"
-                      className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      className="border-input focus:border-ring focus:ring-ring"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="province" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <MapPin className="h-4 w-4 text-blue-600" />
+                    <Label htmlFor="province" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <MapPin className="h-4 w-4 text-primary" />
                       Province
                     </Label>
                     <Select
@@ -222,7 +222,7 @@ export default function AccountDetailsPage({
                       }
                       disabled={!isSuperAdmin}
                     >
-                      <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                      <SelectTrigger className="border-input focus:border-ring focus:ring-ring">
                         <SelectValue placeholder="Sélectionnez une province" />
                       </SelectTrigger>
                       <SelectContent>
@@ -236,8 +236,8 @@ export default function AccountDetailsPage({
                   </div>
 
                   <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="roles" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <Shield className="h-4 w-4 text-blue-600" />
+                    <Label htmlFor="roles" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <Shield className="h-4 w-4 text-primary" />
                       Type de compte
                     </Label>
                     <Select
@@ -249,7 +249,7 @@ export default function AccountDetailsPage({
                         }))
                       }
                     >
-                      <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                      <SelectTrigger className="border-input focus:border-ring focus:ring-ring">
                         <SelectValue placeholder="Sélectionnez un type de compte" />
                       </SelectTrigger>
                       <SelectContent>
@@ -264,12 +264,12 @@ export default function AccountDetailsPage({
                   </div>
                 </div>
 
-                <div className="flex justify-start pt-4 border-t border-gray-200">
+                <div className="flex justify-start pt-4 border-t border-border">
                   <AlertDialog open={open} onOpenChange={setOpen}>
                     <AlertDialogTrigger asChild>
                       <Button
                         type="button"
-                        className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-6 py-2 rounded-lg shadow-lg transition-all duration-200 transform hover:scale-105"
+                        className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg shadow-sm transition-all duration-200 transform hover:scale-105"
                         disabled={updateUserMutation.isLoading}
                       >
                         {updateUserMutation.isLoading ? "Mise à jour..." : "Confirmer la demande"}

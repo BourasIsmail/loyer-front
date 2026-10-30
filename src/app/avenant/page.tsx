@@ -312,7 +312,7 @@ export default function AvenantPage() {
 
   if (isLoading) {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        <div className="min-h-screen bg-background">
           <SideBar />
           <div className="lg:ml-64 p-4 sm:p-6">
             <BreadCrumb />
@@ -338,16 +338,16 @@ export default function AvenantPage() {
 
   if (error) {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        <div className="min-h-screen bg-background">
           <SideBar />
           <div className="lg:ml-64 p-4 sm:p-6">
             <BreadCrumb />
             <Card className="mt-6">
               <CardContent className="flex items-center justify-center py-12">
                 <div className="text-center">
-                  <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">Erreur de chargement</h3>
-                  <p className="text-gray-500">Une erreur s'est produite: {(error as Error).message}</p>
+                  <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-foreground mb-2">Erreur de chargement</h3>
+                  <p className="text-muted-foreground">Une erreur s'est produite: {(error as Error).message}</p>
                 </div>
               </CardContent>
             </Card>
@@ -357,7 +357,7 @@ export default function AvenantPage() {
   }
 
   return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      <div className="min-h-screen bg-background">
         <SideBar />
         <div className="lg:ml-64 p-4 sm:p-6">
           <BreadCrumb />
@@ -365,12 +365,12 @@ export default function AvenantPage() {
           <div className="mt-6 space-y-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <FileText className="h-6 w-6 text-blue-600" />
+                <div className="p-2 bg-accent rounded-lg">
+                  <FileText className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-gray-900">Gestion des Avenants</h1>
-                  <p className="text-gray-600">Gérez et suivez tous vos avenants de contrat</p>
+                  <h1 className="text-2xl font-bold text-foreground">Gestion des Avenants</h1>
+                  <p className="text-muted-foreground">Gérez et suivez tous vos avenants de contrat</p>
                 </div>
               </div>
               <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>

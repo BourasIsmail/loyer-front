@@ -84,16 +84,16 @@ export default function ProprietaireDetails({
 
   if (isLoading || isLoadingUser) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      <div className="min-h-screen bg-background">
         <SideBar />
         <div className="p-4 sm:p-6 lg:p-8 sm:ml-64">
           <BreadCrumb />
           <div className="mt-6">
-            <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
-              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
+            <Card className="shadow-xl border-0 bg-card/80 backdrop-blur-sm">
+              <CardHeader className="bg-primary text-white rounded-t-lg">
                 <div className="flex items-center gap-3">
-                  <Skeleton className="h-6 w-6 bg-white/20" />
-                  <Skeleton className="h-6 w-48 bg-white/20" />
+                  <Skeleton className="h-6 w-6 bg-card/20" />
+                  <Skeleton className="h-6 w-48 bg-card/20" />
                 </div>
               </CardHeader>
               <CardContent className="p-6 space-y-6">
@@ -115,21 +115,21 @@ export default function ProprietaireDetails({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-background">
       <SideBar />
       <div className="p-4 sm:p-6 lg:p-8 sm:ml-64">
         <BreadCrumb />
 
         <div className="mt-6">
-          <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
-            <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
+          <Card className="shadow-xl border-0 bg-card/80 backdrop-blur-sm">
+            <CardHeader className="bg-primary text-white rounded-t-lg">
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-3 text-xl font-semibold">
                   <User className="h-6 w-6" />
                   Détails du Propriétaire
                 </CardTitle>
                 <Link href="/proprietaires">
-                  <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
+                  <Button variant="ghost" size="sm" className="text-white hover:bg-card/20">
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     Retour
                   </Button>
@@ -141,8 +141,8 @@ export default function ProprietaireDetails({
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="nom" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <User className="h-4 w-4 text-blue-600" />
+                    <Label htmlFor="nom" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <User className="h-4 w-4 text-primary" />
                       Nom Complet
                     </Label>
                     <Input
@@ -157,13 +157,13 @@ export default function ProprietaireDetails({
                         })
                       }
                       disabled={!is_Super_Admin}
-                      className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                      className="h-11 border-border focus:border-ring focus:ring-ring"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="type" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <Building2 className="h-4 w-4 text-blue-600" />
+                    <Label htmlFor="type" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <Building2 className="h-4 w-4 text-primary" />
                       Type de Propriétaire
                     </Label>
                     <Select
@@ -176,7 +176,7 @@ export default function ProprietaireDetails({
                       }
                       disabled={!is_Super_Admin}
                     >
-                      <SelectTrigger className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500">
+                      <SelectTrigger className="h-11 border-border focus:border-ring focus:ring-ring">
                         <SelectValue placeholder="Choisissez un type" />
                       </SelectTrigger>
                       <SelectContent>
@@ -188,8 +188,8 @@ export default function ProprietaireDetails({
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="province" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <MapPin className="h-4 w-4 text-blue-600" />
+                    <Label htmlFor="province" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <MapPin className="h-4 w-4 text-primary" />
                       Province
                     </Label>
                     <Select
@@ -202,7 +202,7 @@ export default function ProprietaireDetails({
                       }
                       disabled={!is_Super_Admin}
                     >
-                      <SelectTrigger className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500">
+                      <SelectTrigger className="h-11 border-border focus:border-ring focus:ring-ring">
                         <SelectValue placeholder="Sélectionnez une province" />
                       </SelectTrigger>
                       <SelectContent>
@@ -216,8 +216,8 @@ export default function ProprietaireDetails({
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="cin" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <IdCard className="h-4 w-4 text-blue-600" />
+                    <Label htmlFor="cin" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <IdCard className="h-4 w-4 text-primary" />
                       CIN / IEF
                     </Label>
                     <Input
@@ -232,13 +232,13 @@ export default function ProprietaireDetails({
                         })
                       }
                       disabled={!is_Super_Admin}
-                      className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                      className="h-11 border-border focus:border-ring focus:ring-ring"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="telephone" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <Phone className="h-4 w-4 text-blue-600" />
+                    <Label htmlFor="telephone" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <Phone className="h-4 w-4 text-primary" />
                       Téléphone
                     </Label>
                     <Input
@@ -253,13 +253,13 @@ export default function ProprietaireDetails({
                         })
                       }
                       disabled={!is_Super_Admin}
-                      className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                      className="h-11 border-border focus:border-ring focus:ring-ring"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="adresse" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <MapPin className="h-4 w-4 text-blue-600" />
+                    <Label htmlFor="adresse" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <MapPin className="h-4 w-4 text-primary" />
                       Adresse
                     </Label>
                     <Input
@@ -274,7 +274,7 @@ export default function ProprietaireDetails({
                         })
                       }
                       disabled={!is_Super_Admin}
-                      className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                      className="h-11 border-border focus:border-ring focus:ring-ring"
                     />
                   </div>
                 </div>
@@ -283,7 +283,7 @@ export default function ProprietaireDetails({
                   <Button
                     type="submit"
                     disabled={!is_Super_Admin || isSubmitting}
-                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 h-11 font-medium shadow-lg hover:shadow-xl transition-all duration-200"
+                    className="bg-primary hover:bg-primary/90 text-white px-6 py-2 h-11 font-medium shadow-sm hover:shadow-md transition-all duration-200"
                   >
                     <Save className="h-4 w-4 mr-2" />
                     {isSubmitting ? "Modification en cours..." : "Modifier les informations"}

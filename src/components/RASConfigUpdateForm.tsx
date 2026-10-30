@@ -108,24 +108,24 @@ export function RASConfigUpdateForm() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg">
+        <div className="p-2 bg-primary rounded-lg">
           <Settings className="h-6 w-6 text-white" />
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Configuration RAS</h2>
-          <p className="text-gray-600 dark:text-gray-400">Modifier les paramètres de la Retenue à la Source</p>
+          <h2 className="text-2xl font-bold text-foreground ">Configuration RAS</h2>
+          <p className="text-muted-foreground ">Modifier les paramètres de la Retenue à la Source</p>
         </div>
       </div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <Card className="border-0 shadow-lg bg-gradient-to-r from-white to-blue-50/30 dark:from-gray-800 dark:to-blue-900/10">
-            <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
+          <Card className="shadow-sm">
+            <CardHeader className="bg-primary text-white rounded-t-lg">
               <div className="flex items-center gap-2">
                 <Percent className="h-5 w-5" />
                 <CardTitle>Paramètres Principaux</CardTitle>
               </div>
-              <CardDescription className="text-blue-100">
+              <CardDescription className="text-primary-foreground/80">
                 Configuration des seuils et pourcentages de base
               </CardDescription>
             </CardHeader>
@@ -136,13 +136,13 @@ export function RASConfigUpdateForm() {
                   name="lowerThreshold1"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      <FormLabel className="text-sm font-semibold text-foreground ">
                         Seuil inférieur 1
                       </FormLabel>
                       <FormControl>
                         <Input
                           type="number"
-                          className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                          className="border-input focus:border-ring focus:ring-ring"
                           {...field}
                           onChange={(e) => field.onChange(Number.parseFloat(e.target.value))}
                         />
@@ -156,13 +156,13 @@ export function RASConfigUpdateForm() {
                   name="upperThreshold1"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      <FormLabel className="text-sm font-semibold text-foreground ">
                         Seuil supérieur 1
                       </FormLabel>
                       <FormControl>
                         <Input
                           type="number"
-                          className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                          className="border-input focus:border-ring focus:ring-ring"
                           {...field}
                           onChange={(e) => field.onChange(Number.parseFloat(e.target.value))}
                         />
@@ -176,13 +176,13 @@ export function RASConfigUpdateForm() {
                   name="percentage1"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      <FormLabel className="text-sm font-semibold text-foreground ">
                         Pourcentage 1
                       </FormLabel>
                       <FormControl>
                         <Input
                           type="number"
-                          className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                          className="border-input focus:border-ring focus:ring-ring"
                           {...field}
                           onChange={(e) => field.onChange(Number.parseFloat(e.target.value))}
                         />
@@ -196,13 +196,13 @@ export function RASConfigUpdateForm() {
                   name="lowerThreshold2"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      <FormLabel className="text-sm font-semibold text-foreground ">
                         Seuil inférieur 2
                       </FormLabel>
                       <FormControl>
                         <Input
                           type="number"
-                          className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                          className="border-input focus:border-ring focus:ring-ring"
                           {...field}
                           onChange={(e) => field.onChange(Number.parseFloat(e.target.value))}
                         />
@@ -216,13 +216,13 @@ export function RASConfigUpdateForm() {
                   name="upperThreshold2"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      <FormLabel className="text-sm font-semibold text-foreground ">
                         Seuil supérieur 2
                       </FormLabel>
                       <FormControl>
                         <Input
                           type="number"
-                          className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                          className="border-input focus:border-ring focus:ring-ring"
                           {...field}
                           onChange={(e) => field.onChange(Number.parseFloat(e.target.value))}
                         />
@@ -236,13 +236,13 @@ export function RASConfigUpdateForm() {
                   name="percentage2"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      <FormLabel className="text-sm font-semibold text-foreground ">
                         Pourcentage 2
                       </FormLabel>
                       <FormControl>
                         <Input
                           type="number"
-                          className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                          className="border-input focus:border-ring focus:ring-ring"
                           {...field}
                           onChange={(e) => field.onChange(Number.parseFloat(e.target.value))}
                         />
@@ -256,13 +256,13 @@ export function RASConfigUpdateForm() {
                   name="percentage3"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      <FormLabel className="text-sm font-semibold text-foreground ">
                         Pourcentage 3
                       </FormLabel>
                       <FormControl>
                         <Input
                           type="number"
-                          className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                          className="border-input focus:border-ring focus:ring-ring"
                           {...field}
                           onChange={(e) => field.onChange(Number.parseFloat(e.target.value))}
                         />
@@ -275,8 +275,8 @@ export function RASConfigUpdateForm() {
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-lg bg-gradient-to-r from-white to-indigo-50/30 dark:from-gray-800 dark:to-indigo-900/10">
-            <CardHeader className="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-t-lg">
+          <Card className="shadow-sm">
+            <CardHeader className="bg-primary text-white rounded-t-lg">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Plus className="h-5 w-5" />
@@ -286,7 +286,7 @@ export function RASConfigUpdateForm() {
                   type="button"
                   variant="secondary"
                   size="sm"
-                  className="bg-white/20 hover:bg-white/30 text-white border-white/30"
+                  className="bg-card/20 hover:bg-card/30 text-white border-white/30"
                   onClick={() => {
                     const newSpecialCases = {
                       ...form.getValues("specialCasePercentages"),
@@ -300,7 +300,7 @@ export function RASConfigUpdateForm() {
                   Ajouter
                 </Button>
               </div>
-              <CardDescription className="text-indigo-100">
+              <CardDescription className="text-primary-foreground/80">
                 Pourcentages spécifiques pour certains locaux
               </CardDescription>
             </CardHeader>
@@ -309,14 +309,14 @@ export function RASConfigUpdateForm() {
                 {Object.entries(form.watch("specialCasePercentages")).map(([localId, percentage]) => (
                   <div
                     key={localId}
-                    className="flex items-end gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700"
+                    className="flex items-end gap-4 p-4 bg-muted/50  rounded-lg border border-border "
                   >
                     <FormItem className="flex-1">
-                      <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">ID Local</FormLabel>
+                      <FormLabel className="text-sm font-semibold text-foreground ">ID Local</FormLabel>
                       <FormControl>
                         <Input
                           type="number"
-                          className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                          className="border-input focus:border-ring focus:ring-ring"
                           value={localId}
                           onChange={(e) => {
                             const newSpecialCases = {
@@ -332,13 +332,13 @@ export function RASConfigUpdateForm() {
                       <FormDescription className="text-xs">Identifiant unique du local</FormDescription>
                     </FormItem>
                     <FormItem className="flex-1">
-                      <FormLabel className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      <FormLabel className="text-sm font-semibold text-foreground ">
                         Pourcentage spécial
                       </FormLabel>
                       <FormControl>
                         <Input
                           type="number"
-                          className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                          className="border-input focus:border-ring focus:ring-ring"
                           value={percentage}
                           onChange={(e) => {
                             const newPercentage = Number(e.target.value)
@@ -370,7 +370,7 @@ export function RASConfigUpdateForm() {
                   </div>
                 ))}
                 {Object.keys(form.watch("specialCasePercentages")).length === 0 && (
-                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                  <div className="text-center py-8 text-muted-foreground ">
                     <Plus className="h-12 w-12 mx-auto mb-3 opacity-50" />
                     <p>Aucun cas spécial configuré</p>
                     <p className="text-sm">Cliquez sur "Ajouter" pour en créer un</p>
@@ -399,7 +399,7 @@ export function RASConfigUpdateForm() {
             <Button
               type="submit"
               disabled={loading}
-              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-2.5 font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
+              className="bg-primary hover:bg-primary/90 text-white px-8 py-2.5 font-semibold shadow-sm hover:shadow-md transition-all duration-200"
             >
               {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Settings className="mr-2 h-4 w-4" />}
               Mettre à jour la configuration

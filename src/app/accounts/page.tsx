@@ -80,7 +80,7 @@ export default function AccountsManagement() {
       header: "Nom",
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
-          <UserCheck className="h-4 w-4 text-blue-600" />
+          <UserCheck className="h-4 w-4 text-primary" />
           <span className="font-medium">{row.getValue("name")}</span>
         </div>
       ),
@@ -88,13 +88,13 @@ export default function AccountsManagement() {
     {
       accessorKey: "email",
       header: "Email",
-      cell: ({ row }) => <span className="text-gray-600">{row.getValue("email")}</span>,
+      cell: ({ row }) => <span className="text-muted-foreground">{row.getValue("email")}</span>,
     },
     {
       accessorKey: "province.name",
       header: "Province",
       cell: ({ row }) => (
-        <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+        <span className="px-2 py-1 bg-accent text-accent-foreground rounded-full text-sm">
           {row.original.province?.name || "N/A"}
         </span>
       ),
@@ -158,13 +158,13 @@ export default function AccountsManagement() {
     return (
       <>
         <SideBar />
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        <div className="min-h-screen bg-background">
           <div className="lg:ml-64">
             <div className="p-6">
               <BreadCrumb />
               <div className="mt-6">
-                <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-                  <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-t-lg">
+                <Card className="border-0 shadow-xl bg-card/80 backdrop-blur-sm">
+                  <CardHeader className="bg-primary text-white rounded-t-lg">
                     <CardTitle className="flex items-center gap-2 text-xl">
                       <Users className="h-6 w-6" />
                       Gestion des Comptes
@@ -196,16 +196,16 @@ export default function AccountsManagement() {
     return (
       <>
         <SideBar />
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        <div className="min-h-screen bg-background">
           <div className="lg:ml-64">
             <div className="p-6">
               <BreadCrumb />
               <div className="mt-6">
-                <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+                <Card className="border-0 shadow-xl bg-card/80 backdrop-blur-sm">
                   <CardContent className="p-6">
                     <div className="text-center py-12">
                       <div className="text-red-500 text-lg font-medium mb-2">Erreur de chargement</div>
-                      <p className="text-gray-600">Une erreur s'est produite: {(error as Error).message}</p>
+                      <p className="text-muted-foreground">Une erreur s'est produite: {(error as Error).message}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -220,14 +220,14 @@ export default function AccountsManagement() {
   return (
     <>
       <SideBar />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      <div className="min-h-screen bg-background">
         <div className="lg:ml-64">
           <div className="p-6">
             <BreadCrumb />
 
             <div className="mt-6">
-              <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-                <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-t-lg">
+              <Card className="border-0 shadow-xl bg-card/80 backdrop-blur-sm">
+                <CardHeader className="bg-primary text-white rounded-t-lg">
                   <CardTitle className="flex items-center gap-2 text-xl">
                     <Users className="h-6 w-6" />
                     Gestion des Comptes
@@ -236,13 +236,13 @@ export default function AccountsManagement() {
                 <CardContent className="p-6">
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                     <Link href="/addComptes">
-                      <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 gap-2">
+                      <Button className="bg-primary hover:bg-primary/90 gap-2">
                         <Plus className="h-4 w-4" />
                         Ajouter Un Compte
                       </Button>
                     </Link>
                     <div className="relative w-full sm:w-auto">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                       <Input
                         placeholder="Rechercher par email..."
                         value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
@@ -252,14 +252,14 @@ export default function AccountsManagement() {
                     </div>
                   </div>
 
-                  <div className="rounded-lg border border-gray-200 overflow-hidden">
+                  <div className="rounded-lg border border-border overflow-hidden">
                     <Table>
                       <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
-                          <TableRow key={headerGroup.id} className="bg-gray-50">
+                          <TableRow key={headerGroup.id} className="bg-muted/50">
                             {headerGroup.headers.map((header) => {
                               return (
-                                <TableHead key={header.id} className="font-semibold text-gray-700">
+                                <TableHead key={header.id} className="font-semibold text-foreground">
                                   {header.isPlaceholder
                                     ? null
                                     : flexRender(header.column.columnDef.header, header.getContext())}
@@ -275,7 +275,7 @@ export default function AccountsManagement() {
                             <TableRow
                               key={row.id}
                               data-state={row.getIsSelected() && "selected"}
-                              className="hover:bg-blue-50/50 transition-colors"
+                              className="hover:bg-accent transition-colors"
                             >
                               {row.getVisibleCells().map((cell) => (
                                 <TableCell key={cell.id} className="py-4">
@@ -286,7 +286,7 @@ export default function AccountsManagement() {
                           ))
                         ) : (
                           <TableRow>
-                            <TableCell colSpan={columns.length} className="h-24 text-center text-gray-500">
+                            <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
                               Aucun résultat trouvé.
                             </TableCell>
                           </TableRow>
@@ -296,7 +296,7 @@ export default function AccountsManagement() {
                   </div>
 
                   <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6">
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-muted-foreground">
                       Page {table.getState().pagination.pageIndex + 1} sur {table.getPageCount()}
                     </div>
                     <div className="flex items-center space-x-2">

@@ -46,7 +46,7 @@ export const columns: ColumnDef<Local>[] = [
     header: ({ column }) => <DataTableColumnHeader column={column} title="Province" />,
     cell: ({ row }) => {
       const province = row.original.province?.name
-      return <div className="text-gray-600">{province}</div>
+      return <div className="text-muted-foreground">{province}</div>
     },
   },
   {
@@ -59,7 +59,7 @@ export const columns: ColumnDef<Local>[] = [
         <div className="text-center">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-100">
+              <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-accent">
                 <span className="sr-only">Ouvrir le menu</span>
                 <MoreHorizontal className="h-4 w-4" />
               </Button>

@@ -52,14 +52,14 @@ export function LocalTableCard({ title, queryKey, queryFn, downloadFn }: LocalTa
   }
 
   return (
-    <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-slate-50 dark:from-gray-900 dark:to-gray-800">
+    <Card className="shadow-sm">
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-              <Building2 className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+            <div className="p-2 bg-accent  rounded-lg">
+              <Building2 className="h-5 w-5 text-primary " />
             </div>
-            <CardTitle className="text-xl font-semibold text-gray-900 dark:text-gray-100">{title}</CardTitle>
+            <CardTitle className="text-xl font-semibold text-foreground ">{title}</CardTitle>
           </div>
           <Button
             onClick={handleDownload}
@@ -82,15 +82,15 @@ export function LocalTableCard({ title, queryKey, queryFn, downloadFn }: LocalTa
         </div>
       </CardHeader>
       <CardContent>
-        <div className="rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="rounded-lg border border-border  overflow-hidden">
           <Table>
             <TableHeader>
-              <TableRow className="bg-gray-50 dark:bg-gray-800/50">
-                <TableHead className="font-semibold text-gray-700 dark:text-gray-300">Adresse</TableHead>
-                <TableHead className="font-semibold text-gray-700 dark:text-gray-300">Propriétaire</TableHead>
-                <TableHead className="font-semibold text-gray-700 dark:text-gray-300">RIB</TableHead>
-                <TableHead className="font-semibold text-gray-700 dark:text-gray-300">Montant brut</TableHead>
-                <TableHead className="font-semibold text-gray-700 dark:text-gray-300">Mode de paiement</TableHead>
+              <TableRow className="bg-muted/50 ">
+                <TableHead className="font-semibold text-foreground ">Adresse</TableHead>
+                <TableHead className="font-semibold text-foreground ">Propriétaire</TableHead>
+                <TableHead className="font-semibold text-foreground ">RIB</TableHead>
+                <TableHead className="font-semibold text-foreground ">Montant brut</TableHead>
+                <TableHead className="font-semibold text-foreground ">Mode de paiement</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -116,14 +116,14 @@ export function LocalTableCard({ title, queryKey, queryFn, downloadFn }: LocalTa
                 ))
               ) : locaux && locaux.length > 0 ? (
                 locaux.slice(0, 10).map((local) => (
-                  <TableRow key={local.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                    <TableCell className="max-w-xs truncate font-medium text-gray-900 dark:text-gray-100">
+                  <TableRow key={local.id} className="hover:bg-accent  transition-colors">
+                    <TableCell className="max-w-xs truncate font-medium text-foreground ">
                       {local.adresse}
                     </TableCell>
-                    <TableCell className="max-w-xs truncate text-gray-700 dark:text-gray-300">
+                    <TableCell className="max-w-xs truncate text-foreground ">
                       {local.proprietaires?.map((p) => p.nomComplet).join(" et ")}
                     </TableCell>
-                    <TableCell className="max-w-xs truncate text-gray-600 dark:text-gray-400 font-mono text-sm">
+                    <TableCell className="max-w-xs truncate text-muted-foreground  font-mono text-sm">
                       {local.rib}
                     </TableCell>
                     <TableCell>
@@ -135,7 +135,7 @@ export function LocalTableCard({ title, queryKey, queryFn, downloadFn }: LocalTa
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline" className="text-gray-700 dark:text-gray-300">
+                      <Badge variant="outline" className="text-foreground ">
                         {local.modeDePaiement}
                       </Badge>
                     </TableCell>
@@ -143,7 +143,7 @@ export function LocalTableCard({ title, queryKey, queryFn, downloadFn }: LocalTa
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center py-8 text-gray-500 dark:text-gray-400">
+                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground ">
                     <FileSpreadsheet className="h-8 w-8 mx-auto mb-2 opacity-50" />
                     Aucun local trouvé
                   </TableCell>
@@ -153,7 +153,7 @@ export function LocalTableCard({ title, queryKey, queryFn, downloadFn }: LocalTa
           </Table>
         </div>
         {locaux && locaux.length > 10 && (
-          <div className="mt-4 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800/50 px-4 py-2 rounded-lg">
+          <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground  bg-muted/50  px-4 py-2 rounded-lg">
             <span>Affichage de 10 sur {locaux.length} locaux</span>
             <Badge variant="secondary">{locaux.length - 10} de plus</Badge>
           </div>

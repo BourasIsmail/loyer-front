@@ -67,7 +67,7 @@ export default function AjouterCompte() {
 
   if (isLoadingProvinces) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      <div className="min-h-screen bg-background">
         <SideBar />
         <div className="lg:ml-64">
           <div className="p-4 sm:p-6 lg:p-8">
@@ -77,8 +77,8 @@ export default function AjouterCompte() {
               <Skeleton className="h-4 w-96" />
             </div>
             <Card className="shadow-xl border-0">
-              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
-                <Skeleton className="h-6 w-48 bg-blue-500" />
+              <CardHeader className="bg-primary text-white rounded-t-lg">
+                <Skeleton className="h-6 w-48 bg-primary" />
               </CardHeader>
               <CardContent className="p-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -98,7 +98,7 @@ export default function AjouterCompte() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-background">
       <SideBar />
       <div className="lg:ml-64">
         <div className="p-4 sm:p-6 lg:p-8">
@@ -110,23 +110,23 @@ export default function AjouterCompte() {
                 variant="ghost"
                 size="sm"
                 onClick={() => router.back()}
-                className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                className="text-primary hover:text-primary hover:bg-accent"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Retour
               </Button>
             </div>
             <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <UserPlus className="h-6 w-6 text-blue-600" />
+              <div className="p-2 bg-accent rounded-lg">
+                <UserPlus className="h-6 w-6 text-primary" />
               </div>
-              <h1 className="text-3xl font-bold text-gray-900">Ajouter un Compte</h1>
+              <h1 className="text-3xl font-bold text-foreground">Ajouter un Compte</h1>
             </div>
-            <p className="text-gray-600">Créez un nouveau compte utilisateur pour votre système de gestion</p>
+            <p className="text-muted-foreground">Créez un nouveau compte utilisateur pour votre système de gestion</p>
           </div>
 
           <Card className="shadow-xl border-0 overflow-hidden">
-            <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+            <CardHeader className="bg-primary text-white">
               <CardTitle className="flex items-center gap-2 text-xl">
                 <User className="h-5 w-5" />
                 Informations du Compte
@@ -136,8 +136,8 @@ export default function AjouterCompte() {
               <form onSubmit={gererSoumission} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <Mail className="h-4 w-4 text-blue-600" />
+                    <Label htmlFor="email" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <Mail className="h-4 w-4 text-primary" />
                       Adresse e-mail
                     </Label>
                     <Input
@@ -151,14 +151,14 @@ export default function AjouterCompte() {
                         }))
                       }
                       placeholder="exemple@domaine.com"
-                      className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                      className="h-11 border-border focus:border-ring focus:ring-ring"
                       required
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="name" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <User className="h-4 w-4 text-blue-600" />
+                    <Label htmlFor="name" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <User className="h-4 w-4 text-primary" />
                       Nom complet
                     </Label>
                     <Input
@@ -172,14 +172,14 @@ export default function AjouterCompte() {
                         }))
                       }
                       placeholder="Nom et prénom"
-                      className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                      className="h-11 border-border focus:border-ring focus:ring-ring"
                       required
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="password" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <Lock className="h-4 w-4 text-blue-600" />
+                    <Label htmlFor="password" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <Lock className="h-4 w-4 text-primary" />
                       Mot de passe
                     </Label>
                     <Input
@@ -193,14 +193,14 @@ export default function AjouterCompte() {
                         }))
                       }
                       placeholder="Mot de passe sécurisé"
-                      className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                      className="h-11 border-border focus:border-ring focus:ring-ring"
                       required
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <MapPin className="h-4 w-4 text-blue-600" />
+                    <Label className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <MapPin className="h-4 w-4 text-primary" />
                       Province
                     </Label>
                     <Select
@@ -211,7 +211,7 @@ export default function AjouterCompte() {
                         }))
                       }
                     >
-                      <SelectTrigger className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500">
+                      <SelectTrigger className="h-11 border-border focus:border-ring focus:ring-ring">
                         <SelectValue placeholder="Sélectionnez une province" />
                       </SelectTrigger>
                       <SelectContent>
@@ -225,8 +225,8 @@ export default function AjouterCompte() {
                   </div>
 
                   <div className="space-y-2 md:col-span-2">
-                    <Label className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                      <Shield className="h-4 w-4 text-blue-600" />
+                    <Label className="flex items-center gap-2 text-sm font-medium text-foreground">
+                      <Shield className="h-4 w-4 text-primary" />
                       Type de compte
                     </Label>
                     <Select
@@ -237,7 +237,7 @@ export default function AjouterCompte() {
                         }))
                       }
                     >
-                      <SelectTrigger className="h-11 border-gray-200 focus:border-blue-500 focus:ring-blue-500">
+                      <SelectTrigger className="h-11 border-border focus:border-ring focus:ring-ring">
                         <SelectValue placeholder="Sélectionnez un type de compte" />
                       </SelectTrigger>
                       <SelectContent>
@@ -252,12 +252,12 @@ export default function AjouterCompte() {
                   </div>
                 </div>
 
-                <div className="flex justify-end pt-6 border-t border-gray-100">
+                <div className="flex justify-end pt-6 border-t border-border">
                   <AlertDialog open={dialogueOuvert} onOpenChange={setDialogueOuvert}>
                     <AlertDialogTrigger asChild>
                       <Button
                         type="button"
-                        className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-2 h-11 shadow-lg hover:shadow-xl transition-all duration-200"
+                        className="bg-green-600 hover:bg-green-700 text-white px-8 py-2 h-11 shadow-sm hover:shadow-md transition-all duration-200"
                         disabled={ajouterUtilisateur.isLoading}
                       >
                         <UserPlus className="h-4 w-4 mr-2" />

@@ -98,12 +98,12 @@ export default function Settings() {
     return (
       <>
         <SideBar />
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 p-4 ml-64">
+        <div className="min-h-screen bg-background p-4 ml-64">
           <div className="max-w-4xl mx-auto space-y-6">
             <BreadCrumb />
             <div className="space-y-6">
               <Skeleton className="h-8 w-64" />
-              <Card className="shadow-lg">
+              <Card className="shadow-sm">
                 <CardHeader>
                   <Skeleton className="h-6 w-48" />
                   <Skeleton className="h-4 w-96" />
@@ -130,28 +130,28 @@ export default function Settings() {
   return (
     <>
       <SideBar />
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 p-4 ml-64">
+      <div className="min-h-screen bg-background p-4 ml-64">
         <div className="max-w-4xl mx-auto space-y-6">
           <BreadCrumb />
 
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <User className="h-6 w-6 text-blue-600" />
+              <div className="p-2 bg-accent rounded-lg">
+                <User className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Paramètres du Compte</h1>
-                <p className="text-gray-600">Gérez vos informations personnelles et préférences</p>
+                <h1 className="text-3xl font-bold text-foreground">Paramètres du Compte</h1>
+                <p className="text-muted-foreground">Gérez vos informations personnelles et préférences</p>
               </div>
             </div>
 
-            <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-              <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-t-lg">
+            <Card className="shadow-sm border-0 bg-card/80 backdrop-blur-sm">
+              <CardHeader className="bg-primary text-white rounded-t-lg">
                 <CardTitle className="flex items-center gap-2">
                   <Shield className="h-5 w-5" />
                   Informations du Compte
                 </CardTitle>
-                <CardDescription className="text-blue-100">
+                <CardDescription className="text-primary-foreground/80">
                   Modifiez vos informations personnelles et paramètres de sécurité
                 </CardDescription>
               </CardHeader>
@@ -159,8 +159,8 @@ export default function Settings() {
                 <form onSubmit={gererSoumission} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="email" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                        <Mail className="h-4 w-4 text-blue-600" />
+                      <Label htmlFor="email" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                        <Mail className="h-4 w-4 text-primary" />
                         Adresse e-mail
                       </Label>
                       <Input
@@ -174,14 +174,14 @@ export default function Settings() {
                           }))
                         }
                         placeholder="Adresse e-mail"
-                        className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-input focus:border-ring focus:ring-ring"
                         required
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="name" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                        <User className="h-4 w-4 text-blue-600" />
+                      <Label htmlFor="name" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                        <User className="h-4 w-4 text-primary" />
                         Nom complet
                       </Label>
                       <Input
@@ -195,14 +195,14 @@ export default function Settings() {
                           }))
                         }
                         placeholder="Nom complet"
-                        className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-input focus:border-ring focus:ring-ring"
                         required
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="password" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                        <Lock className="h-4 w-4 text-blue-600" />
+                      <Label htmlFor="password" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                        <Lock className="h-4 w-4 text-primary" />
                         Nouveau mot de passe
                       </Label>
                       <Input
@@ -215,13 +215,13 @@ export default function Settings() {
                           }))
                         }
                         placeholder="Laissez vide pour conserver le mot de passe actuel"
-                        className="border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-input focus:border-ring focus:ring-ring"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="province" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                        <MapPin className="h-4 w-4 text-blue-600" />
+                      <Label htmlFor="province" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                        <MapPin className="h-4 w-4 text-primary" />
                         Province
                       </Label>
                       <Select
@@ -234,7 +234,7 @@ export default function Settings() {
                         }
                         disabled={!isSuperAdmin}
                       >
-                        <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                        <SelectTrigger className="border-input focus:border-ring focus:ring-ring">
                           <SelectValue placeholder="Sélectionnez une province" />
                         </SelectTrigger>
                         <SelectContent>
@@ -246,7 +246,7 @@ export default function Settings() {
                         </SelectContent>
                       </Select>
                       {!isSuperAdmin && (
-                        <p className="text-xs text-gray-500 flex items-center gap-1">
+                        <p className="text-xs text-muted-foreground flex items-center gap-1">
                           <AlertCircle className="h-3 w-3" />
                           Seuls les super administrateurs peuvent modifier la province
                         </p>
@@ -254,8 +254,8 @@ export default function Settings() {
                     </div>
 
                     <div className="space-y-2 md:col-span-2">
-                      <Label htmlFor="roles" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                        <Shield className="h-4 w-4 text-blue-600" />
+                      <Label htmlFor="roles" className="flex items-center gap-2 text-sm font-medium text-foreground">
+                        <Shield className="h-4 w-4 text-primary" />
                         Type de compte
                       </Label>
                       <Select
@@ -268,7 +268,7 @@ export default function Settings() {
                         }
                         disabled={!isSuperAdmin}
                       >
-                        <SelectTrigger className="border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                        <SelectTrigger className="border-input focus:border-ring focus:ring-ring">
                           <SelectValue placeholder="Sélectionnez un type de compte" />
                         </SelectTrigger>
                         <SelectContent>
@@ -281,7 +281,7 @@ export default function Settings() {
                         </SelectContent>
                       </Select>
                       {!isSuperAdmin && (
-                        <p className="text-xs text-gray-500 flex items-center gap-1">
+                        <p className="text-xs text-muted-foreground flex items-center gap-1">
                           <AlertCircle className="h-3 w-3" />
                           Seuls les super administrateurs peuvent modifier le type de compte
                         </p>
@@ -289,12 +289,12 @@ export default function Settings() {
                     </div>
                   </div>
 
-                  <div className="flex justify-start pt-4 border-t border-gray-200">
+                  <div className="flex justify-start pt-4 border-t border-border">
                     <AlertDialog open={dialogueOuvert} onOpenChange={setDialogueOuvert}>
                       <AlertDialogTrigger asChild>
                         <Button
                           type="button"
-                          className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2"
+                          className="bg-green-600 hover:bg-green-700 text-white shadow-sm hover:shadow-md transition-all duration-200 flex items-center gap-2"
                           disabled={miseAJourUtilisateur.isLoading}
                         >
                           <Save className="h-4 w-4" />
@@ -307,16 +307,16 @@ export default function Settings() {
                             <AlertCircle className="h-5 w-5 text-amber-500" />
                             Confirmer les modifications
                           </AlertDialogTitle>
-                          <AlertDialogDescription className="text-gray-600">
+                          <AlertDialogDescription className="text-muted-foreground">
                             Êtes-vous sûr de vouloir enregistrer ces modifications ? Cette action mettra à jour vos
                             informations de compte.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel className="border-gray-300 hover:bg-gray-50">Annuler</AlertDialogCancel>
+                          <AlertDialogCancel className="border-input hover:bg-accent">Annuler</AlertDialogCancel>
                           <AlertDialogAction
                             onClick={gererSoumission}
-                            className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
+                            className="bg-green-600 hover:bg-green-700"
                           >
                             Confirmer
                           </AlertDialogAction>

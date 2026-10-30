@@ -222,7 +222,7 @@ export default function Home() {
               <Skeleton className="h-6 w-48 mb-2" />
               <Skeleton className="h-4 w-32" />
             </div>
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div className="bg-card rounded-xl shadow-sm border border-border p-6">
               <Skeleton className="h-8 w-64 mb-6" />
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                 <Skeleton className="h-10 w-full" />
@@ -246,17 +246,17 @@ export default function Home() {
 
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-foreground mb-2">
               Ordre de Virement
             </h1>
-            <p className="text-gray-600">
+            <p className="text-muted-foreground">
               Générez les ordres de virement pour les paiements des locaux
             </p>
           </div>
 
           {/* Form */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-8">
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+          <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden mb-8">
+            <div className="bg-primary px-6 py-4">
               <h2 className="text-xl font-semibold text-white flex items-center gap-2">
                 <FaFileDownload className="h-5 w-5" />
                 Informations de Virement
@@ -267,9 +267,9 @@ export default function Home() {
                 <div className="space-y-2">
                   <Label
                     htmlFor="region"
-                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                    className="text-sm font-medium text-foreground flex items-center gap-2"
                   >
-                    <FaMapMarkerAlt className="h-4 w-4 text-blue-600" />
+                    <FaMapMarkerAlt className="h-4 w-4 text-primary" />
                     Choisissez une Direction Régionale
                   </Label>
                   <Select
@@ -300,9 +300,9 @@ export default function Home() {
                 <div className="space-y-2">
                   <Label
                     htmlFor="date"
-                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                    className="text-sm font-medium text-foreground flex items-center gap-2"
                   >
-                    <FaCalendarAlt className="h-4 w-4 text-blue-600" />
+                    <FaCalendarAlt className="h-4 w-4 text-primary" />
                     Date
                   </Label>
                   <Input
@@ -317,9 +317,9 @@ export default function Home() {
                 <div className="space-y-2">
                   <Label
                     htmlFor="nOrdre"
-                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                    className="text-sm font-medium text-foreground flex items-center gap-2"
                   >
-                    <FaHashtag className="h-4 w-4 text-blue-600" />
+                    <FaHashtag className="h-4 w-4 text-primary" />
                     N° Ordre de virement
                   </Label>
                   <Input
@@ -334,9 +334,9 @@ export default function Home() {
                 <div className="space-y-2">
                   <Label
                     htmlFor="comptePaiement"
-                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                    className="text-sm font-medium text-foreground flex items-center gap-2"
                   >
-                    <FaCreditCard className="h-4 w-4 text-blue-600" />
+                    <FaCreditCard className="h-4 w-4 text-primary" />
                     Choisissez un compte
                   </Label>
                   <Select
@@ -362,9 +362,9 @@ export default function Home() {
                 <div className="space-y-2">
                   <Label
                     htmlFor="nOP"
-                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                    className="text-sm font-medium text-foreground flex items-center gap-2"
                   >
-                    <FaHashtag className="h-4 w-4 text-blue-600" />
+                    <FaHashtag className="h-4 w-4 text-primary" />
                     N° OP
                   </Label>
                   <Input
@@ -379,9 +379,9 @@ export default function Home() {
                 <div className="space-y-2">
                   <Label
                     htmlFor="dateCreation"
-                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                    className="text-sm font-medium text-foreground flex items-center gap-2"
                   >
-                    <FaCalendarAlt className="h-4 w-4 text-blue-600" />
+                    <FaCalendarAlt className="h-4 w-4 text-primary" />
                     Date de création
                   </Label>
                   <Input
@@ -396,9 +396,9 @@ export default function Home() {
                 <div className="space-y-2">
                   <Label
                     htmlFor="mode"
-                    className="text-sm font-medium text-gray-700 flex items-center gap-2"
+                    className="text-sm font-medium text-foreground flex items-center gap-2"
                   >
-                    <FaCreditCard className="h-4 w-4 text-blue-600" />
+                    <FaCreditCard className="h-4 w-4 text-primary" />
                     Mode de paiement
                   </Label>
                   <Select onValueChange={(value) => setMode(value)} required>
@@ -414,7 +414,7 @@ export default function Home() {
               </div>
               <Button
                 type="submit"
-                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 h-11 flex items-center gap-2"
+                className="bg-primary hover:bg-primary/90 text-white px-6 py-2 h-11 flex items-center gap-2"
               >
                 <FaFileDownload className="h-4 w-4" />
                 Générer l'Ordre de Virement
@@ -424,12 +424,12 @@ export default function Home() {
 
           {/* Data Table */}
           {tableData.length > 0 ? (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+            <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
+              <div className="bg-primary px-6 py-4">
                 <h2 className="text-xl font-semibold text-white">
                   Liste des Locaux
                 </h2>
-                <p className="text-blue-100 text-sm mt-1">
+                <p className="text-primary-foreground/80 text-sm mt-1">
                   {tableData.length} local{tableData.length > 1 ? "aux" : ""}{" "}
                   trouvé{tableData.length > 1 ? "s" : ""}
                 </p>
@@ -443,26 +443,26 @@ export default function Home() {
               </div>
             </div>
           ) : selectedRegion ? (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
-              <div className="text-gray-400 mb-4">
+            <div className="bg-card rounded-xl shadow-sm border border-border p-12 text-center">
+              <div className="text-muted-foreground mb-4">
                 <FaMapMarkerAlt className="h-16 w-16 mx-auto" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              <h3 className="text-xl font-semibold text-foreground mb-2">
                 Aucun local trouvé
               </h3>
-              <p className="text-gray-600">
+              <p className="text-muted-foreground">
                 Aucun local ne correspond à la région sélectionnée.
               </p>
             </div>
           ) : (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
-              <div className="text-gray-400 mb-4">
+            <div className="bg-card rounded-xl shadow-sm border border-border p-12 text-center">
+              <div className="text-muted-foreground mb-4">
                 <FaMapMarkerAlt className="h-16 w-16 mx-auto" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              <h3 className="text-xl font-semibold text-foreground mb-2">
                 Sélectionnez une coordination
               </h3>
-              <p className="text-gray-600">
+              <p className="text-muted-foreground">
                 Choisissez une région pour afficher les locaux disponibles.
               </p>
             </div>

@@ -48,7 +48,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-background">
       <div className="flex min-h-screen">
         <div className="hidden lg:flex lg:w-1/2 xl:w-2/3 relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('/img1.png')] bg-cover bg-center opacity-35"></div>
@@ -65,7 +65,7 @@ export default function LoginPage() {
             <Card className="shadow-2xl border-0">
               <CardHeader className="space-y-4 pb-8">
                 <div className="text-center">
-                  <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">Connexion</CardTitle>
+                  <CardTitle className="text-2xl font-bold text-foreground dark:text-white">Connexion</CardTitle>
                   <CardDescription className="text-base mt-2">Accédez à votre espace de gestion</CardDescription>
                 </div>
               </CardHeader>
@@ -104,7 +104,7 @@ export default function LoginPage() {
 
                   <Button
                     type="submit"
-                    className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-medium"
+                    className="w-full h-11 bg-primary hover:bg-primary/90 text-white font-medium"
                     disabled={isLoading}
                   >
                     {isLoading ? "Connexion..." : "Se connecter"}

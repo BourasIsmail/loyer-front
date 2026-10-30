@@ -208,7 +208,7 @@ export default function Home({
   }
 
 return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+    <div className="min-h-screen bg-background">
       <SideBar />
       <div className="p-4 sm:p-6 lg:p-8 sm:ml-64">
         <div className="flex items-center gap-4 mb-6">
@@ -216,7 +216,7 @@ return (
             variant="outline"
             size="sm"
             onClick={() => router.back()}
-            className="flex items-center gap-2 hover:bg-blue-50 border-blue-200"
+            className="flex items-center gap-2 hover:bg-accent border-border"
           >
             <FaArrowLeft className="h-4 w-4" />
             Retour
@@ -224,8 +224,8 @@ return (
           <BreadCrumb />
         </div>
 
-        <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
-          <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
+        <Card className="border-0 shadow-xl bg-card/80 backdrop-blur-sm">
+          <CardHeader className="bg-primary text-white rounded-t-lg">
             <CardTitle className="flex items-center gap-3 text-xl">
               <FaHome className="h-6 w-6" />
               Détails du Local - {selectedValue?.adresse}
@@ -233,24 +233,24 @@ return (
           </CardHeader>
           <CardContent className="p-0">
             <Tabs defaultValue="info" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 bg-gray-50 rounded-none border-b">
+              <TabsList className="grid w-full grid-cols-3 bg-muted/50 rounded-none border-b">
                 <TabsTrigger
                   value="info"
-                  className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:text-blue-600"
+                  className="flex items-center gap-2 data-[state=active]:bg-card data-[state=active]:text-primary"
                 >
                   <FaHome className="h-4 w-4" />
                   Informations du local
                 </TabsTrigger>
                 <TabsTrigger
                   value="contract"
-                  className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:text-blue-600"
+                  className="flex items-center gap-2 data-[state=active]:bg-card data-[state=active]:text-primary"
                 >
                   <FaFileContract className="h-4 w-4" />
                   Contrat
                 </TabsTrigger>
                 <TabsTrigger
                   value="map"
-                  className="flex items-center gap-2 data-[state=active]:bg-white data-[state=active]:text-blue-600"
+                  className="flex items-center gap-2 data-[state=active]:bg-card data-[state=active]:text-primary"
                 >
                   <FaMapMarkerAlt className="h-4 w-4" />
                   Localisation
@@ -261,7 +261,7 @@ return (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="adresse" className="text-sm font-medium text-gray-700">
+                      <Label htmlFor="adresse" className="text-sm font-medium text-foreground">
                         Adresse
                       </Label>
                       <Input
@@ -275,11 +275,11 @@ return (
                         }
                         placeholder="Adresse"
                         disabled={!is_Super_Admin}
-                        className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-border focus:border-ring focus:ring-ring"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="brutMensuel" className="text-sm font-medium text-gray-700">
+                      <Label htmlFor="brutMensuel" className="text-sm font-medium text-foreground">
                         Montant brut
                       </Label>
                       <Input
@@ -294,11 +294,11 @@ return (
                         }
                         placeholder="Montant brut mensuel"
                         disabled={!is_Super_Admin}
-                        className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-border focus:border-ring focus:ring-ring"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="rib" className="text-sm font-medium text-gray-700">
+                      <Label htmlFor="rib" className="text-sm font-medium text-foreground">
                         RIB
                       </Label>
                       <Input
@@ -312,11 +312,11 @@ return (
                         }
                         placeholder="RIB"
                         disabled={is_Observateur}
-                        className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-border focus:border-ring focus:ring-ring"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="etat" className="text-sm font-medium text-gray-700">
+                      <Label htmlFor="etat" className="text-sm font-medium text-foreground">
                         État du local
                       </Label>
                       <Select
@@ -329,7 +329,7 @@ return (
                           } as Local)
                         }
                       >
-                        <SelectTrigger className="border-gray-200 focus:border-blue-500 focus:ring-blue-500">
+                        <SelectTrigger className="border-border focus:border-ring focus:ring-ring">
                           <SelectValue placeholder="Sélectionnez l'état du local" />
                         </SelectTrigger>
                         <SelectContent>
@@ -340,7 +340,7 @@ return (
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="dateResiliation" className="text-sm font-medium text-gray-700">
+                      <Label htmlFor="dateResiliation" className="text-sm font-medium text-foreground">
                         Date de résiliation
                       </Label>
                       <Input
@@ -355,11 +355,11 @@ return (
                           } as Local)
                         }
                         placeholder="Date de résiliation"
-                        className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-border focus:border-ring focus:ring-ring"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="dateEffetContrat" className="text-sm font-medium text-gray-700">
+                      <Label htmlFor="dateEffetContrat" className="text-sm font-medium text-foreground">
                         Date d'effet de contrat
                       </Label>
                       <Input
@@ -374,11 +374,11 @@ return (
                           } as Local)
                         }
                         placeholder="Date d'effet de contrat"
-                        className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-border focus:border-ring focus:ring-ring"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="province" className="text-sm font-medium text-gray-700">
+                      <Label htmlFor="province" className="text-sm font-medium text-foreground">
                         Province
                       </Label>
                       <Select
@@ -391,7 +391,7 @@ return (
                           } as Local)
                         }
                       >
-                        <SelectTrigger className="border-gray-200 focus:border-blue-500 focus:ring-blue-500">
+                        <SelectTrigger className="border-border focus:border-ring focus:ring-ring">
                           <SelectValue placeholder="Sélectionnez une province" />
                         </SelectTrigger>
                         <SelectContent>
@@ -404,7 +404,7 @@ return (
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="proprietaires" className="text-sm font-medium text-gray-700">
+                      <Label htmlFor="proprietaires" className="text-sm font-medium text-foreground">
                         Propriétaires
                       </Label>
                       <ReactSelect
@@ -452,7 +452,7 @@ return (
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="modeDePaiement" className="text-sm font-medium text-gray-700">
+                      <Label htmlFor="modeDePaiement" className="text-sm font-medium text-foreground">
                         Mode de paiement
                       </Label>
                       <Select
@@ -465,7 +465,7 @@ return (
                           } as Local)
                         }
                       >
-                        <SelectTrigger className="border-gray-200 focus:border-blue-500 focus:ring-blue-500">
+                        <SelectTrigger className="border-border focus:border-ring focus:ring-ring">
                           <SelectValue placeholder="Sélectionnez le mode de paiement" />
                         </SelectTrigger>
                         <SelectContent>
@@ -475,7 +475,7 @@ return (
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="idContrat" className="text-sm font-medium text-gray-700">
+                      <Label htmlFor="idContrat" className="text-sm font-medium text-foreground">
                         ID de contrat
                       </Label>
                       <Input
@@ -489,11 +489,11 @@ return (
                           } as Local)
                         }
                         placeholder="ID de contrat"
-                        className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-border focus:border-ring focus:ring-ring"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="ancientBrute" className="text-sm font-medium text-gray-700">
+                      <Label htmlFor="ancientBrute" className="text-sm font-medium text-foreground">
                         Ancien Brut
                       </Label>
                       <Input
@@ -508,11 +508,11 @@ return (
                           } as Local)
                         }
                         placeholder="Ancien montant brut"
-                        className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-border focus:border-ring focus:ring-ring"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="dateChangementBrute" className="text-sm font-medium text-gray-700">
+                      <Label htmlFor="dateChangementBrute" className="text-sm font-medium text-foreground">
                         Date de changement du brut
                       </Label>
                       <Input
@@ -531,7 +531,7 @@ return (
                           } as Local)
                         }
                         placeholder="Date de changement du brut"
-                        className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-border focus:border-ring focus:ring-ring"
                       />
                     </div>
                   </div>
@@ -539,7 +539,7 @@ return (
                     <Button
                       disabled={!is_Super_Admin}
                       type="submit"
-                      className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 rounded-lg shadow-lg transition-all duration-200"
+                      className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg shadow-sm transition-all duration-200"
                     >
                       Modifier les informations
                     </Button>
@@ -550,14 +550,14 @@ return (
               <TabsContent value="contract" className="p-6">
                 <form onSubmit={registerFile} encType="multipart/form-data" className="space-y-6">
                   <div className="space-y-4">
-                    <Label htmlFor="contract" className="text-lg font-medium text-gray-700">
+                    <Label htmlFor="contract" className="text-lg font-medium text-foreground">
                       <div className="flex items-center gap-2">
-                        <FaFileContract className="h-5 w-5 text-blue-600" />
+                        <FaFileContract className="h-5 w-5 text-primary" />
                         Contrat:
                         {selectedValue?.fileName && (
                           <a
                             href={`http://172.16.20.58:81/local/download/${selectedValue.id}`}
-                            className="ml-2 text-blue-600 hover:text-blue-800 transition-colors"
+                            className="ml-2 text-primary hover:text-accent-foreground transition-colors"
                           >
                             <FaFileDownload className="h-4 w-4" />
                           </a>
@@ -567,11 +567,11 @@ return (
                     <div className="flex items-center justify-center w-full">
                       <label
                         htmlFor="dropzone-file"
-                        className="flex flex-col items-center justify-center w-full h-64 border-2 border-blue-300 border-dashed rounded-lg cursor-pointer bg-blue-50 hover:bg-blue-100 transition-colors duration-200"
+                        className="flex flex-col items-center justify-center w-full h-64 border-2 border-input border-dashed rounded-lg cursor-pointer bg-accent hover:bg-accent transition-colors duration-200"
                       >
                         <div className="flex flex-col items-center justify-center pt-5 pb-6">
                           <svg
-                            className="w-8 h-8 mb-4 text-blue-500"
+                            className="w-8 h-8 mb-4 text-primary"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -585,11 +585,11 @@ return (
                               d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                             />
                           </svg>
-                          <p className="mb-2 text-sm text-blue-600">
+                          <p className="mb-2 text-sm text-primary">
                             <span className="font-semibold">{selectedValue?.fileName || "Télécharger contrat"}</span> ou
                             glisser-déposer
                           </p>
-                          <p className="text-xs text-blue-500">PDF</p>
+                          <p className="text-xs text-primary">PDF</p>
                         </div>
                         <Input
                           id="dropzone-file"
@@ -612,7 +612,7 @@ return (
                     <Button
                       disabled={!is_Super_Admin}
                       type="submit"
-                      className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-6 py-2 rounded-lg shadow-lg transition-all duration-200"
+                      className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg shadow-sm transition-all duration-200"
                     >
                       Télécharger le contrat
                     </Button>
@@ -623,12 +623,12 @@ return (
               <TabsContent value="map" className="p-6">
                 <div className="space-y-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <FaMapMarkerAlt className="h-6 w-6 text-blue-600" />
-                    <h2 className="text-2xl font-bold text-gray-800">Localisation</h2>
+                    <FaMapMarkerAlt className="h-6 w-6 text-primary" />
+                    <h2 className="text-2xl font-bold text-foreground">Localisation</h2>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="latitude" className="text-sm font-medium text-gray-700">
+                      <Label htmlFor="latitude" className="text-sm font-medium text-foreground">
                         Latitude
                       </Label>
                       <Input
@@ -639,14 +639,14 @@ return (
                         onChange={(e) => setLatitude(Number(e.target.value))}
                         required
                         aria-describedby="latitude-description"
-                        className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-border focus:border-ring focus:ring-ring"
                       />
-                      <p id="latitude-description" className="text-sm text-gray-500">
+                      <p id="latitude-description" className="text-sm text-muted-foreground">
                         Entrez une valeur entre -90 et 90
                       </p>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="longitude" className="text-sm font-medium text-gray-700">
+                      <Label htmlFor="longitude" className="text-sm font-medium text-foreground">
                         Longitude
                       </Label>
                       <Input
@@ -657,14 +657,14 @@ return (
                         onChange={(e) => setLongitude(Number(e.target.value))}
                         required
                         aria-describedby="longitude-description"
-                        className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-border focus:border-ring focus:ring-ring"
                       />
-                      <p id="longitude-description" className="text-sm text-gray-500">
+                      <p id="longitude-description" className="text-sm text-muted-foreground">
                         Entrez une valeur entre -180 et 180
                       </p>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="zoom" className="text-sm font-medium text-gray-700">
+                      <Label htmlFor="zoom" className="text-sm font-medium text-foreground">
                         Niveau de zoom
                       </Label>
                       <Input
@@ -676,16 +676,16 @@ return (
                         onChange={(e) => setZoom(Number(e.target.value))}
                         required
                         aria-describedby="zoom-description"
-                        className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                        className="border-border focus:border-ring focus:ring-ring"
                       />
-                      <p id="zoom-description" className="text-sm text-gray-500">
+                      <p id="zoom-description" className="text-sm text-muted-foreground">
                         Entrez une valeur entre 1 et 19
                       </p>
                     </div>
                   </div>
                   <Button
                     onClick={updateLocation}
-                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2 rounded-lg shadow-lg transition-all duration-200"
+                    className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg shadow-sm transition-all duration-200"
                   >
                     Mettre à jour la carte
                   </Button>
@@ -696,7 +696,7 @@ return (
                       <AlertDescription>{error}</AlertDescription>
                     </Alert>
                   )}
-                  <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                  <div className="bg-card rounded-lg shadow-sm overflow-hidden">
                     <MapComponent
                       key={mapKey}
                       latitude={latitude}
@@ -706,11 +706,11 @@ return (
                     />
                   </div>
                   {newLatitude && newLongitude && (
-                    <p className="text-sm text-blue-600 bg-blue-50 p-3 rounded-lg">
+                    <p className="text-sm text-primary bg-accent p-3 rounded-lg">
                       Nouvelle position sélectionnée : {newLatitude.toFixed(6)}, {newLongitude.toFixed(6)}
                     </p>
                   )}
-                  <p className="text-sm text-gray-500 bg-gray-50 p-3 rounded-lg">
+                  <p className="text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
                     Cliquez sur la carte pour sélectionner une nouvelle position
                   </p>
                 </div>

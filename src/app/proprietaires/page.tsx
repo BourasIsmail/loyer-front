@@ -116,12 +116,12 @@ export default function ProprietairePage() {
 
   if (isLoadingUser) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+      <div className="min-h-screen bg-background">
         <SideBar />
         <div className="p-4 sm:p-6 lg:p-8 sm:ml-64">
           <div className="space-y-6">
             <Skeleton className="h-8 w-64" />
-            <div className="bg-white rounded-xl shadow-lg border border-blue-100 p-6">
+            <div className="bg-card rounded-xl shadow-sm border border-border p-6">
               <div className="space-y-4">
                 <Skeleton className="h-10 w-full" />
                 <Skeleton className="h-64 w-full" />
@@ -134,37 +134,37 @@ export default function ProprietairePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+    <div className="min-h-screen bg-background">
       <SideBar />
       <div className="p-4 sm:p-6 lg:p-8 sm:ml-64">
         <BreadCrumb />
 
         {/* Header Section */}
-        <div className="bg-white rounded-xl shadow-lg border border-blue-100 mb-6 overflow-hidden">
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+        <div className="bg-card rounded-xl shadow-sm border border-border mb-6 overflow-hidden">
+          <div className="bg-primary px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="p-2 bg-white/20 rounded-lg">
+                <div className="p-2 bg-card/20 rounded-lg">
                   <Users className="h-6 w-6 text-white" />
                 </div>
                 <div>
                   <h1 className="text-2xl font-bold text-white">Liste des Propriétaires</h1>
-                  <p className="text-blue-100 text-sm">{proprietaires?.length || 0} propriétaire(s) trouvé(s)</p>
+                  <p className="text-primary-foreground/80 text-sm">{proprietaires?.length || 0} propriétaire(s) trouvé(s)</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Controls Section */}
-          <div className="p-6 bg-gradient-to-r from-gray-50 to-white border-b border-gray-100">
+          <div className="p-6 bg-muted/40 border-b border-border">
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
               <div className="flex items-center space-x-3">
-                <Filter className="h-5 w-5 text-gray-500" />
+                <Filter className="h-5 w-5 text-muted-foreground" />
                 <Select
                   onValueChange={(value) => setSelectedRegion(value ? Number(value) : null)}
                   disabled={isLoadingRegions}
                 >
-                  <SelectTrigger className="w-[200px] bg-white border-gray-200 hover:border-blue-300 transition-colors">
+                  <SelectTrigger className="w-[200px] bg-card border-border hover:border-primary/40 transition-colors">
                     <SelectValue placeholder="Filtrer par région" />
                   </SelectTrigger>
                   <SelectContent>
@@ -182,7 +182,7 @@ export default function ProprietairePage() {
                 <Link href={"proprietaires/ajouter"}>
                   <Button
                     disabled={!is_Super_Admin}
-                    className="bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-200"
+                    className="bg-primary hover:bg-primary/90 text-white shadow-md hover:shadow-sm transition-all duration-200"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Ajouter Propriétaire
@@ -194,7 +194,7 @@ export default function ProprietairePage() {
                     <Button
                       disabled={selectedProprietaires.length === 0}
                       variant="outline"
-                      className="border-blue-200 text-blue-700 hover:bg-blue-50 shadow-md hover:shadow-lg transition-all duration-200 bg-transparent"
+                      className="border-border text-primary hover:bg-accent shadow-md hover:shadow-sm transition-all duration-200 bg-transparent"
                     >
                       <FileText className="h-4 w-4 mr-2" />
                       Générer Rapport PDF
@@ -203,7 +203,7 @@ export default function ProprietairePage() {
                   <DialogContent className="sm:max-w-md">
                     <DialogHeader>
                       <DialogTitle className="flex items-center space-x-2">
-                        <FileText className="h-5 w-5 text-blue-600" />
+                        <FileText className="h-5 w-5 text-primary" />
                         <span>Générer un rapport PDF</span>
                       </DialogTitle>
                     </DialogHeader>
@@ -212,7 +212,7 @@ export default function ProprietairePage() {
                         <Label htmlFor="proprietaire" className="text-right font-medium">
                           Propriétaire
                         </Label>
-                        <div className="col-span-3 p-2 bg-gray-50 rounded-md text-sm">
+                        <div className="col-span-3 p-2 bg-muted/50 rounded-md text-sm">
                           {selectedProprietaires.length > 0
                             ? selectedProprietaires[0].nomComplet
                             : "Aucun propriétaire sélectionné"}
@@ -234,7 +234,7 @@ export default function ProprietairePage() {
                     <Button
                       onClick={handleGeneratePdf}
                       disabled={selectedProprietaires.length === 0 || !selectedYear || generatePdfMutation.isLoading}
-                      className="w-full bg-blue-600 hover:bg-blue-700"
+                      className="w-full bg-primary hover:bg-primary/90"
                     >
                       {generatePdfMutation.isLoading ? (
                         <>
@@ -256,7 +256,7 @@ export default function ProprietairePage() {
         </div>
 
         {/* Data Table Section */}
-        <div className="bg-white rounded-xl shadow-lg border border-blue-100 overflow-hidden">
+        <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
           <div className="p-6">
             {isLoadingProprietaires || isLoadingByRegion ? (
               <div className="space-y-4">
