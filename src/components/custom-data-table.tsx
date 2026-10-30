@@ -95,7 +95,7 @@ export function CustomDataTable<TData, TValue>({ columns, data, onRowsSelected }
                     </SelectContent>
                 </Select>
             </div>
-            <div className="rounded-md border">
+            <div>
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -122,7 +122,7 @@ export function CustomDataTable<TData, TValue>({ columns, data, onRowsSelected }
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results.
+                                    Aucun résultat.
                                 </TableCell>
                             </TableRow>
                         )}
@@ -131,10 +131,10 @@ export function CustomDataTable<TData, TValue>({ columns, data, onRowsSelected }
             </div>
             <div className="flex items-center justify-end space-x-2 py-4">
                 <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-                    Previous
+                    Précédent
                 </Button>
                 <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-                    Next
+                    Suivant
                 </Button>
             </div>
         </div>

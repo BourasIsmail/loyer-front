@@ -105,7 +105,7 @@ export function DataTable<TData, TValue>({ columns, data, onRowsSelected }: Data
       </div>
 
       {/* Table */}
-      <div className="rounded-md border bg-card">
+      <div>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
